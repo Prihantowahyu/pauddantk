@@ -1174,7 +1174,10 @@ const SNAKES={17:4,20:9,23:14}, LADDERS={3:11,7:18,13:22};
 const G1={
   completedIslands:{},
   start(){
-    this.completedIslands={}; G1_ISLANDS.forEach(i=>{ const lp=Prog.data.games['ekspedisi_pulau'].lp; if(lp[i.id]) this.completedIslands[i.id]=true; });
+    this.completedIslands={};
+    // Shuffle islands order and shuffle questions within each island
+    this.shuffledIslands = scramble(G1_ISLANDS.map(isl => ({...isl, questions: scramble(isl.questions)})));
+    this.shuffledIslands.forEach(i=>{ const lp=Prog.data.games['ekspedisi_pulau'].lp; if(lp[i.id]) this.completedIslands[i.id]=true; });
     this.showMap();
   },
   showMap(){
@@ -1182,7 +1185,7 @@ const G1={
     document.getElementById('g1-quiz-section').style.display='none';
     document.getElementById('g1-prog').textContent='Pilih Pulau';
     const grid=document.getElementById('g1-island-grid'); grid.innerHTML='';
-    G1_ISLANDS.forEach(isl=>{
+    (this.shuffledIslands||G1_ISLANDS).forEach(isl=>{
       const btn=document.createElement('button'); btn.className='island-btn'+(this.completedIslands[isl.id]?' done':'');
       btn.style.background=isl.bg;
       const lp=Prog.data.games['ekspedisi_pulau'].lp[isl.id]||0;
@@ -1236,10 +1239,10 @@ const G1={
 };
 
 /* ── G2: DAPUR KATA ── */
-const G2={lvl:0,qi:0,mistakes:0,
-  start(l){ this.lvl=l; this.qi=0; this.mistakes=0; this.loadQ(); },
+const G2={lvl:0,qi:0,mistakes:0,shuffledItems:[],
+  start(l){ this.lvl=l; this.qi=0; this.mistakes=0; this.shuffledItems=scramble(G2_DATA[l].items); this.loadQ(); },
   loadQ(){
-    const ld=G2_DATA[this.lvl], q=ld.items[this.qi];
+    const ld=G2_DATA[this.lvl], q=this.shuffledItems[this.qi];
     document.getElementById('g2-title').textContent=ld.title;
     document.getElementById('g2-prog').textContent=`Soal ${this.qi+1} dari ${ld.items.length}`;
     document.getElementById('g2-pot').textContent=q.pot;
@@ -1255,7 +1258,7 @@ const G2={lvl:0,qi:0,mistakes:0,
   next(){
     this.qi++;
     const ld=G2_DATA[this.lvl];
-    if(this.qi<ld.items.length){ this.loadQ(); }
+    if(this.qi<this.shuffledItems.length){ this.loadQ(); }
     else {
       const stars=3,coins=stars*5;
       Prog.record('dapur_kata',this.lvl+1,stars,coins); UI.updateHeader();
@@ -1265,10 +1268,10 @@ const G2={lvl:0,qi:0,mistakes:0,
 };
 
 /* ── G3: LOMBA LARI ── */
-const G3={lvl:0,qi:0,correct:0,mistakes:0,locked:false,
-  start(l){ this.lvl=l; this.qi=0; this.correct=0; this.mistakes=0; this.locked=false; this.loadQ(); },
+const G3={lvl:0,qi:0,correct:0,mistakes:0,locked:false,shuffledQs:[],
+  start(l){ this.lvl=l; this.qi=0; this.correct=0; this.mistakes=0; this.locked=false; this.shuffledQs=scramble(G3_DATA[l].qs); this.loadQ(); },
   loadQ(){
-    const ld=G3_DATA[this.lvl], q=ld.qs[this.qi]; this.locked=false;
+    const ld=G3_DATA[this.lvl], q=this.shuffledQs[this.qi]; this.locked=false;
     document.getElementById('g3-title').textContent=ld.title;
     document.getElementById('g3-prog').textContent=`Soal ${this.qi+1} dari ${ld.qs.length}`;
     document.getElementById('g3-correct').textContent=this.correct;
@@ -1297,7 +1300,7 @@ const G3={lvl:0,qi:0,correct:0,mistakes:0,locked:false,
   },
   next(){
     const ld=G3_DATA[this.lvl]; this.qi++;
-    if(this.qi<ld.qs.length){ this.loadQ(); }
+    if(this.qi<this.shuffledQs.length){ this.loadQ(); }
     else {
       document.getElementById('g3-runner').style.left='84%'; document.getElementById('g3-fill').style.width='90%';
       const stars=calcStars(this.mistakes), coins=stars*5;
@@ -1308,10 +1311,10 @@ const G3={lvl:0,qi:0,correct:0,mistakes:0,locked:false,
 };
 
 /* ── G4: DETEKTIF ── */
-const G4={lvl:0,qi:0,mistakes:0,locked:false,
-  start(l){ this.lvl=l; this.qi=0; this.mistakes=0; this.locked=false; this.loadQ(); },
+const G4={lvl:0,qi:0,mistakes:0,locked:false,shuffledQs:[],
+  start(l){ this.lvl=l; this.qi=0; this.mistakes=0; this.locked=false; this.shuffledQs=scramble(G4_DATA[l].qs); this.loadQ(); },
   loadQ(){
-    const ld=G4_DATA[this.lvl], q=ld.qs[this.qi]; this.locked=false;
+    const ld=G4_DATA[this.lvl], q=this.shuffledQs[this.qi]; this.locked=false;
     document.getElementById('g4-title').textContent=ld.title;
     document.getElementById('g4-prog').textContent=`Soal ${this.qi+1} dari ${ld.qs.length}`;
     document.getElementById('g4-stars').textContent=Prog.gameStars('detektif_huruf',this.lvl+1);
@@ -1337,17 +1340,17 @@ const G4={lvl:0,qi:0,mistakes:0,locked:false,
     );
   },
   next(){ this.qi++; const ld=G4_DATA[this.lvl];
-    if(this.qi<ld.qs.length){ this.loadQ(); }
+    if(this.qi<this.shuffledQs.length){ this.loadQ(); }
     else { const s=calcStars(this.mistakes),c=s*5; Prog.record('detektif_huruf',this.lvl+1,s,c); UI.updateHeader(); showVictory(this.lvl+1,s,c,G4_DATA.length,(n)=>G4.start(Math.min(n,G4_DATA.length-1))); }
   }
 };
 document.getElementById('g4-hint-btn').onclick=()=>{ SFX.pop(); if(G4_DATA[G4.lvl]?.qs[G4.qi]) SFX.speak(G4_DATA[G4.lvl].qs[G4.qi].w); };
 
 /* ── G5: BANGUN RUMAH ── */
-const G5={lvl:0,qi:0,mistakes:0,
-  start(l){ this.lvl=l; this.qi=0; this.mistakes=0; this.loadQ(); },
+const G5={lvl:0,qi:0,mistakes:0,shuffledItems:[],
+  start(l){ this.lvl=l; this.qi=0; this.mistakes=0; this.shuffledItems=scramble(G5_DATA[l].items); this.loadQ(); },
   loadQ(){
-    const ld=G5_DATA[this.lvl], q=ld.items[this.qi];
+    const ld=G5_DATA[this.lvl], q=this.shuffledItems[this.qi];
     document.getElementById('g5-title').textContent=ld.title;
     document.getElementById('g5-prog').textContent=`Soal ${this.qi+1} dari ${ld.items.length}`;
     document.getElementById('g5-stars').textContent=Prog.gameStars('bangun_rumah',this.lvl+1);
@@ -1360,16 +1363,16 @@ const G5={lvl:0,qi:0,mistakes:0,
     }});
   },
   next(){ this.qi++; const ld=G5_DATA[this.lvl];
-    if(this.qi<ld.items.length){ this.loadQ(); }
+    if(this.qi<this.shuffledItems.length){ this.loadQ(); }
     else { const s=3,c=s*5; Prog.record('bangun_rumah',this.lvl+1,s,c); UI.updateHeader(); showVictory(this.lvl+1,s,c,G5_DATA.length,(n)=>G5.start(Math.min(n,G5_DATA.length-1))); }
   }
 };
 
 /* ── G6: KEBUN AJAIB ── */
-const G6={lvl:0,qi:0,mistakes:0,phase:'spell',
-  start(l){ this.lvl=l; this.qi=0; this.mistakes=0; this.loadQ(); },
+const G6={lvl:0,qi:0,mistakes:0,phase:'spell',shuffledItems:[],
+  start(l){ this.lvl=l; this.qi=0; this.mistakes=0; this.shuffledItems=scramble(G6_DATA[l].items); this.loadQ(); },
   loadQ(){
-    const ld=G6_DATA[this.lvl], q=ld.items[this.qi]; this.phase='spell';
+    const ld=G6_DATA[this.lvl], q=this.shuffledItems[this.qi]; this.phase='spell';
     document.getElementById('g6-title').textContent=ld.title;
     document.getElementById('g6-prog').textContent=`Soal ${this.qi+1} dari ${ld.items.length}`;
     document.getElementById('g6-stars').textContent=Prog.gameStars('kebun_ajaib',this.lvl+1);
@@ -1396,17 +1399,17 @@ const G6={lvl:0,qi:0,mistakes:0,phase:'spell',
     );
   },
   next(){ this.qi++; const ld=G6_DATA[this.lvl];
-    if(this.qi<ld.items.length){ this.loadQ(); }
+    if(this.qi<this.shuffledItems.length){ this.loadQ(); }
     else { const s=calcStars(this.mistakes),c=s*5; Prog.record('kebun_ajaib',this.lvl+1,s,c); UI.updateHeader(); showVictory(this.lvl+1,s,c,G6_DATA.length,(n)=>G6.start(Math.min(n,G6_DATA.length-1))); }
   }
 };
 document.getElementById('g6-hint-btn').onclick=()=>{ SFX.pop(); SFX.speak(document.getElementById('g6-hint-txt').textContent); };
 
 /* ── G7: KETUK SUKU ── */
-const G7={lvl:0,qi:0,mistakes:0,
-  start(l){ this.lvl=l; this.qi=0; this.mistakes=0; this.loadQ(); },
+const G7={lvl:0,qi:0,mistakes:0,shuffledQs:[],
+  start(l){ this.lvl=l; this.qi=0; this.mistakes=0; this.shuffledQs=scramble(G7_DATA[l].qs); this.loadQ(); },
   loadQ(){
-    const ld=G7_DATA[this.lvl], q=ld.qs[this.qi];
+    const ld=G7_DATA[this.lvl], q=this.shuffledQs[this.qi];
     document.getElementById('g7-title').textContent=ld.title;
     document.getElementById('g7-prog').textContent=`Soal ${this.qi+1} dari ${ld.qs.length}`;
     document.getElementById('g7-stars').textContent=Prog.gameStars('ketuk_suku',this.lvl+1);
@@ -1436,16 +1439,16 @@ const G7={lvl:0,qi:0,mistakes:0,
     });
   },
   next(){ this.qi++; const ld=G7_DATA[this.lvl];
-    if(this.qi<ld.qs.length){ this.loadQ(); }
+    if(this.qi<this.shuffledQs.length){ this.loadQ(); }
     else { const s=calcStars(this.mistakes),c=s*5; Prog.record('ketuk_suku',this.lvl+1,s,c); UI.updateHeader(); showVictory(this.lvl+1,s,c,G7_DATA.length,(n)=>G7.start(Math.min(n,G7_DATA.length-1))); }
   }
 };
 
 /* ── G8: TOKO MINI ── */
-const G8={lvl:0,qi:0,mistakes:0,
-  start(l){ this.lvl=l; this.qi=0; this.mistakes=0; this.loadQ(); },
+const G8={lvl:0,qi:0,mistakes:0,shuffledQs:[],
+  start(l){ this.lvl=l; this.qi=0; this.mistakes=0; this.shuffledQs=scramble(G8_DATA[l].qs); this.loadQ(); },
   loadQ(){
-    const ld=G8_DATA[this.lvl], q=ld.qs[this.qi];
+    const ld=G8_DATA[this.lvl], q=this.shuffledQs[this.qi];
     document.getElementById('g8-title').textContent=ld.title;
     document.getElementById('g8-prog').textContent=`Soal ${this.qi+1} dari ${ld.qs.length}`;
     document.getElementById('g8-stars').textContent=Prog.gameStars('toko_mini',this.lvl+1);
@@ -1465,16 +1468,16 @@ const G8={lvl:0,qi:0,mistakes:0,
     );
   },
   next(){ this.qi++; const ld=G8_DATA[this.lvl];
-    if(this.qi<ld.qs.length){ this.loadQ(); }
+    if(this.qi<this.shuffledQs.length){ this.loadQ(); }
     else { const s=calcStars(this.mistakes),c=s*5; Prog.record('toko_mini',this.lvl+1,s,c); UI.updateHeader(); showVictory(this.lvl+1,s,c,G8_DATA.length,(n)=>G8.start(Math.min(n,G8_DATA.length-1))); }
   }
 };
 
 /* ── G9: PETERNAKAN ── */
-const G9={lvl:0,qi:0,mistakes:0,
-  start(l){ this.lvl=l; this.qi=0; this.mistakes=0; this.loadQ(); },
+const G9={lvl:0,qi:0,mistakes:0,shuffledQs:[],
+  start(l){ this.lvl=l; this.qi=0; this.mistakes=0; this.shuffledQs=scramble(G9_DATA[l].qs); this.loadQ(); },
   loadQ(){
-    const ld=G9_DATA[this.lvl], q=ld.qs[this.qi];
+    const ld=G9_DATA[this.lvl], q=this.shuffledQs[this.qi];
     document.getElementById('g9-title').textContent=ld.title;
     document.getElementById('g9-prog').textContent=`Soal ${this.qi+1} dari ${ld.qs.length}`;
     document.getElementById('g9-stars').textContent=Prog.gameStars('peternakan',this.lvl+1);
@@ -1487,14 +1490,14 @@ const G9={lvl:0,qi:0,mistakes:0,
     );
   },
   next(){ this.qi++; const ld=G9_DATA[this.lvl];
-    if(this.qi<ld.qs.length){ this.loadQ(); }
+    if(this.qi<this.shuffledQs.length){ this.loadQ(); }
     else { const s=calcStars(this.mistakes),c=s*5; Prog.record('peternakan',this.lvl+1,s,c); UI.updateHeader(); showVictory(this.lvl+1,s,c,G9_DATA.length,(n)=>G9.start(Math.min(n,G9_DATA.length-1))); }
   }
 };
 
 /* ── G10: PUZZLE KATA ── */
-const G10={lvl:0,qi:0,mistakes:0,revealed:0,
-  start(l){ this.lvl=l; this.qi=0; this.mistakes=0; this.revealed=0; this.resetPuzzle(); this.loadQ(); },
+const G10={lvl:0,qi:0,mistakes:0,revealed:0,shuffledQs:[],
+  start(l){ this.lvl=l; this.qi=0; this.mistakes=0; this.revealed=0; this.shuffledQs=scramble(G10_DATA[l].qs); this.resetPuzzle(); this.loadQ(); },
   resetPuzzle(){
     const ld=G10_DATA[this.lvl];
     ['pp0','pp1','pp2','pp3'].forEach((id,i)=>{
@@ -1502,7 +1505,7 @@ const G10={lvl:0,qi:0,mistakes:0,revealed:0,
     });
   },
   loadQ(){
-    const ld=G10_DATA[this.lvl], q=ld.qs[this.qi];
+    const ld=G10_DATA[this.lvl], q=this.shuffledQs[this.qi];
     document.getElementById('g10-title').textContent=ld.title;
     document.getElementById('g10-prog').textContent=`Soal ${this.qi+1} dari ${ld.qs.length}`;
     document.getElementById('g10-stars').textContent=Prog.gameStars('puzzle_kata',this.lvl+1);
@@ -1519,16 +1522,16 @@ const G10={lvl:0,qi:0,mistakes:0,revealed:0,
     el.className='puzzle-piece revealed'; el.textContent=emoji;
   },
   next(){ this.qi++; const ld=G10_DATA[this.lvl];
-    if(this.qi<ld.qs.length){ this.loadQ(); }
+    if(this.qi<this.shuffledQs.length){ this.loadQ(); }
     else { const s=calcStars(this.mistakes),c=s*5; Prog.record('puzzle_kata',this.lvl+1,s,c); UI.updateHeader(); showVictory(this.lvl+1,s,c,G10_DATA.length,(n)=>G10.start(Math.min(n,G10_DATA.length-1))); }
   }
 };
 
 /* ── G11: MISI ROKET ── */
-const G11={lvl:0,qi:0,correct:0,mistakes:0,locked:false,
-  start(l){ this.lvl=l; this.qi=0; this.correct=0; this.mistakes=0; this.locked=false; this.loadQ(); },
+const G11={lvl:0,qi:0,correct:0,mistakes:0,locked:false,shuffledQs:[],
+  start(l){ this.lvl=l; this.qi=0; this.correct=0; this.mistakes=0; this.locked=false; this.shuffledQs=scramble(G11_DATA[l].qs); this.loadQ(); },
   loadQ(){
-    const ld=G11_DATA[this.lvl], q=ld.qs[this.qi]; this.locked=false;
+    const ld=G11_DATA[this.lvl], q=this.shuffledQs[this.qi]; this.locked=false;
     document.getElementById('g11-title').textContent=ld.title;
     document.getElementById('g11-prog').textContent=`Soal ${this.qi+1} dari ${ld.qs.length}`;
     document.getElementById('g11-stars').textContent=Prog.gameStars('misi_roket',this.lvl+1);
@@ -1564,7 +1567,7 @@ const G11={lvl:0,qi:0,correct:0,mistakes:0,locked:false,
     });
   },
   next(){ this.qi++; const ld=G11_DATA[this.lvl];
-    if(this.qi<ld.qs.length){ this.loadQ(); }
+    if(this.qi<this.shuffledQs.length){ this.loadQ(); }
     else {
       document.getElementById('g11-fuel-fill').style.width='100%';
       document.getElementById('g11-fuel-label').textContent='Roket siap meluncur! 🚀';
@@ -1575,14 +1578,14 @@ const G11={lvl:0,qi:0,correct:0,mistakes:0,locked:false,
 };
 
 /* ── G12: SALON KATA ── */
-const G12={lvl:0,qi:0,mistakes:0,accsEarned:[],
-  start(l){ this.lvl=l; this.qi=0; this.mistakes=0; this.accsEarned=[];
+const G12={lvl:0,qi:0,mistakes:0,accsEarned:[],shuffledQs:[],
+  start(l){ this.lvl=l; this.qi=0; this.mistakes=0; this.accsEarned=[]; this.shuffledQs=scramble(G12_DATA[l].qs);
     document.getElementById('g12-ciko').textContent='🦊';
     document.getElementById('g12-accessories').innerHTML='';
     this.loadQ();
   },
   loadQ(){
-    const ld=G12_DATA[this.lvl], q=ld.qs[this.qi];
+    const ld=G12_DATA[this.lvl], q=this.shuffledQs[this.qi];
     document.getElementById('g12-title').textContent=ld.title;
     document.getElementById('g12-prog').textContent=`Soal ${this.qi+1} dari ${ld.qs.length}`;
     document.getElementById('g12-stars').textContent=Prog.gameStars('salon_kata',this.lvl+1);
@@ -1600,7 +1603,7 @@ const G12={lvl:0,qi:0,mistakes:0,accsEarned:[],
     );
   },
   next(){ this.qi++; const ld=G12_DATA[this.lvl];
-    if(this.qi<ld.qs.length){ this.loadQ(); }
+    if(this.qi<this.shuffledQs.length){ this.loadQ(); }
     else { const s=calcStars(this.mistakes),c=s*5; Prog.record('salon_kata',this.lvl+1,s,c); UI.updateHeader(); showVictory(this.lvl+1,s,c,G12_DATA.length,(n)=>G12.start(Math.min(n,G12_DATA.length-1))); }
   }
 };
