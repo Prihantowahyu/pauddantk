@@ -49,7 +49,12 @@ header{position:relative;z-index:10;display:flex;align-items:center;justify-cont
 .stats{display:flex;align-items:center;gap:10px}
 .pill{display:flex;align-items:center;gap:6px;background:#fff;padding:6px 14px;border-radius:999px;border:3px solid #ffda79;box-shadow:0 3px 0 #ecd06f;font-size:1.1rem;font-weight:700;color:#d97706}
 .pill.coin{border-color:#ffd43b;box-shadow:0 3px 0 #e6b800;color:#b45309}
-.hdr-btns{display:flex;gap:8px}
+.hdr-btns {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
 .ico-btn{width:48px;height:48px;border-radius:50%;border:none;background:#fff;box-shadow:0 3px 0 #cbd5e1;cursor:pointer;font-size:1.3rem;display:flex;align-items:center;justify-content:center;transition:all .15s}
 .ico-btn:active{transform:translateY(3px);box-shadow:0 1px 0 #cbd5e1}
 
@@ -793,6 +798,56 @@ body.dark-mode .modal-desc { color: #cbd5e1 !important; }
 .doa-arab { font-size: 1.3rem; font-weight: 700; color: #1e293b; direction: rtl; text-align: right; margin-bottom: 6px; line-height: 1.6; }
 .doa-arti { font-size: .85rem; color: #475569; font-style: italic; }
 
+
+/* Mobile Header & Button Visibility Fix */
+@media(max-width: 768px) {
+  header {
+    padding: 8px 10px !important;
+    gap: 6px !important;
+  }
+  .brand {
+    width: 100%;
+  }
+  .brand-title {
+    font-size: 1.15rem !important;
+  }
+  .brand-sub {
+    display: none !important;
+  }
+  .hdr-controls {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .hdr-top-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    gap: 6px;
+  }
+  .hdr-btns {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 6px !important;
+    width: 100% !important;
+    justify-content: flex-start !important;
+    padding-top: 4px;
+    border-top: 1px dashed #e2e8f0;
+  }
+  .ico-btn {
+    width: 42px !important;
+    height: 42px !important;
+    font-size: 1.15rem !important;
+    flex-shrink: 0 !important;
+  }
+  .ico-btn.btn-reset-highlight {
+    background: #fef2f2 !important;
+    border: 2px solid #f87171 !important;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -812,32 +867,35 @@ body.dark-mode .modal-desc { color: #cbd5e1 !important; }
     </div>
   </div>
 
-  <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
-    <!-- Profile Button (P1) -->
-    <button class="profile-btn" id="hdr-profile-btn" title="Ganti Profil Anak">
-      <span class="p-avatar" id="hdr-p-avatar">👦</span>
-      <span class="p-name" id="hdr-p-name">Habibi</span>
-      <span class="p-tag" id="hdr-p-tag">SD 1</span>
-      <span style="font-size:.8rem;opacity:.6">▾</span>
-    </button>
+  <div class="hdr-controls" style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+    <div class="hdr-top-row" style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+      <!-- Profile Button (P1) -->
+      <button class="profile-btn" id="hdr-profile-btn" title="Ganti Profil Anak">
+        <span class="p-avatar" id="hdr-p-avatar">👦</span>
+        <span class="p-name" id="hdr-p-name">Habibi</span>
+        <span class="p-tag" id="hdr-p-tag">SD 1</span>
+        <span style="font-size:.8rem;opacity:.6">▾</span>
+      </button>
 
-    <div class="stats">
-      <div class="pill"><span>⭐</span><span id="hdr-stars">0</span></div>
-      <div class="pill coin"><span>🪙</span><span id="hdr-coins">0</span></div>
+      <div class="stats">
+        <div class="pill"><span>⭐</span><span id="hdr-stars">0</span></div>
+        <div class="pill coin"><span>🪙</span><span id="hdr-coins">0</span></div>
+      </div>
     </div>
 
+    <!-- Tombol Fitur (Wrap rapi di HP) -->
     <div class="hdr-btns">
-      <button class="ico-btn" id="shop-btn" title="Toko Kostum Harsha (Beli dengan Koin)" aria-label="Toko Kostum">🛍️</button>
-      <button class="ico-btn" id="cert-btn" title="Sertifikat Kelulusan Anak" aria-label="Sertifikat">📜</button>
-      <button class="ico-btn" id="screentime-btn" title="Batas Waktu Layar Anak" aria-label="Waktu Layar">⏳</button>
-      <button class="ico-btn" id="badge-btn" title="Lencana & Prestasi (P4)" aria-label="Lencana">🏆</button>
-      <button class="ico-btn" id="leader-btn" title="Peringkat Keluarga (P12)" aria-label="Peringkat">🏅</button>
-      <button class="ico-btn" id="report-btn" title="Rapor Belajar Anak (P6)" aria-label="Rapor">📊</button>
-      <button class="ico-btn" id="challenge-btn" title="Mode Tantangan Waktu (P5)" aria-label="Mode Tantangan">⚡</button>
-      <button class="ico-btn" id="bgm-btn" title="Musik Latar (P9)" aria-label="Musik Latar">🎵</button>
-      <button class="ico-btn" id="snd-btn" title="Efek Suara (P3)" aria-label="Toggle Suara">🔊</button>
-      <button class="ico-btn" id="dark-btn" title="Mode Malam (P10)" aria-label="Mode Malam">🌙</button>
-      <button class="ico-btn" id="rst-btn" title="Reset Progres" aria-label="Reset Progres">🔄</button>
+      <button class="ico-btn btn-reset-highlight" id="rst-btn" title="Reset Progres (Kunci Orang Tua)" aria-label="Reset Progres" style="background:#fef2f2;border:2px solid #fca5a5">🔄</button>
+      <button class="ico-btn" id="shop-btn" title="Toko Kostum Harsha" aria-label="Toko Kostum">🛍️</button>
+      <button class="ico-btn" id="cert-btn" title="Sertifikat Kelulusan" aria-label="Sertifikat">📜</button>
+      <button class="ico-btn" id="screentime-btn" title="Batas Waktu Layar" aria-label="Waktu Layar">⏳</button>
+      <button class="ico-btn" id="badge-btn" title="Lencana & Prestasi" aria-label="Lencana">🏆</button>
+      <button class="ico-btn" id="leader-btn" title="Peringkat Keluarga" aria-label="Peringkat">🏅</button>
+      <button class="ico-btn" id="report-btn" title="Rapor Belajar" aria-label="Rapor">📊</button>
+      <button class="ico-btn" id="challenge-btn" title="Mode Tantangan Waktu" aria-label="Mode Tantangan">⚡</button>
+      <button class="ico-btn" id="bgm-btn" title="Musik Latar" aria-label="Musik Latar">🎵</button>
+      <button class="ico-btn" id="snd-btn" title="Efek Suara" aria-label="Toggle Suara">🔊</button>
+      <button class="ico-btn" id="dark-btn" title="Mode Malam" aria-label="Mode Malam">🌙</button>
     </div>
   </div>
 </header>
@@ -1295,6 +1353,9 @@ body.dark-mode .modal-desc { color: #cbd5e1 !important; }
         📥 Pulihkan Data
         <input type="file" id="file-restore" accept=".json" style="display:none">
       </label>
+      <button class="btn-big" id="btn-reset-in-profile" style="background:#fee2e2;border:2px solid #ef4444;color:#b91c1c;font-size:.9rem;min-height:46px" title="Reset bintang & koin profil aktif">
+        🔄 Reset Progres Anak Ini
+      </button>
       <button class="btn-big" id="btn-close-profile" style="font-size:.95rem;min-height:46px">Tutup ✨</button>
     </div>
   </div>
@@ -3596,6 +3657,24 @@ const UI = {
       darkBtn.textContent = isDark ? '☀️' : '🌙';
       showToast(isDark ? '🌙' : '☀️', isDark ? 'Mode Malam aktif' : 'Mode Siang aktif');
     };
+
+    
+    // Reset from profile modal
+    const pRstBtn = document.getElementById('btn-reset-in-profile');
+    if (pRstBtn) {
+      pRstBtn.onclick = () => {
+        SFX.pop();
+        ParentGate.ask(() => {
+          if (confirm('Reset semua bintang dan koin untuk ' + Prog.getActiveProfile().name + '?')) {
+            Prog.reset();
+            UI.updateHeader();
+            UI.buildGrid();
+            UI.showProfileModal();
+            showToast('🔄', 'Progres ' + Prog.getActiveProfile().name + ' direset!');
+          }
+        });
+      };
+    }
 
     // Reset button
     const rstBtn = document.getElementById('rst-btn');
