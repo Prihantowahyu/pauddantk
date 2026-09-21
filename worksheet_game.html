@@ -133,28 +133,19 @@
     /* ── NAVIGATION TABS (10 WORKSHEET MODES) ── */
     .mode-tabs {
       display: flex;
-      gap: 8px;
+      gap: 10px;
       width: 100%;
       max-width: 960px;
-      overflow-x: auto;
+      justify-content: center;
+      flex-wrap: wrap;
       padding: 6px 4px 12px 4px;
       margin-bottom: 8px;
-      scrollbar-width: thin;
-      -webkit-overflow-scrolling: touch;
-      justify-content: flex-start;
-    }
-    .mode-tabs::-webkit-scrollbar {
-      height: 6px;
-    }
-    .mode-tabs::-webkit-scrollbar-thumb {
-      background: #93c5fd;
-      border-radius: 999px;
     }
 
     .tab-btn {
-      flex: 0 0 auto;
+      flex: 1 1 calc(20% - 10px);
       min-width: 140px;
-      padding: 10px 16px;
+      padding: 10px 14px;
       border-radius: 18px;
       border: 3px solid transparent;
       background: #ffffff;
@@ -179,6 +170,24 @@
       transform: translateY(-2px);
     }
     .tab-btn:active { transform: translateY(2px); }
+
+    @media (max-width: 768px) {
+      .tab-btn {
+        flex: 1 1 calc(33.33% - 10px);
+        min-width: 120px;
+        font-size: 0.85rem;
+        padding: 8px 10px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .tab-btn {
+        flex: 1 1 calc(50% - 10px);
+        min-width: 110px;
+        font-size: 0.8rem;
+        padding: 8px 8px;
+      }
+    }
 
     /* ── SECTIONS / VIEWS ── */
     .view-panel {
@@ -1378,6 +1387,9 @@
       </div>
 
       <div class="az-grid" id="az-grid"></div>
+    </div>
+  </section>
+
   <!-- ═══════════════════════════════════════════════════════════
        PANEL 4: HUBUNGKAN TITIK (DOT-TO-DOT)
   ═══════════════════════════════════════════════════════════ -->

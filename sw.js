@@ -3,7 +3,7 @@
    Menggunakan path RELATIF agar bekerja di GitHub Pages maupun XAMPP
    ───────────────────────────────────────────────────────────── */
 
-const CACHE_NAME = 'harsha-edu-v5';
+const CACHE_NAME = 'harsha-edu-v6';
 
 // Aset yang di-pre-cache — path relatif terhadap sw.js
 const PRE_CACHE_ASSETS = [
