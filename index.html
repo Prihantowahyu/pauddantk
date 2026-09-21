@@ -317,51 +317,14 @@ header{position:relative;z-index:10;display:flex;align-items:center;justify-cont
   <div class="stats">
     <div class="pill"><span>⭐</span><span id="hdr-stars">0</span></div>
     <div class="pill coin"><span>🪙</span><span id="hdr-coins">0</span></div>
-  </div>
   <div class="hdr-btns">
-    <a href="nusa_pintar.html" style="text-decoration:none;display:flex;align-items:center;gap:8px;background:linear-gradient(135deg,#38bdf8,#0284c7);color:#fff;font-weight:700;padding:8px 18px;border-radius:999px;box-shadow:0 3px 0 #0369a1;font-size:1rem;transition:transform .15s" title="Buka Petualangan bersama Harsha">
-      <img src="logo_harsha.png" alt="Logo" style="width:22px;height:22px;object-fit:contain" onerror="this.style.display='none'">
-      <span>Petualangan Harsha (Baru!) 🚀</span>
-    </a>
-    <a href="worksheet_game.html" style="text-decoration:none;display:flex;align-items:center;gap:8px;background:linear-gradient(135deg,#f59e0b,#d97706);color:#fff;font-weight:700;padding:8px 18px;border-radius:999px;box-shadow:0 3px 0 #b45309;font-size:1rem;transition:transform .15s" title="Buka Lembar Kerja Ceria">
-      <span>📝 Lembar Kerja</span>
-    </a>
     <button class="ico-btn" id="snd-btn" title="Suara" aria-label="Toggle Suara">🔊</button>
     <button class="ico-btn" id="rst-btn" title="Reset" aria-label="Reset Progres">🔄</button>
   </div>
 </header>
 
-<!-- ═══ HUB MENU ═══ -->
+<!-- ═══ HUB MENU (SEMUA MODE UBIN) ═══ -->
 <main class="view active" id="hub" style="flex-direction:column">
-  <!-- FEATURED HARSHA ADVENTURE BANNER -->
-  <div class="mascot-bar" style="background:linear-gradient(135deg,#e0f2fe 0%,#ffffff 60%,#fef08a 100%);border:4px solid #38bdf8;box-shadow:0 10px 24px rgba(2,132,199,.18);position:relative;overflow:hidden">
-    <a href="nusa_pintar.html" style="text-decoration:none;display:flex;align-items:center;gap:18px;width:100%;flex-wrap:wrap">
-      <img src="logo_harsha.png" alt="Logo Harsha" style="width:96px;height:96px;object-fit:contain;filter:drop-shadow(0 6px 14px rgba(0,0,0,.15));animation:pulse 3s infinite ease-in-out;border-radius:16px" onerror="this.style.fontSize='80px';this.outerHTML='<span style=\'font-size:80px;animation:pulse 3s infinite ease-in-out\'>🏝️</span>'">
-      <div class="mascot-txt" style="flex:1;min-width:240px">
-        <div style="display:inline-block;background:#0284c7;color:#fff;font-size:0.75rem;font-weight:800;padding:3px 10px;border-radius:20px;margin-bottom:4px;letter-spacing:.5px">EDISI SPESIAL BARU ✨</div>
-        <h2 style="color:#0369a1;font-size:1.45rem;margin-bottom:4px">Petualangan bersama Harsha 🏝️📖</h2>
-        <p style="color:#334155;font-size:.95rem;line-height:1.4">Bantu <b>Habibi</b>, <b>Shafiyyah</b>, dan <b>Arsha</b> mengumpulkan Halaman Buku Ajaib di 5 Pulau Tropis! Penuh tantangan Calistung seru &amp; hadiah aksesoris kostum.</p>
-      </div>
-      <button class="btn-play" style="padding:14px 26px;font-size:1.15rem;background:linear-gradient(135deg,#0284c7,#0369a1);box-shadow:0 4px 0 #075985;color:#fff;border-radius:30px;pointer-events:none">
-        Mulai Petualangan 🚀
-      </button>
-    </a>
-  </div>
-
-  <!-- FEATURED WORKSHEET DIGITAL BANNER -->
-  <div class="mascot-bar" style="background:linear-gradient(135deg,#fef3c7 0%,#ffffff 60%,#dbeafe 100%);border:4px solid #f59e0b;box-shadow:0 10px 24px rgba(245,158,11,.18);position:relative;overflow:hidden;margin-top:14px">
-    <a href="worksheet_game.html" style="text-decoration:none;display:flex;align-items:center;gap:18px;width:100%;flex-wrap:wrap">
-      <div style="font-size:72px;line-height:1;filter:drop-shadow(0 6px 14px rgba(0,0,0,.15));animation:pulse 3s infinite ease-in-out">📝🎨</div>
-      <div class="mascot-txt" style="flex:1;min-width:240px">
-        <div style="display:inline-block;background:#d97706;color:#fff;font-size:0.75rem;font-weight:800;padding:3px 10px;border-radius:20px;margin-bottom:4px;letter-spacing:.5px">BARU! WORKSHEET DIGITAL 🌟</div>
-        <h2 style="color:#b45309;font-size:1.45rem;margin-bottom:4px">Lembar Kerja Ceria PAUD / TK ✏️🧭</h2>
-        <p style="color:#334155;font-size:.95rem;line-height:1.4">Adaptasi digital dari lembar kerja edukatif: <b>Labirin Mencari Jalan</b> (Pemancing &amp; Anak Lapar), <b>Koding Penjumlahan</b> (Kode Bunga &amp; Warna), serta <b>Tebal &amp; Tulis Huruf A-Z</b>!</p>
-      </div>
-      <button class="btn-play" style="padding:14px 26px;font-size:1.15rem;background:linear-gradient(135deg,#f59e0b,#d97706);box-shadow:0 4px 0 #b45309;color:#fff;border-radius:30px;pointer-events:none">
-        Buka Lembar Kerja ✨
-      </button>
-    </a>
-  </div>
   <div class="grid" id="hub-grid"></div>
 </main>
 
@@ -1724,25 +1687,46 @@ const UI={
   buildGrid(){
     const g=document.getElementById('hub-grid'); g.innerHTML='';
 
-    // Special Harsha Adventure Card
+    // 1. Ubin Petualangan bersama Harsha
     const hCard=document.createElement('div');
     hCard.className='gcard playable';
     hCard.style.border='4px solid #38bdf8';
-    hCard.style.boxShadow='0 8px 22px rgba(2,132,199,.22)';
+    hCard.style.boxShadow='0 8px 22px rgba(2,132,199,.18)';
     hCard.innerHTML=`
       <span class="gbadge" style="background:#0284c7;color:#fff">PETUALANGAN UTAMA ✨</span>
       <div class="gico" style="background:#e0f2fe;display:flex;align-items:center;justify-content:center">
-        <img src="logo_harsha.png" alt="HSA" style="width:68px;height:68px;object-fit:contain">
+        <img src="logo_harsha.png" alt="HSA" style="width:72px;height:72px;object-fit:contain">
       </div>
-      <h3 class="gtitle" style="color:#0369a1">🌟 Petualangan bersama Harsha</h3>
+      <h3 class="gtitle" style="color:#0369a1">Petualangan Harsha</h3>
       <p class="gdesc">Eksplorasi 5 Pulau Calistung bersama Habibi, Shafiyyah, &amp; Arsha!</p>
       <div class="gfooter">
         <div class="gstars" style="color:#0369a1;font-weight:800">🏝️ 5 Pulau</div>
-        <button class="btn-play" style="background:linear-gradient(135deg,#0284c7,#0369a1)">Main 🚀</button>
+        <button class="btn-play" style="background:linear-gradient(135deg,#0284c7,#0369a1)">Mulai 🚀</button>
       </div>
     `;
     hCard.onclick=()=>{ SFX.pop(); window.location.href='nusa_pintar.html'; };
     g.appendChild(hCard);
+
+    // 2. Ubin Lembar Kerja Ceria Digital
+    const wCard=document.createElement('div');
+    wCard.className='gcard playable';
+    wCard.style.border='4px solid #f59e0b';
+    wCard.style.boxShadow='0 8px 22px rgba(245,158,11,.18)';
+    wCard.style.background='linear-gradient(180deg,#ffffff 0%,#fffdf0 100%)';
+    wCard.innerHTML=`
+      <span class="gbadge" style="background:#d97706;color:#fff">WORKSHEET BARU 🌟</span>
+      <div class="gico" style="background:#fef3c7;display:flex;align-items:center;justify-content:center;font-size:46px">
+        📝
+      </div>
+      <h3 class="gtitle" style="color:#b45309">Lembar Kerja Ceria</h3>
+      <p class="gdesc">Labirin Mencari Jalan, Koding Penjumlahan Bunga, &amp; Tebal Tulis A-Z!</p>
+      <div class="gfooter">
+        <div class="gstars" style="color:#b45309;font-weight:800">✏️ 3 Modul</div>
+        <button class="btn-play" style="background:linear-gradient(135deg,#f59e0b,#d97706)">Buka ✨</button>
+      </div>
+    `;
+    wCard.onclick=()=>{ SFX.pop(); window.location.href='worksheet_game.html'; };
+    g.appendChild(wCard);
 
     CATALOG.forEach(game=>{
       const gd=Prog.data.games[game.id]||{played:false,stars:0,highLevel:0};
