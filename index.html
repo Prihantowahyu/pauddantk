@@ -304,6 +304,318 @@ header{position:relative;z-index:10;display:flex;align-items:center;justify-cont
   .ular-board{gap:3px}
   .cell{font-size:.65rem}
 }
+
+/* ═══════════════════════════════════════════════════════════
+   EXTRA STYLES: Multi-profile, Badges, Dark Mode, Mascot, etc.
+═══════════════════════════════════════════════════════════ */
+
+/* Dark Mode */
+body.dark-mode {
+  background: linear-gradient(180deg, #090d16 0%, #0f172a 45%, #1e1b4b 80%, #0c1a2e 100%) !important;
+  color: #e2e8f0;
+}
+body.dark-mode header {
+  background: rgba(15, 23, 42, 0.92) !important;
+  border-bottom: 3px solid #334155 !important;
+}
+body.dark-mode .brand-title { color: #f43f5e !important; text-shadow: 0 0 12px rgba(244,63,94,.4) !important; }
+body.dark-mode .brand-sub { color: #94a3b8 !important; }
+body.dark-mode .pill, body.dark-mode .profile-btn, body.dark-mode .ico-btn {
+  background: #1e293b !important;
+  border-color: #475569 !important;
+  color: #f1f5f9 !important;
+  box-shadow: 0 3px 0 #334155 !important;
+}
+body.dark-mode .gcard {
+  background: rgba(30, 41, 59, 0.92) !important;
+  border-color: #334155 !important;
+  color: #f8fafc !important;
+}
+body.dark-mode .gtitle { color: #f8fafc !important; }
+body.dark-mode .gdesc { color: #94a3b8 !important; }
+body.dark-mode .mascot-bar {
+  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%) !important;
+  border-color: #334155 !important;
+}
+body.dark-mode .mascot-txt h2 { color: #38bdf8 !important; }
+body.dark-mode .mascot-txt p { color: #cbd5e1 !important; }
+body.dark-mode .modal-box {
+  background: #0f172a !important;
+  border-color: #475569 !important;
+  color: #f8fafc !important;
+}
+body.dark-mode .modal-title { color: #f8fafc !important; }
+body.dark-mode .modal-desc { color: #cbd5e1 !important; }
+
+/* Profile Button in Header */
+.profile-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #fff;
+  border: 3px solid #60a5fa;
+  box-shadow: 0 3px 0 #3b82f6;
+  border-radius: 999px;
+  padding: 4px 14px 4px 8px;
+  cursor: pointer;
+  font-family: var(--font);
+  font-weight: 700;
+  color: #1e3a5f;
+  transition: all .15s;
+}
+.profile-btn:active { transform: translateY(2px); box-shadow: 0 1px 0 #3b82f6; }
+.profile-btn .p-avatar {
+  font-size: 1.5rem;
+  background: #e0f2fe;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.profile-btn .p-name { font-size: 1rem; }
+.profile-btn .p-tag {
+  font-size: .7rem;
+  background: #2563eb;
+  color: #fff;
+  padding: 2px 7px;
+  border-radius: 999px;
+  font-weight: 800;
+}
+
+/* Modals general */
+.modal-grid-3 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 12px;
+  width: 100%;
+  margin: 16px 0;
+}
+.p-card {
+  background: #f8fafc;
+  border: 3px solid #cbd5e1;
+  border-radius: 18px;
+  padding: 14px 10px;
+  text-align: center;
+  cursor: pointer;
+  transition: all .2s;
+  position: relative;
+}
+.p-card:hover { transform: translateY(-4px); box-shadow: 0 8px 16px rgba(0,0,0,.1); }
+.p-card.active-p {
+  border-color: #2563eb;
+  background: #eff6ff;
+  box-shadow: 0 0 0 3px rgba(37,99,235,.25);
+}
+.p-card .pc-avatar { font-size: 2.8rem; margin-bottom: 6px; }
+.p-card .pc-name { font-size: 1.15rem; font-weight: 700; color: #1e293b; margin-bottom: 2px; }
+.p-card .pc-badge { font-size: .72rem; font-weight: 700; color: #2563eb; background: #dbeafe; padding: 2px 8px; border-radius: 999px; display: inline-block; margin-bottom: 8px; }
+.p-card .pc-stats { font-size: .85rem; font-weight: 700; color: #d97706; }
+
+/* Badges Grid */
+.badges-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  gap: 10px;
+  width: 100%;
+  max-height: 380px;
+  overflow-y: auto;
+  padding: 6px;
+  margin: 14px 0;
+}
+.badge-item {
+  border-radius: 16px;
+  border: 2px solid #e2e8f0;
+  background: #fff;
+  padding: 10px 6px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  transition: transform .2s;
+}
+.badge-item.unlocked {
+  border-color: #f59e0b;
+  background: linear-gradient(180deg, #fffbeb 0%, #fef3c7 100%);
+  box-shadow: 0 4px 10px rgba(245,158,11,.2);
+}
+.badge-item.locked {
+  opacity: .5;
+  filter: grayscale(1);
+}
+.badge-ico { font-size: 2.4rem; margin-bottom: 4px; }
+.badge-title { font-size: .75rem; font-weight: 700; color: #1e293b; line-height: 1.2; }
+.badge-desc { font-size: .65rem; color: #64748b; margin-top: 2px; }
+
+/* Leaderboard */
+.leader-podium {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 12px;
+  margin: 20px 0 16px;
+  width: 100%;
+}
+.podium-slot {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 30%;
+}
+.podium-box {
+  width: 100%;
+  border-radius: 14px 14px 0 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-weight: 800;
+  box-shadow: 0 4px 10px rgba(0,0,0,.15);
+  padding: 8px 4px;
+}
+.podium-1 .podium-box { height: 110px; background: linear-gradient(180deg, #fbbf24, #d97706); }
+.podium-2 .podium-box { height: 85px; background: linear-gradient(180deg, #94a3b8, #64748b); }
+.podium-3 .podium-box { height: 65px; background: linear-gradient(180deg, #f97316, #c2410c); }
+
+/* Parent Report */
+.report-sheet {
+  background: #fff;
+  border-radius: 16px;
+  border: 3px solid #93c5fd;
+  padding: 16px;
+  width: 100%;
+  text-align: left;
+  margin: 12px 0;
+}
+.report-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px dashed #e2e8f0;
+}
+.skill-bar-wrap { width: 100%; background: #e2e8f0; height: 12px; border-radius: 999px; overflow: hidden; margin-top: 4px; }
+.skill-bar-fill { height: 100%; border-radius: 999px; transition: width .5s; }
+
+/* Timer bar for challenge mode */
+.challenge-banner {
+  background: linear-gradient(90deg, #f59e0b, #ef4444);
+  color: #fff;
+  padding: 8px 16px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-weight: 700;
+  margin-bottom: 10px;
+  box-shadow: 0 4px 10px rgba(239,68,68,.3);
+  animation: pulse 2s infinite ease-in-out;
+}
+.timer-pill {
+  background: #fff;
+  color: #dc2626;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 1.1rem;
+  font-weight: 800;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* Floating Harsha Mascot */
+.harsha-float {
+  position: fixed;
+  bottom: 16px;
+  right: 16px;
+  z-index: 500;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  pointer-events: none;
+}
+.harsha-bubble {
+  background: #fff;
+  border: 3px solid #ff922b;
+  border-radius: 18px 18px 4px 18px;
+  padding: 10px 14px;
+  font-size: .88rem;
+  font-weight: 600;
+  color: #7c2d12;
+  box-shadow: 0 8px 20px rgba(0,0,0,.15);
+  margin-bottom: 8px;
+  max-width: 220px;
+  text-align: right;
+  pointer-events: auto;
+  cursor: pointer;
+  animation: pop .3s ease;
+  user-select: text;
+}
+.harsha-bubble::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  right: 28px;
+  border-width: 8px 8px 0 0;
+  border-style: solid;
+  border-color: #ff922b transparent transparent transparent;
+}
+.harsha-avatar-btn {
+  pointer-events: auto;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: 4px solid #fff;
+  background: linear-gradient(135deg, #ffd43b, #ff922b);
+  box-shadow: 0 6px 16px rgba(255,146,43,.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+  cursor: pointer;
+  transition: transform .2s cubic-bezier(.175,.885,.32,1.275);
+  animation: floatMascot 3s ease-in-out infinite alternate;
+}
+.harsha-avatar-btn:hover { transform: scale(1.12) rotate(6deg); }
+@keyframes floatMascot {
+  from { transform: translateY(0); }
+  to { transform: translateY(-8px); }
+}
+
+/* Dialect selector pills */
+.lang-pills {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: 6px;
+}
+.lang-btn {
+  border: 2px solid #fdba74;
+  background: #fff;
+  border-radius: 999px;
+  padding: 3px 10px;
+  font-size: .75rem;
+  font-weight: 700;
+  cursor: pointer;
+  color: #c2410c;
+  transition: all .15s;
+}
+.lang-btn.active {
+  background: #ea580c;
+  color: #fff;
+  border-color: #ea580c;
+}
+
+@media(max-width: 600px) {
+  .hdr-btns { gap: 4px; }
+  .ico-btn { width: 40px; height: 40px; font-size: 1.1rem; }
+  .profile-btn { padding: 3px 10px 3px 6px; }
+  .profile-btn .p-tag { display: none; }
+  .harsha-float { bottom: 70px; right: 10px; }
+}
+
 </style>
 </head>
 <body>
@@ -313,25 +625,78 @@ header{position:relative;z-index:10;display:flex;align-items:center;justify-cont
 <canvas id="ccanvas"></canvas>
 
 <!-- HEADER -->
+<!-- HEADER -->
 <header>
   <div class="brand">
-    <img src="logo_harsha.png" alt="Logo Harsha" style="width:52px;height:52px;object-fit:contain;filter:drop-shadow(0 4px 8px rgba(0,0,0,.15));border-radius:12px" onerror="this.style.display='none';this.nextElementSibling.querySelector('.brand-ico').style.display='flex'">
+    <img src="logo_harsha.png" alt="Logo Harsha" style="width:48px;height:48px;object-fit:contain;filter:drop-shadow(0 4px 8px rgba(0,0,0,.15));border-radius:12px" onerror="this.style.display='none'">
     <div>
       <h1 class="brand-title">Petualangan bersama Harsha</h1>
       <p class="brand-sub">Habibi ★ Shafiyyah ★ Arsha — Belajar Calistung Ceria!</p>
     </div>
   </div>
-  <div class="stats">
-    <div class="pill"><span>⭐</span><span id="hdr-stars">0</span></div>
-    <div class="pill coin"><span>🪙</span><span id="hdr-coins">0</span></div>
-  <div class="hdr-btns">
-    <button class="ico-btn" id="snd-btn" title="Suara" aria-label="Toggle Suara">🔊</button>
-    <button class="ico-btn" id="rst-btn" title="Reset" aria-label="Reset Progres">🔄</button>
+
+  <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+    <!-- Profile Button (P1) -->
+    <button class="profile-btn" id="hdr-profile-btn" title="Ganti Profil Anak">
+      <span class="p-avatar" id="hdr-p-avatar">👦</span>
+      <span class="p-name" id="hdr-p-name">Habibi</span>
+      <span class="p-tag" id="hdr-p-tag">SD 1</span>
+      <span style="font-size:.8rem;opacity:.6">▾</span>
+    </button>
+
+    <div class="stats">
+      <div class="pill"><span>⭐</span><span id="hdr-stars">0</span></div>
+      <div class="pill coin"><span>🪙</span><span id="hdr-coins">0</span></div>
+    </div>
+
+    <div class="hdr-btns">
+      <button class="ico-btn" id="badge-btn" title="Lencana & Prestasi (P4)" aria-label="Lencana">🏆</button>
+      <button class="ico-btn" id="leader-btn" title="Peringkat Keluarga (P12)" aria-label="Peringkat">🏅</button>
+      <button class="ico-btn" id="report-btn" title="Rapor Belajar Anak (P6)" aria-label="Rapor">📊</button>
+      <button class="ico-btn" id="challenge-btn" title="Mode Tantangan Waktu (P5)" aria-label="Mode Tantangan">⚡</button>
+      <button class="ico-btn" id="bgm-btn" title="Musik Latar (P9)" aria-label="Musik Latar">🎵</button>
+      <button class="ico-btn" id="snd-btn" title="Efek Suara (P3)" aria-label="Toggle Suara">🔊</button>
+      <button class="ico-btn" id="dark-btn" title="Mode Malam (P10)" aria-label="Mode Malam">🌙</button>
+      <button class="ico-btn" id="rst-btn" title="Reset Progres" aria-label="Reset Progres">🔄</button>
+    </div>
   </div>
 </header>
 
 <!-- ═══ HUB MENU (SEMUA MODE UBIN) ═══ -->
 <main class="view active" id="hub" style="flex-direction:column">
+  <!-- Mascot Banner & Dialect Selector (P8, P15) -->
+  <div class="mascot-bar">
+    <div class="ciko-box" id="ciko-btn" title="Ketuk Harsha untuk bicara!">
+      <svg viewBox="0 0 100 100">
+        <circle cx="50" cy="50" r="45" fill="#ffd43b" stroke="#f59f00" stroke-width="4"/>
+        <!-- Eyes with cute highlight -->
+        <circle cx="36" cy="44" r="8" fill="#1e293b"/>
+        <circle cx="38" cy="42" r="3" fill="#fff"/>
+        <circle cx="64" cy="44" r="8" fill="#1e293b"/>
+        <circle cx="66" cy="42" r="3" fill="#fff"/>
+        <!-- Rosy Cheeks -->
+        <circle cx="26" cy="54" r="6" fill="#ff8787" opacity=".7"/>
+        <circle cx="74" cy="54" r="6" fill="#ff8787" opacity=".7"/>
+        <!-- Big Smile -->
+        <path d="M 36 56 Q 50 72 64 56" fill="none" stroke="#d9480f" stroke-width="4" stroke-linecap="round"/>
+        <!-- Harsha Cap / Star -->
+        <path d="M 50 6 L 54 18 L 66 18 L 56 26 L 60 38 L 50 30 L 40 38 L 44 26 L 34 18 L 46 18 Z" fill="#ff6b6b"/>
+      </svg>
+    </div>
+    <div class="mascot-txt" style="flex:1">
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
+        <h2 id="mascot-title">Halo, Sobat Harsha! 👋</h2>
+        <div class="lang-pills">
+          <button class="lang-btn active" data-lang="id" title="Bahasa Indonesia">🇮🇩 Indo</button>
+          <button class="lang-btn" data-lang="ja" title="Basa Jawa">🇮🇩 Jawa</button>
+          <button class="lang-btn" data-lang="su" title="Basa Sunda">🇮🇩 Sunda</button>
+          <button class="lang-btn" data-lang="mn" title="Baso Minang">🇮🇩 Minang</button>
+        </div>
+      </div>
+      <p id="ciko-speech">Yuk mulai belajar membaca, menulis, dan berhitung hari ini!</p>
+    </div>
+  </div>
+
   <div class="grid" id="hub-grid"></div>
 </main>
 
@@ -607,6 +972,88 @@ header{position:relative;z-index:10;display:flex;align-items:center;justify-cont
 </section>
 
 <!-- MODALS -->
+
+<!-- ═══ MODAL PROFIL (P1 & P2) ═══ -->
+<div class="modal-bg" id="profile-modal">
+  <div class="modal-box" style="max-width:540px">
+    <div class="modal-ico">👦👧👶</div>
+    <h2 class="modal-title">Pilih Profil Anak</h2>
+    <p class="modal-desc">Setiap anak punya catatan bintang, koin, dan lencana tersendiri!</p>
+    
+    <div class="modal-grid-3" id="profile-cards-container"></div>
+
+    <div style="width:100%;margin-top:14px;padding-top:12px;border-top:2px dashed #cbd5e1;display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+      <button class="btn-big btn-sec" id="btn-export-backup" style="font-size:.9rem;min-height:46px" title="Simpan data ke file komputer / HP">
+        💾 Cadangkan Data
+      </button>
+      <label class="btn-big btn-sec" style="font-size:.9rem;min-height:46px;cursor:pointer;display:inline-flex;align-items:center" title="Buka file cadangan yang pernah diunduh">
+        📥 Pulihkan Data
+        <input type="file" id="file-restore" accept=".json" style="display:none">
+      </label>
+      <button class="btn-big" id="btn-close-profile" style="font-size:.95rem;min-height:46px">Tutup ✨</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ MODAL LENCANA & PRESTASI (P4) ═══ -->
+<div class="modal-bg" id="badge-modal">
+  <div class="modal-box" style="max-width:520px">
+    <div class="modal-ico">🏆🌟</div>
+    <h2 class="modal-title">Lencana & Prestasi Harsha</h2>
+    <p class="modal-desc">Kumpulkan lencana keren dengan rajin bermain dan belajar!</p>
+    
+    <div class="badges-grid" id="badges-container"></div>
+
+    <div class="modal-btns">
+      <button class="btn-big" id="btn-close-badge">Tutup ✨</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ MODAL PERINGKAT KELUARGA (P12) ═══ -->
+<div class="modal-bg" id="leader-modal">
+  <div class="modal-box" style="max-width:500px">
+    <div class="modal-ico">🏅👑</div>
+    <h2 class="modal-title">Peringkat Bintang Keluarga</h2>
+    <p class="modal-desc">Ayo saling menyemangati belajar bersama Habibi, Shafiyyah, & Arsha!</p>
+    
+    <div class="leader-podium" id="leader-podium"></div>
+
+    <div style="width:100%;text-align:left;background:#f8fafc;border-radius:14px;padding:12px 16px;margin:12px 0;border:2px solid #e2e8f0" id="leader-list"></div>
+
+    <div class="modal-btns">
+      <button class="btn-big" id="btn-close-leader">Hebat Semuanya! 🎉</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ MODAL RAPOR BELAJAR ANAK (P6) ═══ -->
+<div class="modal-bg" id="report-modal">
+  <div class="modal-box" style="max-width:520px">
+    <div class="modal-ico">📊📜</div>
+    <h2 class="modal-title">Rapor Belajar Anak Ceria</h2>
+    <p class="modal-desc">Ringkasan kemajuan belajar untuk Orang Tua & Guru</p>
+
+    <div class="report-sheet" id="report-sheet-content"></div>
+
+    <div class="modal-btns">
+      <button class="btn-big" id="btn-print-report" style="background:linear-gradient(135deg,#0284c7,#0369a1);box-shadow:0 4px 0 #075985">🖨️ Cetak Rapor</button>
+      <button class="btn-big" id="btn-share-wa" style="background:linear-gradient(135deg,#16a34a,#15803d);box-shadow:0 4px 0 #14532d">📲 Kirim WA</button>
+      <button class="btn-big btn-sec" id="btn-close-report">Tutup</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ FLOATING MASCOT COMPANION (P8) ═══ -->
+<div class="harsha-float">
+  <div class="harsha-bubble" id="harsha-bubble" style="display:none">
+    Halo! Semangat belajar ya! ⭐
+  </div>
+  <button class="harsha-avatar-btn" id="harsha-float-btn" title="Ketuk Harsha!">
+    🦁
+  </button>
+</div>
+
 <div class="modal-bg" id="vic-modal">
   <div class="modal-box">
     <div class="modal-ico">🎉🏆</div>
@@ -624,95 +1071,495 @@ header{position:relative;z-index:10;display:flex;align-items:center;justify-cont
 
 <script>
 /* ═══════════════════════════════════════════════════════════
-   1. SOUND MANAGER (Web Audio API, zero external files)
+   1. MULTI-PROFILE SYSTEM (P1) & REGIONAL DIALECTS (P15)
 ═══════════════════════════════════════════════════════════ */
-const SFX = {
-  ctx: null, on: true,
-  init() { if (!this.ctx) { const A = window.AudioContext || window.webkitAudioContext; if (A) this.ctx = new A(); } },
-  resume() { this.init(); if (this.ctx?.state === 'suspended') this.ctx.resume(); },
-  _osc(type, freq, dur, vol=.3, startFreq=null) {
-    this.resume(); if (!this.ctx || !this.on) return;
-    const o = this.ctx.createOscillator(), g = this.ctx.createGain(), t = this.ctx.currentTime;
-    o.type = type; o.frequency.setValueAtTime(startFreq||freq, t);
-    if (startFreq) o.frequency.exponentialRampToValueAtTime(freq, t+dur*.6);
-    g.gain.setValueAtTime(vol, t); g.gain.exponentialRampToValueAtTime(.001, t+dur);
-    o.connect(g); g.connect(this.ctx.destination); o.start(t); o.stop(t+dur+.01);
+const PROFILES = [
+  { id: 'habibi', name: 'Habibi', avatar: '👦', badge: 'Kakak Pintar', color: '#2563eb', level: 'SD-1', age: 7, desc: 'Tantangan calistung mandiri' },
+  { id: 'shafiyyah', name: 'Shafiyyah', avatar: '👧', badge: 'Adik Ceria', color: '#ec4899', level: 'TK-B', age: 5, desc: 'Membaca & berhitung ceria' },
+  { id: 'arsha', name: 'Arsha', avatar: '👶', badge: 'Si Kecil Hebat', color: '#10b981', level: 'TK-A', age: 4, desc: 'Mengenal abjad & angka dasar' }
+];
+
+const DIALECTS = {
+  id: {
+    name: 'Bahasa Indonesia',
+    greet: 'Halo, Sobat Harsha! Yuk mulai belajar membaca, menulis, dan berhitung hari ini!',
+    praise: ['Luar Biasa!', 'Hebat Sekali!', 'Pintar Banget!', 'Keren!'],
+    encourage: 'Jangan menyerah, kamu pasti bisa! Coba lagi ya! 💪'
   },
-  pop() { this._osc('sine', 880, .12, .28, 520); },
-  correct() {
-    [523.25,659.25,783.99,1046.5].forEach((f,i)=>{
-      this.resume(); if(!this.ctx||!this.on) return;
-      const o=this.ctx.createOscillator(),g=this.ctx.createGain(),t=this.ctx.currentTime+i*.08;
-      o.type='triangle'; o.frequency.setValueAtTime(f,t);
-      g.gain.setValueAtTime(.26,t); g.gain.exponentialRampToValueAtTime(.001,t+.28);
-      o.connect(g);g.connect(this.ctx.destination);o.start(t);o.stop(t+.3);
+  ja: {
+    name: 'Basa Jawa',
+    greet: 'Sugeng rawuh, bocah pinter! Monggo sinau maca, nulis, lan ngetung bareng Harsha!',
+    praise: ['Pinter Tenan!', 'Jos Gandos!', 'Apik Banget!', 'Mbois!'],
+    encourage: 'Ampun nyerah nggih, mesthi saged! Dicobi malih! 💪'
+  },
+  su: {
+    name: 'Basa Sunda',
+    greet: 'Wilujeng sumping, budak bageur! Hayu urang diajar maca, nulis, sareng ngitung!',
+    praise: ['Saé Pisan!', 'Pinter Pisan!', 'Hebat Euy!', 'Alus Pisan!'],
+    encourage: 'Tong sumerah, pasti tiasa! Hayu cobi deui! 💪'
+  },
+  mn: {
+    name: 'Baso Minang',
+    greet: 'Salamaik datang, paja pandai! Mari kito baraja mambaco, manulih, jo maretong!',
+    praise: ['Rancak Bana!', 'Pandai Bana!', 'Mantap Surantap!', 'Hehaik!'],
+    encourage: 'Jan mananyarah, pasti bisa! Cubo lo sakali lai! 💪'
+  }
+};
+
+let currentLang = localStorage.getItem('harsha_lang') || 'id';
+
+/* ═══════════════════════════════════════════════════════════
+   2. PROGRESS & BACKUP SYSTEM (P1 & P2 & P14)
+═══════════════════════════════════════════════════════════ */
+const Prog = {
+  activeId: 'habibi',
+  data: null,
+  IDS: ['ekspedisi_pulau','dapur_kata','lomba_lari','detektif_huruf','bangun_rumah',
+        'kebun_ajaib','ketuk_suku','toko_mini','peternakan','puzzle_kata',
+        'misi_roket','salon_kata','ular_tangga'],
+
+  default(id = 'habibi') {
+    const g = {};
+    this.IDS.forEach(gid => g[gid] = { played: false, highLevel: 0, stars: 0, lp: {} });
+    return {
+      id: id,
+      totalStars: 0,
+      totalCoins: 0,
+      games: g,
+      badges: [],
+      speedWins: 0,
+      visitedNusa: false,
+      visitedWorksheet: false,
+      playCount: 0,
+      gameCounts: {},
+      createdAt: new Date().toISOString()
+    };
+  },
+
+  getActiveProfile() {
+    return PROFILES.find(p => p.id === this.activeId) || PROFILES[0];
+  },
+
+  load() {
+    this.activeId = localStorage.getItem('calistung_active_profile') || 'habibi';
+    const key = 'calistung_profile_' + this.activeId;
+    try {
+      const raw = localStorage.getItem(key);
+      if (raw) {
+        this.data = JSON.parse(raw);
+        this.IDS.forEach(id => {
+          if (!this.data.games[id]) this.data.games[id] = { played: false, highLevel: 0, stars: 0, lp: {} };
+        });
+        if (!this.data.badges) this.data.badges = [];
+        if (!this.data.gameCounts) this.data.gameCounts = {};
+      } else {
+        // Check for legacy single-profile migration
+        const legacy = localStorage.getItem('calistung_progress');
+        if (legacy && this.activeId === 'habibi') {
+          try {
+            const old = JSON.parse(legacy);
+            this.data = this.default(this.activeId);
+            this.data.totalStars = old.totalStars || 0;
+            this.data.totalCoins = old.totalCoins || 0;
+            if (old.games) {
+              this.IDS.forEach(id => {
+                if (old.games[id]) this.data.games[id] = old.games[id];
+              });
+            }
+            this.save();
+          } catch(e) {
+            this.data = this.default(this.activeId);
+            this.save();
+          }
+        } else {
+          this.data = this.default(this.activeId);
+          this.save();
+        }
+      }
+    } catch(e) {
+      this.data = this.default(this.activeId);
+    }
+  },
+
+  save() {
+    try {
+      localStorage.setItem('calistung_profile_' + this.activeId, JSON.stringify(this.data));
+      localStorage.setItem('calistung_active_profile', this.activeId);
+    } catch(e) {}
+  },
+
+  switchProfile(profileId) {
+    this.save();
+    this.activeId = profileId;
+    localStorage.setItem('calistung_active_profile', profileId);
+    this.load();
+    UI.updateHeader();
+    UI.buildGrid();
+    showToast(this.getActiveProfile().avatar, 'Beralih ke profil ' + this.getActiveProfile().name + '!');
+  },
+
+  getAllProfilesData() {
+    return PROFILES.map(p => {
+      try {
+        const raw = localStorage.getItem('calistung_profile_' + p.id);
+        if (raw) return JSON.parse(raw);
+      } catch(e) {}
+      return this.default(p.id);
     });
   },
-  retry() { this._osc('sine',440,.25,.18,392); },
+
+  exportBackup() {
+    const backup = {
+      app: 'Petualangan bersama Harsha',
+      version: 2,
+      exportDate: new Date().toISOString(),
+      activeProfile: this.activeId,
+      profiles: {}
+    };
+    PROFILES.forEach(p => {
+      try {
+        const raw = localStorage.getItem('calistung_profile_' + p.id);
+        backup.profiles[p.id] = raw ? JSON.parse(raw) : this.default(p.id);
+      } catch(e) {
+        backup.profiles[p.id] = this.default(p.id);
+      }
+    });
+
+    const str = 'data:text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(backup, null, 2));
+    const a = document.createElement('a');
+    a.setAttribute('href', str);
+    a.setAttribute('download', 'harsha_cadangan_' + new Date().toISOString().slice(0,10) + '.json');
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    showToast('💾', 'File cadangan berhasil diunduh!');
+  },
+
+  importBackup(jsonString) {
+    try {
+      const parsed = JSON.parse(jsonString);
+      if (!parsed.profiles) throw new Error('Format file tidak cocok!');
+      PROFILES.forEach(p => {
+        if (parsed.profiles[p.id]) {
+          localStorage.setItem('calistung_profile_' + p.id, JSON.stringify(parsed.profiles[p.id]));
+        }
+      });
+      if (parsed.activeProfile) {
+        this.activeId = parsed.activeProfile;
+        localStorage.setItem('calistung_active_profile', this.activeId);
+      }
+      this.load();
+      UI.updateHeader();
+      UI.buildGrid();
+      showToast('🎉', 'Data berhasil dipulihkan!');
+      return true;
+    } catch(err) {
+      alert('Gagal memulihkan file: ' + err.message);
+      return false;
+    }
+  },
+
+  record(gameId, levelNum, stars, coins) {
+    const g = this.data.games[gameId];
+    if (!g) return;
+    g.played = true;
+    if (levelNum > g.highLevel) g.highLevel = levelNum;
+    const prev = g.lp[levelNum] || 0;
+    if (stars > prev) {
+      const d = stars - prev;
+      g.stars += d;
+      this.data.totalStars += d;
+      g.lp[levelNum] = stars;
+    }
+    this.data.totalCoins += coins;
+    this.data.playCount = (this.data.playCount || 0) + 1;
+    this.data.gameCounts[gameId] = (this.data.gameCounts[gameId] || 0) + 1;
+    this.data.lastPlayed = new Date().toISOString();
+
+    if (ChallengeMode.active) {
+      this.data.speedWins = (this.data.speedWins || 0) + 1;
+    }
+
+    this.save();
+    Badges.check();
+  },
+
+  reset() {
+    this.data = this.default(this.activeId);
+    this.save();
+  },
+
+  gameStars(gameId, level) {
+    return this.data.games[gameId]?.lp?.[level] || 0;
+  }
+};
+
+/* ═══════════════════════════════════════════════════════════
+   3. SOUND MANAGER (P3) & BACKGROUND MUSIC SYNTHESIZER (P9)
+═══════════════════════════════════════════════════════════ */
+const SFX = {
+  ctx: null,
+  on: true,
+  init() {
+    if (!this.ctx) {
+      const A = window.AudioContext || window.webkitAudioContext;
+      if (A) this.ctx = new A();
+    }
+  },
+  resume() {
+    this.init();
+    if (this.ctx?.state === 'suspended') this.ctx.resume();
+  },
+  _osc(type, freq, dur, vol = .3, startFreq = null) {
+    this.resume();
+    if (!this.ctx || !this.on) return;
+    const o = this.ctx.createOscillator(), g = this.ctx.createGain(), t = this.ctx.currentTime;
+    o.type = type;
+    o.frequency.setValueAtTime(startFreq || freq, t);
+    if (startFreq) o.frequency.exponentialRampToValueAtTime(freq, t + dur * .6);
+    g.gain.setValueAtTime(vol, t);
+    g.gain.exponentialRampToValueAtTime(.001, t + dur);
+    o.connect(g);
+    g.connect(this.ctx.destination);
+    o.start(t);
+    o.stop(t + dur + .01);
+  },
+  pop() { this._osc('sine', 880, .12, .28, 520); },
+  click() { this._osc('triangle', 600, .05, .15, 400); },
+  tick() { this._osc('sine', 1000, .03, .1); },
+  correct() {
+    [523.25, 659.25, 783.99, 1046.5].forEach((f, i) => {
+      this.resume();
+      if (!this.ctx || !this.on) return;
+      const o = this.ctx.createOscillator(), g = this.ctx.createGain(), t = this.ctx.currentTime + i * .08;
+      o.type = 'triangle';
+      o.frequency.setValueAtTime(f, t);
+      g.gain.setValueAtTime(.26, t);
+      g.gain.exponentialRampToValueAtTime(.001, t + .28);
+      o.connect(g);
+      g.connect(this.ctx.destination);
+      o.start(t);
+      o.stop(t + .3);
+    });
+  },
+  retry() {
+    this._osc('sine', 380, .25, .2, 440);
+  },
+  badge() {
+    [659.25, 880, 1174.66, 1318.51, 1760].forEach((f, i) => {
+      this.resume();
+      if (!this.ctx || !this.on) return;
+      const o = this.ctx.createOscillator(), g = this.ctx.createGain(), t = this.ctx.currentTime + i * .09;
+      o.type = 'sine';
+      o.frequency.setValueAtTime(f, t);
+      g.gain.setValueAtTime(.25, t);
+      g.gain.exponentialRampToValueAtTime(.001, t + .35);
+      o.connect(g);
+      g.connect(this.ctx.destination);
+      o.start(t);
+      o.stop(t + .4);
+    });
+  },
   fanfare() {
     [{f:523.25,d:.15},{f:659.25,d:.15},{f:783.99,d:.18},{f:783.99,d:.12},{f:880,d:.22},{f:1046.5,d:.45}]
-    .reduce((t,n)=>{
-      this.resume(); if(!this.ctx||!this.on) return t;
-      const o=this.ctx.createOscillator(),g=this.ctx.createGain();
-      o.type='triangle';o.frequency.setValueAtTime(n.f,t);
-      g.gain.setValueAtTime(.28,t);g.gain.exponentialRampToValueAtTime(.001,t+n.d);
-      o.connect(g);g.connect(this.ctx.destination);o.start(t);o.stop(t+n.d);
-      return t+n.d*.9;
+    .reduce((t, n) => {
+      this.resume();
+      if (!this.ctx || !this.on) return t;
+      const o = this.ctx.createOscillator(), g = this.ctx.createGain();
+      o.type = 'triangle';
+      o.frequency.setValueAtTime(n.f, t);
+      g.gain.setValueAtTime(.28, t);
+      g.gain.exponentialRampToValueAtTime(.001, t + n.d);
+      o.connect(g);
+      g.connect(this.ctx.destination);
+      o.start(t);
+      o.stop(t + n.d);
+      return t + n.d * .9;
     }, this.ctx ? this.ctx.currentTime : 0);
   },
   speak(txt) {
     if (!this.on || !('speechSynthesis' in window)) return;
     speechSynthesis.cancel();
     const u = new SpeechSynthesisUtterance(txt);
-    u.lang='id-ID'; u.rate=.85; u.pitch=1.1;
+    u.lang = 'id-ID';
+    u.rate = .88;
+    u.pitch = 1.15;
     speechSynthesis.speak(u);
   }
 };
 
-/* ═══════════════════════════════════════════════════════════
-   2. PROGRESS SYSTEM (Unified localStorage: "calistung_progress")
-═══════════════════════════════════════════════════════════ */
-const KEY = 'calistung_progress';
-const Prog = {
-  data: null,
-  IDS: ['ekspedisi_pulau','dapur_kata','lomba_lari','detektif_huruf','bangun_rumah',
-        'kebun_ajaib','ketuk_suku','toko_mini','peternakan','puzzle_kata',
-        'misi_roket','salon_kata','ular_tangga'],
-  default() {
-    const g = {}; this.IDS.forEach(id => g[id]={played:false,highLevel:0,stars:0,lp:{}});
-    return {totalStars:0,totalCoins:0,games:g};
+/* Cheerful Procedural Web Audio BGM (P9) */
+const BGM = {
+  on: false,
+  timerId: null,
+  step: 0,
+  melody: [
+    261.63, 293.66, 329.63, 392.00,
+    329.63, 293.66, 261.63, 392.00,
+    329.63, 392.00, 440.00, 523.25,
+    440.00, 392.00, 329.63, 261.63
+  ],
+  toggle() {
+    this.on = !this.on;
+    localStorage.setItem('harsha_bgm', this.on ? '1' : '0');
+    if (this.on) this.start();
+    else this.stop();
+    return this.on;
   },
-  load() {
-    try { const r=localStorage.getItem(KEY); if(r){ this.data=JSON.parse(r); this.IDS.forEach(id=>{ if(!this.data.games[id]) this.data.games[id]={played:false,highLevel:0,stars:0,lp:{}}; }); } else { this.data=this.default(); this.save(); } } catch(e){ this.data=this.default(); }
+  start() {
+    if (!SFX.ctx) SFX.init();
+    SFX.resume();
+    this.stop();
+    this.step = 0;
+    this.timerId = setInterval(() => {
+      if (!this.on || !SFX.ctx || !SFX.on) return;
+      const freq = this.melody[this.step % this.melody.length];
+      const t = SFX.ctx.currentTime;
+      const osc = SFX.ctx.createOscillator();
+      const gain = SFX.ctx.createGain();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(freq, t);
+      gain.gain.setValueAtTime(0.04, t);
+      gain.gain.exponentialRampToValueAtTime(0.0001, t + 0.38);
+      osc.connect(gain);
+      gain.connect(SFX.ctx.destination);
+      osc.start(t);
+      osc.stop(t + 0.4);
+      this.step++;
+    }, 420);
   },
-  save() { try { localStorage.setItem(KEY,JSON.stringify(this.data)); } catch(e){} },
-  reset() { this.data=this.default(); this.save(); },
-  record(gameId, levelNum, stars, coins) {
-    const g = this.data.games[gameId]; if(!g) return;
-    g.played=true; if(levelNum>g.highLevel) g.highLevel=levelNum;
-    const prev=g.lp[levelNum]||0;
-    if(stars>prev){ const d=stars-prev; g.stars+=d; this.data.totalStars+=d; g.lp[levelNum]=stars; }
-    this.data.totalCoins+=coins; this.save();
-  },
-  gameStars(gameId, level) { return this.data.games[gameId]?.lp?.[level]||0; }
+  stop() {
+    if (this.timerId) {
+      clearInterval(this.timerId);
+      this.timerId = null;
+    }
+  }
 };
 
 /* ═══════════════════════════════════════════════════════════
-   3. CONFETTI
+   4. BADGE SYSTEM (P4)
+═══════════════════════════════════════════════════════════ */
+const Badges = {
+  LIST: [
+    { id: 'b_first', title: 'Langkah Pertama', ico: '🌟', desc: 'Mainkan game pertamamu', check: p => p.totalStars >= 1 },
+    { id: 'b_stars_15', title: 'Bintang Cilik', ico: '⭐', desc: 'Kumpulkan 15 bintang emas', check: p => p.totalStars >= 15 },
+    { id: 'b_stars_35', title: 'Bintang Kejora', ico: '👑', desc: 'Kumpulkan 35 bintang emas', check: p => p.totalStars >= 35 },
+    { id: 'b_coins_50', title: 'Saudagar Koin', ico: '🪙', desc: 'Kumpulkan 50 koin emas', check: p => p.totalCoins >= 50 },
+    { id: 'b_explorer_5', title: 'Penjelajah Hebat', ico: '🚀', desc: 'Mainkan 5 jenis game berbeda', check: p => Object.values(p.games).filter(g => g.played).length >= 5 },
+    { id: 'b_master_all', title: 'Master Harsha', ico: '🎓', desc: 'Mainkan seluruh 13 mini-game', check: p => Object.values(p.games).filter(g => g.played).length >= 13 },
+    { id: 'b_speed', title: 'Kilat Juara', ico: '⚡', desc: 'Menangkan game di Mode Tantangan', check: p => (p.speedWins || 0) >= 1 },
+    { id: 'b_nusa', title: 'Petualang Nusa', ico: '🏝️', desc: 'Eksplorasi Petualangan 5 Pulau', check: p => p.visitedNusa || (p.games['ekspedisi_pulau'] && p.games['ekspedisi_pulau'].played) }
+  ],
+
+  check() {
+    let newlyUnlocked = false;
+    this.LIST.forEach(b => {
+      if (!Prog.data.badges.includes(b.id) && b.check(Prog.data)) {
+        Prog.data.badges.push(b.id);
+        newlyUnlocked = true;
+        setTimeout(() => {
+          SFX.badge();
+          Confetti.launch();
+          showToast(b.ico, 'Lencana Baru: ' + b.title + '!');
+        }, 800);
+      }
+    });
+    if (newlyUnlocked) Prog.save();
+  },
+
+  renderModal() {
+    const c = document.getElementById('badges-container');
+    c.innerHTML = '';
+    this.LIST.forEach(b => {
+      const unlocked = Prog.data.badges.includes(b.id);
+      const div = document.createElement('div');
+      div.className = 'badge-item ' + (unlocked ? 'unlocked' : 'locked');
+      div.innerHTML = `
+        <div class="badge-ico">${b.ico}</div>
+        <div class="badge-title">${b.title}</div>
+        <div class="badge-desc">${unlocked ? 'Tercapai! 🎉' : b.desc}</div>
+      `;
+      c.appendChild(div);
+    });
+  }
+};
+
+/* ═══════════════════════════════════════════════════════════
+   5. CHALLENGE / SPEED MODE (P5)
+═══════════════════════════════════════════════════════════ */
+const ChallengeMode = {
+  active: false,
+  timerInterval: null,
+  timeLeft: 45,
+  toggle() {
+    this.active = !this.active;
+    const btn = document.getElementById('challenge-btn');
+    if (this.active) {
+      btn.style.background = '#fef08a';
+      btn.style.boxShadow = '0 3px 0 #ca8a04';
+      showToast('⚡', 'Mode Tantangan Waktu AKTIF!');
+    } else {
+      btn.style.background = '#fff';
+      btn.style.boxShadow = '0 3px 0 #cbd5e1';
+      showToast('🐢', 'Mode Santai AKTIF');
+    }
+  }
+};
+
+/* ═══════════════════════════════════════════════════════════
+   6. CONFETTI
 ═══════════════════════════════════════════════════════════ */
 const Confetti = {
   c: null, ctx: null, ps: [], aid: null,
-  init() { this.c=document.getElementById('ccanvas'); this.ctx=this.c.getContext('2d'); this._resize(); window.addEventListener('resize',()=>this._resize()); },
-  _resize() { if(!this.c) return; this.c.width=window.innerWidth; this.c.height=window.innerHeight; },
+  init() {
+    this.c = document.getElementById('ccanvas');
+    this.ctx = this.c.getContext('2d');
+    this._resize();
+    window.addEventListener('resize', () => this._resize());
+  },
+  _resize() {
+    if (!this.c) return;
+    this.c.width = window.innerWidth;
+    this.c.height = window.innerHeight;
+  },
   launch() {
-    this._resize(); const cols=['#ff6b6b','#ffd43b','#4dabf7','#69db7c','#da77f2','#ffa94d']; this.ps=[];
-    for(let i=0;i<80;i++) this.ps.push({x:window.innerWidth*.5,y:window.innerHeight*.4,vx:(Math.random()-.5)*14,vy:(Math.random()-.85)*16,s:Math.random()*9+5,c:cols[Math.floor(Math.random()*cols.length)],r:Math.random()*360,rs:(Math.random()-.5)*12,o:1});
-    if(this.aid) cancelAnimationFrame(this.aid); this._loop();
+    this._resize();
+    const cols = ['#ff6b6b','#ffd43b','#4dabf7','#69db7c','#da77f2','#ffa94d'];
+    this.ps = [];
+    for (let i = 0; i < 90; i++) {
+      this.ps.push({
+        x: window.innerWidth * .5,
+        y: window.innerHeight * .4,
+        vx: (Math.random() - .5) * 14,
+        vy: (Math.random() - .85) * 16,
+        s: Math.random() * 9 + 5,
+        c: cols[Math.floor(Math.random() * cols.length)],
+        r: Math.random() * 360,
+        rs: (Math.random() - .5) * 12,
+        o: 1
+      });
+    }
+    if (this.aid) cancelAnimationFrame(this.aid);
+    this._loop();
   },
   _loop() {
-    this.ctx.clearRect(0,0,this.c.width,this.c.height); let n=0;
-    this.ps.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.vy+=.35;p.r+=p.rs;p.o-=.009;if(p.o>0){n++;this.ctx.save();this.ctx.translate(p.x,p.y);this.ctx.rotate(p.r*Math.PI/180);this.ctx.globalAlpha=Math.max(0,p.o);this.ctx.fillStyle=p.c;this.ctx.fillRect(-p.s/2,-p.s/2,p.s,p.s);this.ctx.restore();}});
-    if(n>0) this.aid=requestAnimationFrame(()=>this._loop()); else this.ctx.clearRect(0,0,this.c.width,this.c.height);
+    this.ctx.clearRect(0, 0, this.c.width, this.c.height);
+    let n = 0;
+    this.ps.forEach(p => {
+      p.x += p.vx; p.y += p.vy; p.vy += .35; p.r += p.rs; p.o -= .009;
+      if (p.o > 0) {
+        n++;
+        this.ctx.save();
+        this.ctx.translate(p.x, p.y);
+        this.ctx.rotate(p.r * Math.PI / 180);
+        this.ctx.globalAlpha = Math.max(0, p.o);
+        this.ctx.fillStyle = p.c;
+        this.ctx.fillRect(-p.s / 2, -p.s / 2, p.s, p.s);
+        this.ctx.restore();
+      }
+    });
+    if (n > 0) this.aid = requestAnimationFrame(() => this._loop());
+    else this.ctx.clearRect(0, 0, this.c.width, this.c.height);
   }
 };
 
@@ -1678,28 +2525,72 @@ const G13={
   }
 };
 
+
+
 /* ═══════════════════════════════════════════════════════════
-   8. UI CONTROLLER
+   8. UI CONTROLLER & MODAL LOGIC
 ═══════════════════════════════════════════════════════════ */
-const UI={
-  init(){
-    Prog.load(); Confetti.init();
-    this.buildGrid(); this.updateHeader(); this.bindEvents();
+const UI = {
+  init() {
+    Prog.load();
+    Confetti.init();
+    this.initDarkMode();
+    this.initBGM();
+    this.initDialect();
+    this.buildGrid();
+    this.updateHeader();
+    this.bindEvents();
+    Badges.check();
   },
-  updateHeader(){
-    document.getElementById('hdr-stars').textContent=Prog.data.totalStars;
-    document.getElementById('hdr-coins').textContent=Prog.data.totalCoins;
-    document.getElementById('snd-btn').textContent=SFX.on?'🔊':'🔇';
+
+  initDarkMode() {
+    if (localStorage.getItem('harsha_dark_mode') === '1') {
+      document.body.classList.add('dark-mode');
+      const b = document.getElementById('dark-btn');
+      if (b) b.textContent = '☀️';
+    }
   },
-  buildGrid(){
-    const g=document.getElementById('hub-grid'); g.innerHTML='';
+
+  initBGM() {
+    if (localStorage.getItem('harsha_bgm') === '1') {
+      BGM.on = true;
+      const b = document.getElementById('bgm-btn');
+      if (b) b.textContent = '🎶';
+    }
+  },
+
+  initDialect() {
+    const d = DIALECTS[currentLang] || DIALECTS.id;
+    const sp = document.getElementById('ciko-speech');
+    if (sp) sp.textContent = d.greet;
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+      btn.classList.toggle('active', btn.getAttribute('data-lang') === currentLang);
+    });
+  },
+
+  updateHeader() {
+    const prof = Prog.getActiveProfile();
+    document.getElementById('hdr-p-avatar').textContent = prof.avatar;
+    document.getElementById('hdr-p-name').textContent = prof.name;
+    document.getElementById('hdr-p-tag').textContent = prof.level;
+    document.getElementById('hdr-stars').textContent = Prog.data.totalStars;
+    document.getElementById('hdr-coins').textContent = Prog.data.totalCoins;
+    document.getElementById('snd-btn').textContent = SFX.on ? '🔊' : '🔇';
+    const bgmBtn = document.getElementById('bgm-btn');
+    if (bgmBtn) bgmBtn.textContent = BGM.on ? '🎶' : '🎵';
+  },
+
+  buildGrid() {
+    const g = document.getElementById('hub-grid');
+    if (!g) return;
+    g.innerHTML = '';
 
     // 1. Ubin Petualangan bersama Harsha
-    const hCard=document.createElement('div');
-    hCard.className='gcard playable';
-    hCard.style.border='4px solid #38bdf8';
-    hCard.style.boxShadow='0 8px 22px rgba(2,132,199,.18)';
-    hCard.innerHTML=`
+    const hCard = document.createElement('div');
+    hCard.className = 'gcard playable';
+    hCard.style.border = '4px solid #38bdf8';
+    hCard.style.boxShadow = '0 8px 22px rgba(2,132,199,.18)';
+    hCard.innerHTML = `
       <span class="gbadge" style="background:#0284c7;color:#fff">PETUALANGAN UTAMA ✨</span>
       <div class="gico" style="background:#e0f2fe;display:flex;align-items:center;justify-content:center">
         <img src="logo_harsha.png" alt="HSA" style="width:72px;height:72px;object-fit:contain">
@@ -1711,16 +2602,21 @@ const UI={
         <button class="btn-play" style="background:linear-gradient(135deg,#0284c7,#0369a1)">Mulai 🚀</button>
       </div>
     `;
-    hCard.onclick=()=>{ SFX.pop(); window.location.href='nusa_pintar.html'; };
+    hCard.onclick = () => {
+      SFX.pop();
+      Prog.data.visitedNusa = true;
+      Prog.save();
+      window.location.href = 'nusa_pintar.html';
+    };
     g.appendChild(hCard);
 
     // 2. Ubin Lembar Kerja Ceria Digital
-    const wCard=document.createElement('div');
-    wCard.className='gcard playable';
-    wCard.style.border='4px solid #f59e0b';
-    wCard.style.boxShadow='0 8px 22px rgba(245,158,11,.18)';
-    wCard.style.background='linear-gradient(180deg,#ffffff 0%,#fffdf0 100%)';
-    wCard.innerHTML=`
+    const wCard = document.createElement('div');
+    wCard.className = 'gcard playable';
+    wCard.style.border = '4px solid #f59e0b';
+    wCard.style.boxShadow = '0 8px 22px rgba(245,158,11,.18)';
+    wCard.style.background = 'linear-gradient(180deg,#ffffff 0%,#fffdf0 100%)';
+    wCard.innerHTML = `
       <span class="gbadge" style="background:#d97706;color:#fff">WORKSHEET BARU 🌟</span>
       <div class="gico" style="background:#fef3c7;display:flex;align-items:center;justify-content:center;font-size:46px">
         📝
@@ -1732,49 +2628,333 @@ const UI={
         <button class="btn-play" style="background:linear-gradient(135deg,#f59e0b,#d97706)">Buka ✨</button>
       </div>
     `;
-    wCard.onclick=()=>{ SFX.pop(); window.location.href='worksheet_game.html'; };
+    wCard.onclick = () => {
+      SFX.pop();
+      Prog.data.visitedWorksheet = true;
+      Prog.save();
+      window.location.href = 'worksheet_game.html';
+    };
     g.appendChild(wCard);
 
-    CATALOG.forEach(game=>{
-      const gd=Prog.data.games[game.id]||{played:false,stars:0,highLevel:0};
-      const card=document.createElement('div'); card.className='gcard playable';
-      const badge=gd.played?`<span class="gbadge badge-played">Level ${gd.highLevel}/5</span>`:`<span class="gbadge badge-new">MAIN SEKARANG</span>`;
-      card.innerHTML=`${badge}<div class="gico" style="background:${game.bg};color:${game.col}">${game.ico}</div><h3 class="gtitle">${game.n}. ${game.title}</h3><p class="gdesc">${game.desc}</p><div class="gfooter"><div class="gstars">⭐ ${gd.stars||0}</div><button class="btn-play">Main 🎮</button></div>`;
-      card.onclick=()=>{ SFX.pop(); this.switchTo(game.screen); game.launch(); };
+    CATALOG.forEach(game => {
+      const gd = Prog.data.games[game.id] || { played: false, stars: 0, highLevel: 0 };
+      const card = document.createElement('div');
+      card.className = 'gcard playable';
+      const badge = gd.played
+        ? `<span class="gbadge badge-played">Level ${gd.highLevel}/5</span>`
+        : `<span class="gbadge badge-new">MAIN SEKARANG</span>`;
+      card.innerHTML = `${badge}<div class="gico" style="background:${game.bg};color:${game.col}">${game.ico}</div><h3 class="gtitle">${game.n}. ${game.title}</h3><p class="gdesc">${game.desc}</p><div class="gfooter"><div class="gstars">⭐ ${gd.stars||0}</div><button class="btn-play">Main 🎮</button></div>`;
+      card.onclick = () => {
+        SFX.pop();
+        this.switchTo(game.screen);
+        game.launch();
+      };
       g.appendChild(card);
     });
   },
-  switchTo(screenId){
-    document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
-    const t=document.getElementById(screenId); if(t){ t.classList.add('active'); window.scrollTo({top:0,behavior:'smooth'}); }
+
+  switchTo(screenId) {
+    document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+    const t = document.getElementById(screenId);
+    if (t) {
+      t.classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
   },
-  goHub(){ this.switchTo('hub'); this.buildGrid(); this.updateHeader(); },
-  bindEvents(){
-    // Back buttons
-    document.querySelectorAll('.back-btn').forEach(btn=>{
-      btn.onclick=()=>{ SFX.pop(); this.goHub(); };
+
+  goHub() {
+    this.switchTo('hub');
+    this.buildGrid();
+    this.updateHeader();
+  },
+
+  showProfileModal() {
+    const c = document.getElementById('profile-cards-container');
+    c.innerHTML = '';
+    const allData = Prog.getAllProfilesData();
+    PROFILES.forEach(p => {
+      const pData = allData.find(d => d.id === p.id) || Prog.default(p.id);
+      const isCur = p.id === Prog.activeId;
+      const card = document.createElement('div');
+      card.className = 'p-card ' + (isCur ? 'active-p' : '');
+      card.innerHTML = `
+        <div class="pc-avatar">${p.avatar}</div>
+        <div class="pc-name">${p.name}</div>
+        <div class="pc-badge">${p.badge} (${p.level})</div>
+        <div class="pc-stats">⭐ ${pData.totalStars} · 🪙 ${pData.totalCoins}</div>
+        <button class="btn-play" style="margin-top:10px;width:100%;justify-content:center;${isCur?'background:#16a34a;box-shadow:0 3px 0 #15803d':''}">
+          ${isCur ? '✓ Aktif' : 'Pilih Ini 👦'}
+        </button>
+      `;
+      card.onclick = () => {
+        SFX.pop();
+        Prog.switchProfile(p.id);
+        document.getElementById('profile-modal').classList.remove('open');
+      };
+      c.appendChild(card);
     });
-    // Victory hub button
-    document.getElementById('vic-hub').onclick=()=>{ document.getElementById('vic-modal').classList.remove('open'); this.goHub(); };
-    // Sound toggle
-    document.getElementById('snd-btn').onclick=()=>{ SFX.on=!SFX.on; SFX.pop(); this.updateHeader(); showToast(SFX.on?'🔊':'🔇',SFX.on?'Suara aktif!':'Suara mati'); };
-    // Reset
-    document.getElementById('rst-btn').onclick=()=>{
-      SFX.pop(); if(confirm('Reset semua bintang dan progres?')){ Prog.reset(); this.updateHeader(); this.buildGrid(); showToast('🔄','Progres direset!'); }
+    document.getElementById('profile-modal').classList.add('open');
+  },
+
+  showLeaderboardModal() {
+    const all = Prog.getAllProfilesData();
+    const sorted = [...all].sort((a,b) => (b.totalStars || 0) - (a.totalStars || 0));
+
+    const p1 = PROFILES.find(p => p.id === (sorted[0]?.id || 'habibi'));
+    const p2 = PROFILES.find(p => p.id === (sorted[1]?.id || 'shafiyyah'));
+    const p3 = PROFILES.find(p => p.id === (sorted[2]?.id || 'arsha'));
+
+    const podium = document.getElementById('leader-podium');
+    podium.innerHTML = `
+      <!-- 2nd -->
+      <div class="podium-slot podium-2">
+        <div style="font-size:2rem;margin-bottom:4px">${p2.avatar}</div>
+        <div style="font-weight:700;font-size:.85rem;margin-bottom:4px">${p2.name}</div>
+        <div class="podium-box">
+          <div style="font-size:1.4rem">🥈</div>
+          <div style="font-size:.8rem">⭐ ${sorted[1]?.totalStars || 0}</div>
+        </div>
+      </div>
+      <!-- 1st -->
+      <div class="podium-slot podium-1">
+        <div style="font-size:2.6rem;margin-bottom:4px">${p1.avatar} 👑</div>
+        <div style="font-weight:800;font-size:.95rem;margin-bottom:4px;color:#d97706">${p1.name}</div>
+        <div class="podium-box">
+          <div style="font-size:1.8rem">🥇</div>
+          <div style="font-size:.9rem">⭐ ${sorted[0]?.totalStars || 0}</div>
+        </div>
+      </div>
+      <!-- 3rd -->
+      <div class="podium-slot podium-3">
+        <div style="font-size:2rem;margin-bottom:4px">${p3.avatar}</div>
+        <div style="font-weight:700;font-size:.85rem;margin-bottom:4px">${p3.name}</div>
+        <div class="podium-box">
+          <div style="font-size:1.4rem">🥉</div>
+          <div style="font-size:.8rem">⭐ ${sorted[2]?.totalStars || 0}</div>
+        </div>
+      </div>
+    `;
+
+    const list = document.getElementById('leader-list');
+    list.innerHTML = sorted.map((d, i) => {
+      const p = PROFILES.find(x => x.id === d.id);
+      return `
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid #e2e8f0">
+          <div><strong>#${i+1} ${p.avatar} ${p.name}</strong> (${p.badge})</div>
+          <div style="font-weight:700;color:#d97706">⭐ ${d.totalStars} &nbsp; 🪙 ${d.totalCoins}</div>
+        </div>
+      `;
+    }).join('');
+
+    document.getElementById('leader-modal').classList.add('open');
+  },
+
+  showReportModal() {
+    const prof = Prog.getActiveProfile();
+    const data = Prog.data;
+    const sheet = document.getElementById('report-sheet-content');
+
+    const totalGames = Prog.IDS.length;
+    const playedGames = Object.values(data.games).filter(g => g.played).length;
+    const completionPct = Math.round((playedGames / totalGames) * 100);
+
+    sheet.innerHTML = `
+      <div style="text-align:center;border-bottom:2px dashed #93c5fd;padding-bottom:12px;margin-bottom:12px">
+        <div style="font-size:3rem">${prof.avatar}</div>
+        <h3 style="font-size:1.4rem;color:#1e3a5f;margin:4px 0">${prof.name}</h3>
+        <p style="font-size:.85rem;color:#64748b">${prof.badge} · ${prof.level} · Usia ${prof.age} Tahun</p>
+      </div>
+
+      <div class="report-row">
+        <span>⭐ Total Bintang Terkumpul:</span>
+        <strong>${data.totalStars} Bintang</strong>
+      </div>
+      <div class="report-row">
+        <span>🪙 Total Koin Emas:</span>
+        <strong>${data.totalCoins} Koin</strong>
+      </div>
+      <div class="report-row">
+        <span>🎮 Mini-Game Dikuasai:</span>
+        <strong>${playedGames} dari ${totalGames} (${completionPct}%)</strong>
+      </div>
+      <div class="report-row">
+        <span>🏆 Lencana Prestasi:</span>
+        <strong>${data.badges.length} Terbuka</strong>
+      </div>
+
+      <div style="margin-top:14px">
+        <div style="font-weight:700;color:#1e3a5f;margin-bottom:4px">Kemampuan Membaca &amp; Abjad</div>
+        <div class="skill-bar-wrap"><div class="skill-bar-fill" style="width:${Math.min(100, Math.max(25, data.totalStars * 3))}%;background:#3b82f6"></div></div>
+      </div>
+      <div style="margin-top:10px">
+        <div style="font-weight:700;color:#1e3a5f;margin-bottom:4px">Kemampuan Berhitung &amp; Angka</div>
+        <div class="skill-bar-wrap"><div class="skill-bar-fill" style="width:${Math.min(100, Math.max(30, data.totalCoins * 2))}%;background:#10b981"></div></div>
+      </div>
+      <div style="margin-top:10px">
+        <div style="font-weight:700;color:#1e3a5f;margin-bottom:4px">Ketelitian &amp; Logika Berpikir</div>
+        <div class="skill-bar-wrap"><div class="skill-bar-fill" style="width:${Math.min(100, completionPct + 20)}%;background:#f59e0b"></div></div>
+      </div>
+
+      <div style="margin-top:14px;background:#f0fdf4;border:2px solid #86efac;border-radius:10px;padding:10px;font-size:.85rem;color:#166534">
+        💡 <strong>Catatan Guru &amp; Harsha:</strong> ${prof.name} belajar dengan sangat tekun dan ceria! Pertahankan semangat belajarnya setiap hari!
+      </div>
+    `;
+
+    document.getElementById('report-modal').classList.add('open');
+  },
+
+  bindEvents() {
+    // Back buttons
+    document.querySelectorAll('.back-btn').forEach(btn => {
+      btn.onclick = () => { SFX.pop(); this.goHub(); };
+    });
+
+    // Victory modal hub
+    const vh = document.getElementById('vic-hub');
+    if (vh) vh.onclick = () => {
+      document.getElementById('vic-modal').classList.remove('open');
+      this.goHub();
     };
-    // Ciko mascot
-    document.getElementById('ciko-btn').onclick=()=>{
+
+    // Profile modal
+    const pBtn = document.getElementById('hdr-profile-btn');
+    if (pBtn) pBtn.onclick = () => { SFX.pop(); this.showProfileModal(); };
+    const cpBtn = document.getElementById('btn-close-profile');
+    if (cpBtn) cpBtn.onclick = () => document.getElementById('profile-modal').classList.remove('open');
+
+    // Badges modal
+    const bBtn = document.getElementById('badge-btn');
+    if (bBtn) bBtn.onclick = () => { SFX.pop(); Badges.renderModal(); document.getElementById('badge-modal').classList.add('open'); };
+    const cbBadge = document.getElementById('btn-close-badge');
+    if (cbBadge) cbBadge.onclick = () => document.getElementById('badge-modal').classList.remove('open');
+
+    // Leaderboard modal
+    const lBtn = document.getElementById('leader-btn');
+    if (lBtn) lBtn.onclick = () => { SFX.pop(); this.showLeaderboardModal(); };
+    const clLeader = document.getElementById('btn-close-leader');
+    if (clLeader) clLeader.onclick = () => document.getElementById('leader-modal').classList.remove('open');
+
+    // Parent report modal
+    const rBtn = document.getElementById('report-btn');
+    if (rBtn) rBtn.onclick = () => { SFX.pop(); this.showReportModal(); };
+    const crBtn = document.getElementById('btn-close-report');
+    if (crBtn) crBtn.onclick = () => document.getElementById('report-modal').classList.remove('open');
+
+    // Print & Share WA
+    const prBtn = document.getElementById('btn-print-report');
+    if (prBtn) prBtn.onclick = () => window.print();
+
+    const waBtn = document.getElementById('btn-share-wa');
+    if (waBtn) waBtn.onclick = () => {
+      const p = Prog.getActiveProfile();
+      const txt = `🌟 *RAPOR BELAJAR HARSHA EDU* 🌟%0A👤 Nama: *${p.name}* (${p.level})%0A⭐ Total Bintang: *${Prog.data.totalStars}*%0A🪙 Total Koin: *${Prog.data.totalCoins}*%0A🎮 Modul: *${Object.values(Prog.data.games).filter(g=>g.played).length}/13 Game Selesai*%0A%0A_Aplikasi Belajar Calistung 100% Gratis untuk Anak Indonesia oleh @prihantowhy!_`;
+      window.open('https://api.whatsapp.com/send?text=' + txt, '_blank');
+    };
+
+    // Challenge Mode Toggle
+    const chBtn = document.getElementById('challenge-btn');
+    if (chBtn) chBtn.onclick = () => { SFX.pop(); ChallengeMode.toggle(); };
+
+    // BGM Toggle
+    const bgmBtn = document.getElementById('bgm-btn');
+    if (bgmBtn) bgmBtn.onclick = () => {
       SFX.pop();
-      const q=rand(['Halo! Yuk kumpulkan semua bintang!','Belajar itu seru bersama Ciko!','Kamu pasti bisa menyelesaikan semua game!','Semangat belajar hari ini!']);
-      document.getElementById('ciko-speech').textContent=q; SFX.speak(q);
+      const on = BGM.toggle();
+      bgmBtn.textContent = on ? '🎶' : '🎵';
+      showToast(on ? '🎶' : '🎵', on ? 'Musik BGM aktif!' : 'Musik BGM mati');
     };
+
+    // Sound toggle
+    const sndBtn = document.getElementById('snd-btn');
+    if (sndBtn) sndBtn.onclick = () => {
+      SFX.on = !SFX.on;
+      SFX.pop();
+      this.updateHeader();
+      showToast(SFX.on ? '🔊' : '🔇', SFX.on ? 'Suara aktif!' : 'Suara mati');
+    };
+
+    // Dark Mode Toggle
+    const darkBtn = document.getElementById('dark-btn');
+    if (darkBtn) darkBtn.onclick = () => {
+      SFX.pop();
+      document.body.classList.toggle('dark-mode');
+      const isDark = document.body.classList.contains('dark-mode');
+      localStorage.setItem('harsha_dark_mode', isDark ? '1' : '0');
+      darkBtn.textContent = isDark ? '☀️' : '🌙';
+      showToast(isDark ? '🌙' : '☀️', isDark ? 'Mode Malam aktif' : 'Mode Siang aktif');
+    };
+
+    // Reset button
+    const rstBtn = document.getElementById('rst-btn');
+    if (rstBtn) rstBtn.onclick = () => {
+      SFX.pop();
+      if (confirm('Reset bintang dan progres untuk ' + Prog.getActiveProfile().name + '?')) {
+        Prog.reset();
+        this.updateHeader();
+        this.buildGrid();
+        showToast('🔄', 'Progres direset!');
+      }
+    };
+
+    // Backup & Restore
+    const expBtn = document.getElementById('btn-export-backup');
+    if (expBtn) expBtn.onclick = () => Prog.exportBackup();
+
+    const fileIn = document.getElementById('file-restore');
+    if (fileIn) fileIn.onchange = (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      const r = new FileReader();
+      r.onload = ev => Prog.importBackup(ev.target.result);
+      r.readAsText(file);
+    };
+
+    // Dialect selector buttons
+    document.querySelectorAll('.lang-pills button').forEach(btn => {
+      btn.onclick = () => {
+        SFX.pop();
+        const lang = btn.getAttribute('data-lang');
+        currentLang = lang;
+        localStorage.setItem('harsha_lang', lang);
+        this.initDialect();
+        showToast('🗣️', 'Bahasa dialihkan ke ' + DIALECTS[lang].name);
+      };
+    });
+
+    // Mascot Speech Banner
+    const ciko = document.getElementById('ciko-btn');
+    if (ciko) ciko.onclick = () => {
+      SFX.pop();
+      const d = DIALECTS[currentLang] || DIALECTS.id;
+      const q = rand(d.praise.concat([d.greet, d.encourage]));
+      document.getElementById('ciko-speech').textContent = q;
+      SFX.speak(q);
+    };
+
+    // Floating mascot button
+    const mfBtn = document.getElementById('harsha-float-btn');
+    const mfBubble = document.getElementById('harsha-bubble');
+    if (mfBtn && mfBubble) {
+      mfBtn.onclick = () => {
+        SFX.pop();
+        const d = DIALECTS[currentLang] || DIALECTS.id;
+        const q = rand(d.praise.concat([d.greet, d.encourage]));
+        mfBubble.textContent = q;
+        mfBubble.style.display = 'block';
+        SFX.speak(q);
+        setTimeout(() => { mfBubble.style.display = 'none'; }, 4000);
+      };
+    }
+
     // G1 Hint & G13 Dice bindings
-    const hb=document.getElementById('g1-hint-btn'); if(hb) hb.onclick=()=>{ SFX.pop(); SFX.speak(document.getElementById('g1-hint-txt').textContent); };
-    const db=document.getElementById('g13-dice'); if(db) db.onclick=()=>G13.rollDice();
+    const hb = document.getElementById('g1-hint-btn');
+    if (hb) hb.onclick = () => { SFX.pop(); SFX.speak(document.getElementById('g1-hint-txt').textContent); };
+    const db = document.getElementById('g13-dice');
+    if (db) db.onclick = () => G13.rollDice();
   }
 };
 
-window.addEventListener('DOMContentLoaded',()=>UI.init());
+window.addEventListener('DOMContentLoaded', () => UI.init());
 </script>
 
 <!-- ── PWA INSTALL BANNER ── -->
