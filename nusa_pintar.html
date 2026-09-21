@@ -1,0 +1,2044 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#4f46e5">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Harsha Edu">
+  <meta name="description" content="Petualangan bersama Harsha — Game Edukasi Calistung Pulau Huruf untuk anak 6-7 tahun">
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="icons/icon-152x152.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192x192.png">
+  <title>Petualangan bersama Harsha — Game Edukasi Calistung</title>
+  <style>
+    /* ═══════════════════════════════════════════════════════════
+       1. CORE DESIGN & RESET
+    ═══════════════════════════════════════════════════════════ */
+    :root {
+      --primary: #4f46e5;
+      --primary-dark: #3730a3;
+      --secondary: #06b6d4;
+      --accent: #f59e0b;
+      --success: #10b981;
+      --danger: #ef4444;
+      --bg-sky: linear-gradient(180deg, #bae6fd 0%, #e0f2fe 50%, #f0fdf4 100%);
+      --card-bg: rgba(255, 255, 255, 0.94);
+      --font-family: 'Comic Sans MS', 'Chalkboard SE', 'Nunito', 'Segoe UI', cursive, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      user-select: none;
+      -webkit-user-select: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      font-family: var(--font-family);
+      background: var(--bg-sky);
+      min-height: 100vh;
+      color: #1e293b;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Fullscreen Game Container (Optimized for Landscape Tablet 10") */
+    #game-container {
+      width: 100vw;
+      height: 100vh;
+      max-width: 1200px;
+      max-height: 800px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+      border-radius: 20px;
+      background: #f8fafc;
+    }
+
+    @media (max-width: 900px) {
+      #game-container {
+        border-radius: 0;
+        max-height: 100vh;
+      }
+    }
+
+    /* Views */
+    .screen {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 24px;
+      z-index: 10;
+      background: var(--bg-sky);
+      overflow-y: auto;
+    }
+
+    .screen.active {
+      display: flex;
+      animation: fadeIn 0.35s ease-out forwards;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.98); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    /* Global Header */
+    .app-header {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 18px;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(8px);
+      border-radius: 18px;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.06);
+      z-index: 20;
+    }
+
+    .player-chip {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: #f1f5f9;
+      padding: 6px 14px;
+      border-radius: 40px;
+      font-weight: bold;
+      font-size: 1.05rem;
+      border: 3px solid transparent;
+      transition: transform 0.2s;
+    }
+
+    .player-avatar-mini {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.6rem;
+      position: relative;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+    }
+
+    .star-pill, .nav-btn {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 18px;
+      border-radius: 30px;
+      font-weight: 800;
+      font-size: 1.1rem;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+      min-height: 52px;
+    }
+
+    .star-pill {
+      background: #fef3c7;
+      color: #b45309;
+      border: 2px solid #fde68a;
+    }
+
+    .nav-btn {
+      background: #ffffff;
+      color: #334155;
+      font-size: 1rem;
+      border: 2px solid #e2e8f0;
+      transition: all 0.15s;
+    }
+
+    .nav-btn:hover, .nav-btn:active {
+      transform: translateY(-2px);
+      background: #f8fafc;
+    }
+
+    /* Standard Interactive Button (min 60x60px touch targets) */
+    .btn-action {
+      min-width: 180px;
+      min-height: 64px;
+      padding: 12px 28px;
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: #ffffff;
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      border: none;
+      border-radius: 40px;
+      cursor: pointer;
+      box-shadow: 0 8px 18px rgba(16, 185, 129, 0.35), 0 4px 0 #047857;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      transition: transform 0.1s, box-shadow 0.1s;
+    }
+
+    .btn-action:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 22px rgba(16, 185, 129, 0.4), 0 4px 0 #047857;
+    }
+
+    .btn-action:active {
+      transform: translateY(3px);
+      box-shadow: 0 3px 8px rgba(16, 185, 129, 0.3), 0 1px 0 #047857;
+    }
+
+    .btn-action.pulse {
+      animation: pulseBtn 1.8s infinite;
+    }
+
+    @keyframes pulseBtn {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       2. SCREEN 1: LAYAR PEMBUKA & PILIH KARAKTER
+    ═══════════════════════════════════════════════════════════ */
+    #screen-start {
+      justify-content: center;
+      gap: 16px;
+      background: radial-gradient(circle at 50% 30%, #e0f2fe 0%, #bae6fd 60%, #7dd3fc 100%);
+    }
+
+    .game-logo {
+      text-align: center;
+      margin-bottom: 6px;
+    }
+
+    .game-title {
+      font-size: 2.5rem;
+      font-weight: 900;
+      color: #1e3a8a;
+      text-shadow: 2px 2px 0 #93c5fd, 4px 4px 0 rgba(0,0,0,0.08);
+      letter-spacing: -0.5px;
+    }
+
+    .game-subtitle {
+      font-size: 1.15rem;
+      color: #0369a1;
+      font-weight: 700;
+      margin-top: 4px;
+    }
+
+    .setup-card {
+      background: var(--card-bg);
+      padding: 20px 28px;
+      border-radius: 24px;
+      box-shadow: 0 12px 30px rgba(15, 23, 42, 0.12);
+      width: 100%;
+      max-width: 620px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      align-items: center;
+    }
+
+    /* Avatar Preview Box */
+    .avatar-preview-container {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .avatar-preview-circle {
+      width: 110px;
+      height: 110px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 4rem;
+      position: relative;
+      border: 5px solid #ffffff;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+      transition: background 0.3s, transform 0.2s;
+    }
+
+    .avatar-preview-circle:hover {
+      transform: scale(1.06);
+    }
+
+    /* Accessory on avatar */
+    .avatar-acc {
+      position: absolute;
+      top: -16px;
+      font-size: 2.2rem;
+      filter: drop-shadow(0 4px 6px rgba(0,0,0,0.2));
+      animation: gentleFloat 2.5s ease-in-out infinite;
+    }
+
+    @keyframes gentleFloat {
+      0%, 100% { transform: translateY(0) rotate(-2deg); }
+      50% { transform: translateY(-4px) rotate(2deg); }
+    }
+
+    .section-title {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: #475569;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    /* Name Input */
+    .input-name-wrap {
+      width: 100%;
+      max-width: 380px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .input-name {
+      width: 100%;
+      height: 56px;
+      padding: 0 20px;
+      border-radius: 30px;
+      border: 3px solid #cbd5e1;
+      font-family: inherit;
+      font-size: 1.3rem;
+      font-weight: 700;
+      text-align: center;
+      color: #1e293b;
+      background: #f8fafc;
+      outline: none;
+      transition: all 0.2s;
+    }
+
+    .input-name:focus {
+      border-color: var(--primary);
+      background: #ffffff;
+      box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.2);
+    }
+
+    /* Selectors */
+    .selector-row {
+      display: flex;
+      gap: 14px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .char-btn {
+      width: 68px;
+      height: 68px;
+      border-radius: 20px;
+      border: 3px solid #e2e8f0;
+      background: #ffffff;
+      font-size: 2.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+      transition: all 0.15s;
+    }
+
+    .char-btn.active {
+      border-color: var(--primary);
+      transform: scale(1.12);
+      box-shadow: 0 6px 16px rgba(79, 70, 229, 0.35);
+      background: #eef2ff;
+    }
+
+    .color-dot {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      border: 4px solid #ffffff;
+      cursor: pointer;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+      transition: transform 0.15s, border-color 0.15s;
+    }
+
+    .color-dot.active {
+      transform: scale(1.22);
+      border-color: #1e293b;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       3. SCREEN 2: PETA DUNIA (5 PULAU)
+    ═══════════════════════════════════════════════════════════ */
+    #screen-map {
+      background: linear-gradient(180deg, #38bdf8 0%, #7dd3fc 40%, #0284c7 100%);
+      padding: 14px 20px;
+      justify-content: flex-start;
+      gap: 14px;
+    }
+
+    .map-banner {
+      background: rgba(255, 255, 255, 0.94);
+      padding: 10px 24px;
+      border-radius: 20px;
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: #0369a1;
+      text-align: center;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+      max-width: 780px;
+      width: 100%;
+    }
+
+    /* Archipelago Map Area */
+    .archipelago {
+      flex: 1;
+      width: 100%;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      padding: 10px;
+    }
+
+    /* Sailing dashed line connecting islands */
+    .map-path-svg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .island-node {
+      position: relative;
+      z-index: 5;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .island-node.unlocked:hover {
+      transform: translateY(-6px) scale(1.05);
+    }
+
+    .island-bubble {
+      width: 105px;
+      height: 105px;
+      border-radius: 50%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      background: #ffffff;
+      border: 6px solid #e0f2fe;
+      box-shadow: 0 12px 24px rgba(0,0,0,0.18), 0 4px 0 rgba(0,0,0,0.1);
+      transition: all 0.2s;
+    }
+
+    .island-node.unlocked .island-bubble {
+      background: radial-gradient(circle, #fef08a 0%, #fde047 70%, #ca8a04 100%);
+      border-color: #ffffff;
+      box-shadow: 0 0 0 6px #10b981, 0 14px 28px rgba(16, 185, 129, 0.4);
+      animation: floatIsland 3s ease-in-out infinite alternate;
+    }
+
+    @keyframes floatIsland {
+      from { transform: translateY(0); }
+      to { transform: translateY(-8px); }
+    }
+
+    .island-node.locked {
+      cursor: not-allowed;
+      opacity: 0.75;
+      filter: grayscale(85%);
+    }
+
+    .island-node.locked .island-bubble {
+      background: #cbd5e1;
+      border-color: #94a3b8;
+    }
+
+    .island-emoji {
+      font-size: 2.8rem;
+    }
+
+    .island-lock-ico {
+      position: absolute;
+      bottom: -6px;
+      right: -6px;
+      background: #475569;
+      color: #ffffff;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      border: 2px solid #ffffff;
+    }
+
+    .island-label {
+      background: #ffffff;
+      color: #0f172a;
+      font-weight: 800;
+      font-size: 0.95rem;
+      padding: 5px 12px;
+      border-radius: 20px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      white-space: nowrap;
+      text-align: center;
+    }
+
+    .island-status-pill {
+      font-size: 0.75rem;
+      font-weight: 800;
+      padding: 2px 8px;
+      border-radius: 12px;
+      margin-top: 2px;
+    }
+
+    .island-node.unlocked .island-status-pill {
+      background: #dcfce7;
+      color: #15803d;
+    }
+
+    .island-node.locked .island-status-pill {
+      background: #f1f5f9;
+      color: #64748b;
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       4. SCREEN 3: PULAU HURUF (3 FASE)
+    ═══════════════════════════════════════════════════════════ */
+    #screen-pulau1 {
+      padding: 14px 20px;
+      background: linear-gradient(180deg, #6ee7b7 0%, #a7f3d0 40%, #ecfdf5 100%);
+    }
+
+    .island-game-area {
+      flex: 1;
+      width: 100%;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin-top: 10px;
+    }
+
+    /* FASE 1: SAMBUTAN & OBJEK INTERAKTIF */
+    #phase1-container {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 0;
+      position: relative;
+    }
+
+    .welcome-speech {
+      background: #ffffff;
+      padding: 14px 24px;
+      border-radius: 26px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: #065f46;
+      text-align: center;
+      border: 3px solid #10b981;
+      position: relative;
+      max-width: 580px;
+      animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    @keyframes popIn {
+      from { transform: scale(0.7); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .stage-objects {
+      width: 100%;
+      max-width: 720px;
+      height: 220px;
+      position: relative;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-around;
+      margin: 14px 0;
+    }
+
+    /* Interactive Decor Object (min 60x60px) */
+    .decor-item {
+      min-width: 76px;
+      min-height: 76px;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      transition: transform 0.2s;
+    }
+
+    .decor-emoji {
+      font-size: 4.2rem;
+      filter: drop-shadow(0 6px 12px rgba(0,0,0,0.15));
+      transition: transform 0.2s;
+    }
+
+    .decor-item:hover .decor-emoji {
+      transform: scale(1.15);
+    }
+
+    .decor-badge {
+      background: #ffffff;
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-size: 0.8rem;
+      font-weight: 800;
+      color: #047857;
+      margin-top: -6px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+
+    /* Bonus Chest */
+    .bonus-chest {
+      position: relative;
+      cursor: pointer;
+      animation: chestWiggle 2s infinite ease-in-out;
+    }
+
+    @keyframes chestWiggle {
+      0%, 80%, 100% { transform: rotate(0); }
+      85% { transform: rotate(-8deg) scale(1.05); }
+      90% { transform: rotate(8deg) scale(1.05); }
+      95% { transform: rotate(-5deg); }
+    }
+
+    .chest-ico {
+      font-size: 4.4rem;
+      filter: drop-shadow(0 8px 16px rgba(245, 158, 11, 0.4));
+    }
+
+    /* Hero Center Stage */
+    .hero-stage {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      animation: heroBounce 1.5s infinite alternate ease-in-out;
+    }
+
+    @keyframes heroBounce {
+      from { transform: translateY(0); }
+      to { transform: translateY(-12px); }
+    }
+
+    .hero-circle-stage {
+      width: 95px;
+      height: 95px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3.5rem;
+      position: relative;
+      border: 4px solid #ffffff;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    }
+
+    /* Auto-advance timer bar */
+    .phase1-bottom {
+      width: 100%;
+      max-width: 480px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .auto-bar-wrap {
+      width: 100%;
+      height: 10px;
+      background: rgba(255,255,255,0.6);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .auto-bar-fill {
+      height: 100%;
+      width: 100%;
+      background: #10b981;
+      transition: width 0.1s linear;
+    }
+
+    /* FASE 2: TANTANGAN 4 SOAL */
+    #phase2-container {
+      width: 100%;
+      height: 100%;
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      padding: 6px 0;
+    }
+
+    .question-card {
+      background: var(--card-bg);
+      padding: 16px 28px;
+      border-radius: 24px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      width: 100%;
+      max-width: 680px;
+      border: 3px solid #6ee7b7;
+    }
+
+    .speaker-btn {
+      width: 58px;
+      height: 58px;
+      min-width: 58px;
+      border-radius: 50%;
+      background: #ecfdf5;
+      border: 3px solid #10b981;
+      font-size: 1.8rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 10px rgba(16, 185, 129, 0.2);
+      transition: transform 0.1s;
+    }
+
+    .speaker-btn:hover {
+      transform: scale(1.1);
+    }
+
+    .question-text {
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: #064e3b;
+      line-height: 1.2;
+    }
+
+    .question-target-letter {
+      color: #2563eb;
+      font-size: 2rem;
+      background: #eff6ff;
+      padding: 2px 14px;
+      border-radius: 14px;
+      border: 2px solid #bfdbfe;
+      display: inline-block;
+      margin-left: 6px;
+    }
+
+    /* Challenge Board (Choices or Drag) */
+    .challenge-board {
+      flex: 1;
+      width: 100%;
+      max-width: 780px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin: 12px 0;
+    }
+
+    /* Multiple Choice Grid */
+    .letter-grid {
+      display: flex;
+      gap: 18px;
+      justify-content: center;
+      flex-wrap: wrap;
+      width: 100%;
+    }
+
+    .letter-btn {
+      min-width: 90px;
+      min-height: 90px;
+      width: 105px;
+      height: 105px;
+      border-radius: 24px;
+      background: #ffffff;
+      border: 4px solid #cbd5e1;
+      font-size: 3.2rem;
+      font-weight: 900;
+      color: #1e293b;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 8px 18px rgba(0,0,0,0.08), 0 5px 0 #94a3b8;
+      transition: all 0.15s;
+    }
+
+    .letter-btn:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 22px rgba(0,0,0,0.12), 0 5px 0 #94a3b8;
+      border-color: #94a3b8;
+    }
+
+    .letter-btn:active {
+      transform: translateY(3px);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1), 0 1px 0 #94a3b8;
+    }
+
+    /* Drag & Drop Area (Soal 2) */
+    .drag-drop-area {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 22px;
+      width: 100%;
+    }
+
+    .dropzone-box {
+      width: 180px;
+      height: 130px;
+      border: 4px dashed #059669;
+      background: rgba(255,255,255,0.85);
+      border-radius: 28px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      font-weight: 800;
+      color: #047857;
+      box-shadow: 0 6px 16px rgba(5, 150, 105, 0.15);
+      transition: all 0.2s;
+    }
+
+    .dropzone-box.dragover {
+      background: #d1fae5;
+      border-color: #10b981;
+      transform: scale(1.06);
+    }
+
+    .draggable-row {
+      display: flex;
+      gap: 20px;
+    }
+
+    .drag-letter {
+      min-width: 85px;
+      min-height: 85px;
+      width: 95px;
+      height: 95px;
+      border-radius: 24px;
+      background: #ffffff;
+      border: 4px solid #3b82f6;
+      font-size: 3rem;
+      font-weight: 900;
+      color: #1d4ed8;
+      cursor: grab;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 8px 18px rgba(59, 130, 246, 0.25), 0 4px 0 #1d4ed8;
+      touch-action: none;
+    }
+
+    .drag-letter:active {
+      cursor: grabbing;
+      opacity: 0.8;
+      transform: scale(1.05);
+    }
+
+    /* Feedback Overlay / Toast */
+    .feedback-toast {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0.6);
+      background: #ffffff;
+      padding: 18px 36px;
+      border-radius: 40px;
+      box-shadow: 0 16px 40px rgba(0,0,0,0.25);
+      display: none;
+      align-items: center;
+      gap: 16px;
+      z-index: 100;
+      border: 5px solid #10b981;
+      animation: popFeedback 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    }
+
+    .feedback-toast.show {
+      display: flex;
+    }
+
+    @keyframes popFeedback {
+      to { transform: translate(-50%, -50%) scale(1); }
+    }
+
+    .feedback-toast.retry {
+      border-color: #f59e0b;
+    }
+
+    .feedback-emoji {
+      font-size: 3rem;
+    }
+
+    .feedback-text {
+      font-size: 1.8rem;
+      font-weight: 900;
+      color: #1e293b;
+    }
+
+    /* FASE 3: PERAYAAN (RANDOM 3 JENIS) */
+    #phase3-container {
+      width: 100%;
+      height: 100%;
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      text-align: center;
+      gap: 16px;
+      z-index: 50;
+    }
+
+    .victory-card {
+      background: rgba(255, 255, 255, 0.96);
+      border-radius: 32px;
+      padding: 26px 36px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.18);
+      max-width: 600px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+      border: 5px solid #fde047;
+      animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .magic-page-found {
+      font-size: 4.8rem;
+      animation: bookWobble 2s infinite alternate ease-in-out;
+    }
+
+    @keyframes bookWobble {
+      from { transform: scale(1) rotate(-4deg); }
+      to { transform: scale(1.12) rotate(4deg); }
+    }
+
+    .stars-score-row {
+      display: flex;
+      gap: 12px;
+      margin: 6px 0;
+    }
+
+    .star-score-item {
+      font-size: 3.4rem;
+      filter: drop-shadow(0 4px 8px rgba(245, 158, 11, 0.4));
+      animation: starPop 0.5s ease-out backwards;
+    }
+
+    @keyframes starPop {
+      0% { transform: scale(0); opacity: 0; }
+      70% { transform: scale(1.3); }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    /* Canvas for particle animations */
+    #celebration-canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 40;
+    }
+
+    /* Floating Jumping Mascot for Celebration Type 3 */
+    .celebration-jumping-hero {
+      position: absolute;
+      bottom: 20px;
+      font-size: 6rem;
+      animation: heroGrandJump 1.2s infinite ease-in-out alternate;
+      z-index: 45;
+    }
+
+    @keyframes heroGrandJump {
+      0% { transform: translateY(0) scale(1, 0.9); }
+      50% { transform: translateY(-160px) scale(0.9, 1.1) rotate(10deg); }
+      100% { transform: translateY(0) scale(1, 0.9); }
+    }
+
+    /* Soft Shake Animation for Mistakes */
+    .soft-shake {
+      animation: softShake 0.4s ease-in-out;
+    }
+
+    @keyframes softShake {
+      0%, 100% { transform: translateX(0); }
+      20% { transform: translateX(-8px); }
+      40% { transform: translateX(8px); }
+      60% { transform: translateX(-6px); }
+      80% { transform: translateX(6px); }
+    }
+  </style>
+</head>
+<body>
+
+<div id="game-container">
+
+  <!-- ═══════════════════════════════════════════════════════════
+       1. LAYAR PEMBUKA (PILIH KARAKTER, WARNA, NAMA)
+  ═══════════════════════════════════════════════════════════ -->
+  <section class="screen active" id="screen-start">
+    <div class="game-logo">
+      <img src="logo_harsha.png" alt="Logo Harsha" style="width:130px;height:130px;object-fit:contain;filter:drop-shadow(0 8px 18px rgba(0,0,0,.25));margin-bottom:6px">
+      <h1 class="game-title">Petualangan bersama Harsha</h1>
+      <p class="game-subtitle">Habibi ★ Shafiyyah ★ Arsha — Jelajahi Pulau Huruf &amp; Temukan Buku Ajaib!</p>
+    </div>
+
+    <div class="setup-card">
+      <!-- Live Avatar Preview -->
+      <div class="avatar-preview-container">
+        <div class="avatar-preview-circle" id="preview-circle" style="background:#38bdf8">
+          <span id="preview-acc" class="avatar-acc" style="display:none">🎩</span>
+          <span id="preview-char">👦</span>
+        </div>
+      </div>
+
+      <!-- Input Nama -->
+      <div class="input-name-wrap">
+        <div class="section-title">Nama Penjelajah Cilik:</div>
+        <input type="text" id="player-name-input" class="input-name" placeholder="Ketik namamu..." maxlength="12" autocomplete="off" value="Arsha">
+      </div>
+
+      <!-- Pilih Karakter -->
+      <div>
+        <div class="section-title" style="text-align:center">Pilih Karakter Harsha:</div>
+        <div class="selector-row">
+          <button class="char-btn" data-char="👦" title="Habibi">
+            <span style="font-size:1.8rem">👦</span>
+            <span style="font-size:0.75rem;font-weight:800;display:block">Habibi</span>
+          </button>
+          <button class="char-btn" data-char="👧" title="Shafiyyah">
+            <span style="font-size:1.8rem">👧</span>
+            <span style="font-size:0.75rem;font-weight:800;display:block">Shafiyyah</span>
+          </button>
+          <button class="char-btn active" data-char="🧒" title="Arsha">
+            <span style="font-size:1.8rem">🧒</span>
+            <span style="font-size:0.75rem;font-weight:800;display:block">Arsha</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Pilih Warna Kostum -->
+      <div>
+        <div class="section-title" style="text-align:center">Pilih Warna Kostum:</div>
+        <div class="selector-row">
+          <div class="color-dot active" data-color="#38bdf8" style="background:#38bdf8" title="Biru Habibi"></div>
+          <div class="color-dot" data-color="#f472b6" style="background:#f472b6" title="Pink Shafiyyah"></div>
+          <div class="color-dot" data-color="#facc15" style="background:#facc15" title="Kuning Arsha"></div>
+          <div class="color-dot" data-color="#4ade80" style="background:#4ade80" title="Hijau Ceria"></div>
+        </div>
+      </div>
+
+      <!-- Tombol Mulai -->
+      <button class="btn-action pulse" id="btn-start-adventure">
+        <span>Mulai Petualangan!</span> <span>🚀</span>
+      </button>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       2. PETA DUNIA (5 PULAU)
+  ═══════════════════════════════════════════════════════════ -->
+  <section class="screen" id="screen-map">
+    <div class="app-header">
+      <div class="player-chip" id="map-player-chip">
+        <div class="player-avatar-mini" id="header-avatar-circle" style="background:#ff6b6b">
+          <span id="header-acc" style="position:absolute;top:-8px;font-size:1.1rem;display:none">🎩</span>
+          <span id="header-char">🐱</span>
+        </div>
+        <span id="header-name">Penjelajah</span>
+      </div>
+
+      <div class="star-pill">
+        <span>⭐</span> <span id="header-stars">0</span> <span>Bintang</span>
+      </div>
+
+      <div style="display:flex;gap:8px">
+        <button class="nav-btn" id="btn-edit-profile">
+          <span>🎨 Ubah Profil</span>
+        </button>
+        <a href="index.html" class="nav-btn" style="text-decoration:none">
+          <span>🎮 13 Game Hub</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="map-banner">
+      📖 Kumpulkan kembali 5 Halaman Buku Ajaib di setiap pulau!
+    </div>
+
+    <div class="archipelago">
+      <!-- Dotted sailing route -->
+      <svg class="map-path-svg" viewBox="0 0 1000 400" preserveAspectRatio="none">
+        <path d="M 120 200 Q 300 80, 500 200 T 900 200" fill="none" stroke="#ffffff" stroke-width="5" stroke-dasharray="10 12" opacity="0.6"/>
+      </svg>
+
+      <!-- Pulau 1: Terbuka -->
+      <div class="island-node unlocked" id="node-pulau1" title="Masuk ke Pulau Huruf">
+        <div class="island-bubble">
+          <span class="island-emoji">🏝️</span>
+        </div>
+        <div class="island-label">1. Pulau Huruf</div>
+        <div class="island-status-pill" id="pulau1-stars-badge">Ayo Mulai! ✨</div>
+      </div>
+
+      <!-- Pulau 2: Terkunci -->
+      <div class="island-node locked" title="Pulau Suku Kata (Terkunci)">
+        <div class="island-bubble">
+          <span class="island-emoji">🌴</span>
+          <span class="island-lock-ico">🔒</span>
+        </div>
+        <div class="island-label">2. Pulau Suku Kata</div>
+        <div class="island-status-pill">Terkunci</div>
+      </div>
+
+      <!-- Pulau 3: Terkunci -->
+      <div class="island-node locked" title="Pulau Kata (Terkunci)">
+        <div class="island-bubble">
+          <span class="island-emoji">🌋</span>
+          <span class="island-lock-ico">🔒</span>
+        </div>
+        <div class="island-label">3. Pulau Kata</div>
+        <div class="island-status-pill">Terkunci</div>
+      </div>
+
+      <!-- Pulau 4: Terkunci -->
+      <div class="island-node locked" title="Pulau Angka (Terkunci)">
+        <div class="island-bubble">
+          <span class="island-emoji">🏰</span>
+          <span class="island-lock-ico">🔒</span>
+        </div>
+        <div class="island-label">4. Pulau Angka</div>
+        <div class="island-status-pill">Terkunci</div>
+      </div>
+
+      <!-- Pulau 5: Terkunci -->
+      <div class="island-node locked" title="Pulau Berhitung (Terkunci)">
+        <div class="island-bubble">
+          <span class="island-emoji">👑</span>
+          <span class="island-lock-ico">🔒</span>
+        </div>
+        <div class="island-label">5. Pulau Berhitung</div>
+        <div class="island-status-pill">Terkunci</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       3. PULAU HURUF (3 FASE)
+  ═══════════════════════════════════════════════════════════ -->
+  <section class="screen" id="screen-pulau1">
+    <div class="app-header">
+      <button class="nav-btn" id="btn-back-to-map">
+        <span>🗺️ Kembali ke Peta</span>
+      </button>
+
+      <div style="font-size:1.3rem;font-weight:900;color:#065f46">
+        Pulau Huruf 🔤
+      </div>
+
+      <div class="star-pill">
+        <span>⭐</span> <span id="p1-stars-display">0</span>
+      </div>
+    </div>
+
+    <div class="island-game-area">
+
+      <!-- ── FASE 1: SAMBUTAN (5-8 Detik / Interaktif) ── -->
+      <div id="phase1-container">
+        <div class="welcome-speech" id="p1-welcome-txt">
+          Halo! Selamat datang di Pulau Huruf! Ketuk objek lucu di pulau ini ya! 👇
+        </div>
+
+        <div class="stage-objects">
+          <!-- Dekor 1: Pohon Goyang -->
+          <div class="decor-item" id="decor-tree" title="Ketuk Pohon!">
+            <div class="decor-emoji">🌳</div>
+            <div class="decor-badge">Ketuk Aku!</div>
+          </div>
+
+          <!-- Hero Stage -->
+          <div class="hero-stage">
+            <div class="hero-circle-stage" id="stage-hero-circle" style="background:#ff6b6b">
+              <span id="stage-hero-acc" class="avatar-acc" style="display:none">🎩</span>
+              <span id="stage-hero-char">🐱</span>
+            </div>
+            <div class="decor-badge" id="stage-hero-name" style="margin-top:6px;font-size:0.95rem">Penjelajah</div>
+          </div>
+
+          <!-- Dekor 2: Bunga Pelangi -->
+          <div class="decor-item" id="decor-flower" title="Ketuk Bunga!">
+            <div class="decor-emoji">🌸</div>
+            <div class="decor-badge">Ketuk Aku!</div>
+          </div>
+
+          <!-- Dekor 3: Peti Kejutan Aksesori Kostum -->
+          <div class="decor-item bonus-chest" id="decor-chest" title="Buka Peti Kejutan!">
+            <div class="chest-ico" id="chest-ico">🎁</div>
+            <div class="decor-badge" style="background:#fef3c7;color:#b45309">Peti Bonus!</div>
+          </div>
+        </div>
+
+        <div class="phase1-bottom">
+          <div class="auto-bar-wrap">
+            <div class="auto-bar-fill" id="p1-timer-fill"></div>
+          </div>
+          <button class="btn-action" id="btn-skip-to-phase2">
+            <span>Mulai Tantangan!</span> <span>🚀</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- ── FASE 2: TANTANGAN 4 SOAL ── -->
+      <div id="phase2-container">
+        <!-- Question Bar -->
+        <div class="question-card">
+          <button class="speaker-btn" id="btn-repeat-speech" title="Dengarkan Suara">🔊</button>
+          <div class="question-text" id="q-instruction-text">
+            Mana huruf <span class="question-target-letter" id="q-target-letter">A</span>?
+          </div>
+        </div>
+
+        <!-- Challenge Interactive Area -->
+        <div class="challenge-board">
+          <!-- Soal 1, 3, 4: Multiple Choices -->
+          <div class="letter-grid" id="choices-grid"></div>
+
+          <!-- Soal 2: Drag & Drop Area -->
+          <div class="drag-drop-area" id="drag-drop-container" style="display:none">
+            <div class="dropzone-box" id="letter-dropzone">
+              <span style="font-size:2.2rem">📥</span>
+              <span>Tarik ke Sini!</span>
+            </div>
+            <div class="draggable-row" id="draggable-items"></div>
+          </div>
+        </div>
+
+        <!-- Progress Footer -->
+        <div style="font-weight:800;color:#047857;font-size:1.1rem" id="q-progress-text">
+          Soal 1 dari 4
+        </div>
+      </div>
+
+      <!-- ── FASE 3: PERAYAAN (RANDOM 3 JENIS) ── -->
+      <div id="phase3-container">
+        <canvas id="celebration-canvas"></canvas>
+        <div id="jumping-hero-box" class="celebration-jumping-hero" style="display:none">🐱</div>
+
+        <div class="victory-card">
+          <div class="magic-page-found">📜✨</div>
+          <h2 style="font-size:2.2rem;font-weight:900;color:#065f46" id="victory-title">Hebat Sekali!</h2>
+          <p style="font-size:1.25rem;font-weight:700;color:#334155" id="victory-desc">
+            Halaman 1 Buku Ajaib Berhasil Ditemukan!
+          </p>
+
+          <div class="stars-score-row" id="victory-stars-row">
+            <span class="star-score-item">⭐</span>
+            <span class="star-score-item">⭐</span>
+            <span class="star-score-item">⭐</span>
+          </div>
+
+          <div style="display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin-top:10px">
+            <button class="btn-action" id="btn-finish-to-map">
+              <span>Kembali ke Peta</span> <span>🗺️</span>
+            </button>
+            <button class="nav-btn" id="btn-replay-pulau1" style="font-size:1.1rem;padding:12px 24px">
+              <span>Main Lagi 🔄</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Floating Feedback Toast -->
+    <div class="feedback-toast" id="feedback-toast">
+      <span class="feedback-emoji" id="toast-emoji">🌟</span>
+      <span class="feedback-text" id="toast-msg">Hebat!</span>
+    </div>
+  </section>
+
+</div>
+
+<script>
+/* ═══════════════════════════════════════════════════════════
+   1. SOUND & TTS AUDIO ENGINE (Web Audio API)
+═══════════════════════════════════════════════════════════ */
+const Sound = {
+  ctx: null,
+  init() {
+    if (!this.ctx) {
+      const AudioCtx = window.AudioContext || window.webkitAudioContext;
+      if (AudioCtx) this.ctx = new AudioCtx();
+    }
+  },
+  resume() {
+    this.init();
+    if (this.ctx && this.ctx.state === 'suspended') {
+      this.ctx.resume();
+    }
+  },
+  playTone(freq, type, duration, vol = 0.25, ramp = null) {
+    this.resume();
+    if (!this.ctx) return;
+    try {
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+      const t = this.ctx.currentTime;
+      osc.type = type;
+      osc.frequency.setValueAtTime(ramp ? ramp : freq, t);
+      if (ramp) osc.frequency.exponentialRampToValueAtTime(freq, t + duration * 0.7);
+      gain.gain.setValueAtTime(vol, t);
+      gain.gain.exponentialRampToValueAtTime(0.001, t + duration);
+      osc.connect(gain);
+      gain.connect(this.ctx.destination);
+      osc.start(t);
+      osc.stop(t + duration + 0.05);
+    } catch(e) {}
+  },
+  pop() {
+    this.playTone(880, 'sine', 0.12, 0.28, 520);
+  },
+  correct() {
+    this.resume();
+    if (!this.ctx) return;
+    const now = this.ctx.currentTime;
+    [523.25, 659.25, 783.99, 1046.50].forEach((freq, idx) => {
+      setTimeout(() => this.playTone(freq, 'sine', 0.22, 0.22), idx * 75);
+    });
+  },
+  retry() {
+    this.playTone(280, 'sine', 0.25, 0.2, 380);
+  },
+  fanfare() {
+    this.resume();
+    if (!this.ctx) return;
+    const notes = [523.25, 659.25, 783.99, 1046.50, 1318.51];
+    notes.forEach((f, i) => {
+      setTimeout(() => this.playTone(f, 'triangle', 0.35, 0.3), i * 110);
+    });
+  },
+  sparkle() {
+    this.playTone(1200, 'sine', 0.18, 0.2, 800);
+  },
+  speak(text) {
+    if (!('speechSynthesis' in window)) return;
+    try {
+      window.speechSynthesis.cancel();
+      const u = new SpeechSynthesisUtterance(text);
+      u.lang = 'id-ID';
+      u.rate = 0.95;
+      u.pitch = 1.25; // ramah untuk anak-anak
+      window.speechSynthesis.speak(u);
+    } catch(e) {}
+  }
+};
+
+/* ═══════════════════════════════════════════════════════════
+   2. DATA & PROGRESS MANAGER (localStorage: nusaPintar_progress)
+═══════════════════════════════════════════════════════════ */
+const STORAGE_KEY = 'nusaPintar_progress';
+
+const StorageManager = {
+  data: {
+    name: 'Arsha',
+    char: '🧒',
+    color: '#facc15',
+    accessories: [],
+    islands: {
+      pulau1: { completed: false, stars: 0 }
+    },
+    totalStars: 0
+  },
+  load() {
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        this.data = Object.assign(this.data, parsed);
+        if (!this.data.islands) this.data.islands = { pulau1: { completed: false, stars: 0 } };
+        if (!this.data.accessories) this.data.accessories = [];
+      }
+    } catch(e) {
+      console.warn('Storage read error, using default', e);
+    }
+  },
+  save() {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(this.data));
+    } catch(e) {}
+  },
+  recordIsland(islandKey, stars) {
+    if (!this.data.islands[islandKey]) {
+      this.data.islands[islandKey] = { completed: false, stars: 0 };
+    }
+    const currentStars = this.data.islands[islandKey].stars || 0;
+    if (stars > currentStars) {
+      const diff = stars - currentStars;
+      this.data.totalStars += diff;
+      this.data.islands[islandKey].stars = stars;
+    }
+    this.data.islands[islandKey].completed = true;
+    this.save();
+  },
+  addAccessory(acc) {
+    if (!this.data.accessories.includes(acc)) {
+      this.data.accessories.push(acc);
+      this.save();
+    }
+  }
+};
+
+/* ═══════════════════════════════════════════════════════════
+   3. APP NAVIGATION & UI CONTROLLER
+═══════════════════════════════════════════════════════════ */
+const App = {
+  currentScreen: 'screen-start',
+
+  init() {
+    StorageManager.load();
+    this.bindEvents();
+    this.syncProfileUI();
+
+    // If player already has a name, update input and enable quick map entry
+    if (StorageManager.data.name && StorageManager.data.name.trim() !== '') {
+      document.getElementById('player-name-input').value = StorageManager.data.name;
+    }
+  },
+
+  showScreen(screenId) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    const target = document.getElementById(screenId);
+    if (target) {
+      target.classList.add('active');
+      this.currentScreen = screenId;
+    }
+  },
+
+  syncProfileUI() {
+    const d = StorageManager.data;
+    // Avatar previews
+    document.getElementById('preview-char').textContent = d.char;
+    document.getElementById('preview-circle').style.background = d.color;
+    
+    // Header mini avatar
+    document.getElementById('header-char').textContent = d.char;
+    document.getElementById('header-avatar-circle').style.background = d.color;
+    document.getElementById('header-name').textContent = d.name || 'Penjelajah';
+    document.getElementById('header-stars').textContent = d.totalStars;
+
+    // Pulau 1 Island status badge
+    const p1Status = d.islands.pulau1;
+    const badge = document.getElementById('pulau1-stars-badge');
+    if (p1Status && p1Status.completed) {
+      badge.textContent = `⭐ ${p1Status.stars}/3 Selesai!`;
+      badge.style.background = '#fef08a';
+      badge.style.color = '#854d0e';
+    } else {
+      badge.textContent = 'Ayo Mulai! ✨';
+    }
+
+    // Pulau 1 Stage Hero
+    document.getElementById('stage-hero-char').textContent = d.char;
+    document.getElementById('stage-hero-circle').style.background = d.color;
+    document.getElementById('stage-hero-name').textContent = d.name || 'Penjelajah';
+    document.getElementById('p1-stars-display').textContent = d.totalStars;
+
+    // Equipped accessories
+    const hasHat = d.accessories.includes('🎩');
+    const hasGlasses = d.accessories.includes('🕶️');
+    const acc = hasHat ? '🎩' : (hasGlasses ? '🕶️' : '');
+    
+    ['preview-acc', 'header-acc', 'stage-hero-acc'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) {
+        if (acc) {
+          el.textContent = acc;
+          el.style.display = 'block';
+        } else {
+          el.style.display = 'none';
+        }
+      }
+    });
+  },
+
+  bindEvents() {
+    // 1. Character selector buttons
+    document.querySelectorAll('.char-btn').forEach(btn => {
+      btn.onclick = () => {
+        Sound.pop();
+        document.querySelectorAll('.char-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        StorageManager.data.char = btn.dataset.char;
+        App.syncProfileUI();
+      };
+    });
+
+    // 2. Costume color dots
+    document.querySelectorAll('.color-dot').forEach(dot => {
+      dot.onclick = () => {
+        Sound.pop();
+        document.querySelectorAll('.color-dot').forEach(d => d.classList.remove('active'));
+        dot.classList.add('active');
+        StorageManager.data.color = dot.dataset.color;
+        App.syncProfileUI();
+      };
+    });
+
+    // 3. Name input
+    const nameInput = document.getElementById('player-name-input');
+    nameInput.oninput = (e) => {
+      StorageManager.data.name = e.target.value.trim();
+    };
+
+    // 4. Start button -> World Map
+    document.getElementById('btn-start-adventure').onclick = () => {
+      Sound.pop();
+      const entered = nameInput.value.trim();
+      StorageManager.data.name = entered || 'Ciko';
+      StorageManager.save();
+      App.syncProfileUI();
+      App.showScreen('screen-map');
+      Sound.speak(`Selamat datang di peta dunia Nusa Pintar, ${StorageManager.data.name}! Pilih Pulau Huruf.`);
+    };
+
+    // 5. Edit profile button
+    document.getElementById('btn-edit-profile').onclick = () => {
+      Sound.pop();
+      App.showScreen('screen-start');
+    };
+
+    // 6. Pulau 1 Node click -> Pulau Huruf
+    document.getElementById('node-pulau1').onclick = () => {
+      Sound.pop();
+      PulauHuruf.start();
+    };
+
+    // 7. Back to map button
+    document.getElementById('btn-back-to-map').onclick = () => {
+      Sound.pop();
+      PulauHuruf.cleanup();
+      App.showScreen('screen-map');
+    };
+  }
+};
+
+/* ═══════════════════════════════════════════════════════════
+   4. PULAU HURUF CONTROLLER (3 FASE)
+═══════════════════════════════════════════════════════════ */
+const PulauHuruf = {
+  currentQuestionIdx: 0,
+  mistakesInQuestion: 0,
+  totalMistakes: 0,
+  phase1Timer: null,
+  questions: [
+    {
+      type: 'choice',
+      instruction: 'Mana huruf',
+      target: 'A',
+      options: ['A', 'I', 'U', 'E'],
+      speech: 'Cari huruf A'
+    },
+    {
+      type: 'drag',
+      instruction: 'Seret huruf',
+      target: 'B',
+      options: ['B', 'D', 'M'],
+      speech: 'Seret huruf B ke dalam kotak'
+    },
+    {
+      type: 'choice',
+      instruction: 'Cari huruf',
+      target: 'M',
+      options: ['M', 'K', 'C', 'D'],
+      speech: 'Mana huruf M?'
+    },
+    {
+      type: 'choice',
+      instruction: 'Hati-hati, cari huruf',
+      target: 'U',
+      options: ['U', 'O', 'C', 'I', 'E'],
+      speech: 'Hati-hati dengan huruf mirip, cari huruf U'
+    }
+  ],
+
+  start() {
+    App.showScreen('screen-pulau1');
+    this.currentQuestionIdx = 0;
+    this.totalMistakes = 0;
+    this.startPhase1();
+  },
+
+  /* ── FASE 1: SAMBUTAN (5-8 Detik) ── */
+  startPhase1() {
+    document.getElementById('phase1-container').style.display = 'flex';
+    document.getElementById('phase2-container').style.display = 'none';
+    document.getElementById('phase3-container').style.display = 'none';
+
+    const pName = StorageManager.data.name || 'Sahabat Cilik';
+    const welcomeMsg = `Halo ${pName}! Selamat datang di Pulau Huruf! Ketuk objek lucu di pulau ini ya! 🌳🌸🎁`;
+    document.getElementById('p1-welcome-txt').textContent = welcomeMsg;
+    Sound.speak(`Halo ${pName}! Selamat datang di Pulau Huruf!`);
+
+    // Reset chest visual
+    const chest = document.getElementById('decor-chest');
+    const chestIco = document.getElementById('chest-ico');
+    if (chestIco) chestIco.textContent = '🎁';
+    if (chest) chest.onclick = () => this.openBonusChest();
+
+    // Decorative items reactions
+    document.getElementById('decor-tree').onclick = () => {
+      Sound.pop();
+      const el = document.getElementById('decor-tree');
+      el.classList.add('soft-shake');
+      setTimeout(() => el.classList.remove('soft-shake'), 400);
+      this.showToast('🍎', 'Pohon berbuah apel lezat!');
+    };
+
+    document.getElementById('decor-flower').onclick = () => {
+      Sound.sparkle();
+      const el = document.getElementById('decor-flower');
+      el.style.transform = 'scale(1.3) rotate(360deg)';
+      setTimeout(() => el.style.transform = '', 600);
+      this.showToast('✨', 'Bunga pelangi bermekaran!');
+    };
+
+    // Skip to Phase 2 button
+    document.getElementById('btn-skip-to-phase2').onclick = () => {
+      Sound.pop();
+      this.finishPhase1();
+    };
+
+    // 7-second auto advance timer bar
+    const duration = 7000;
+    const interval = 100;
+    let elapsed = 0;
+    const bar = document.getElementById('p1-timer-fill');
+    bar.style.width = '100%';
+
+    if (this.phase1Timer) clearInterval(this.phase1Timer);
+    this.phase1Timer = setInterval(() => {
+      elapsed += interval;
+      const pct = Math.max(0, 100 - (elapsed / duration) * 100);
+      bar.style.width = pct + '%';
+      if (elapsed >= duration) {
+        clearInterval(this.phase1Timer);
+        this.finishPhase1();
+      }
+    }, interval);
+  },
+
+  openBonusChest() {
+    Sound.fanfare();
+    const chest = document.getElementById('decor-chest');
+    const chestIco = document.getElementById('chest-ico');
+    if (chestIco) chestIco.textContent = '✨🎩✨';
+    if (chest) chest.onclick = null;
+
+    // Give accessory (hat or sunglasses)
+    let newAcc = '🎩';
+    if (StorageManager.data.accessories.includes('🎩')) {
+      newAcc = '🕶️';
+    }
+    StorageManager.addAccessory(newAcc);
+    App.syncProfileUI();
+
+    const toastMsg = newAcc === '🎩' ? 'Kamu dapat Topi Petualang!' : 'Kamu dapat Kacamata Keren!';
+    this.showToast(newAcc, toastMsg);
+    Sound.speak(toastMsg);
+  },
+
+  finishPhase1() {
+    if (this.phase1Timer) clearInterval(this.phase1Timer);
+    document.getElementById('phase1-container').style.display = 'none';
+    this.startPhase2();
+  },
+
+  /* ── FASE 2: TANTANGAN 4 SOAL ── */
+  startPhase2() {
+    document.getElementById('phase2-container').style.display = 'flex';
+    this.loadQuestion();
+  },
+
+  loadQuestion() {
+    this.mistakesInQuestion = 0;
+    const q = this.questions[this.currentQuestionIdx];
+
+    document.getElementById('q-progress-text').textContent = `Soal ${this.currentQuestionIdx + 1} dari ${this.questions.length}`;
+    document.getElementById('q-instruction-text').innerHTML = `${q.instruction} <span class="question-target-letter" id="q-target-letter">${q.target}</span>`;
+    
+    // Repeat speech button
+    document.getElementById('btn-repeat-speech').onclick = () => {
+      Sound.pop();
+      Sound.speak(q.speech);
+    };
+
+    Sound.speak(q.speech);
+
+    if (q.type === 'choice') {
+      this.renderChoiceQuestion(q);
+    } else if (q.type === 'drag') {
+      this.renderDragQuestion(q);
+    }
+  },
+
+  renderChoiceQuestion(q) {
+    document.getElementById('choices-grid').style.display = 'flex';
+    document.getElementById('drag-drop-container').style.display = 'none';
+    const grid = document.getElementById('choices-grid');
+    grid.innerHTML = '';
+
+    q.options.forEach(opt => {
+      const btn = document.createElement('button');
+      btn.className = 'letter-btn';
+      btn.textContent = opt;
+      btn.onclick = () => this.handleAnswer(opt, q.target, btn);
+      grid.appendChild(btn);
+    });
+  },
+
+  renderDragQuestion(q) {
+    document.getElementById('choices-grid').style.display = 'none';
+    document.getElementById('drag-drop-container').style.display = 'flex';
+
+    const dropzone = document.getElementById('letter-dropzone');
+    dropzone.innerHTML = `<span style="font-size:2.2rem">📥</span><span>Seret huruf ${q.target} ke Sini!</span>`;
+    dropzone.className = 'dropzone-box';
+
+    const row = document.getElementById('draggable-items');
+    row.innerHTML = '';
+
+    // Drag events setup (supports both HTML5 drag & touch/tap)
+    dropzone.ondragover = (e) => { e.preventDefault(); dropzone.classList.add('dragover'); };
+    dropzone.ondragleave = () => dropzone.classList.remove('dragover');
+    dropzone.ondrop = (e) => {
+      e.preventDefault();
+      dropzone.classList.remove('dragover');
+      const val = e.dataTransfer.getData('text');
+      this.handleAnswer(val, q.target, null);
+    };
+
+    q.options.forEach(opt => {
+      const item = document.createElement('div');
+      item.className = 'drag-letter';
+      item.textContent = opt;
+      item.draggable = true;
+
+      item.ondragstart = (e) => {
+        Sound.pop();
+        e.dataTransfer.setData('text', opt);
+      };
+
+      // Also support tap-to-select fallback for tablets
+      item.onclick = () => {
+        Sound.pop();
+        this.handleAnswer(opt, q.target, item);
+      };
+
+      row.appendChild(item);
+    });
+  },
+
+  handleAnswer(selected, target, element) {
+    if (selected === target) {
+      // Benar!
+      Sound.correct();
+      const praises = ["Hebat!", "Kamu jago!", "Mantap!", "Keren!"];
+      const praise = praises[Math.floor(Math.random() * praises.length)];
+      this.showToast('🌟', praise);
+      Sound.speak(praise);
+
+      setTimeout(() => {
+        this.currentQuestionIdx++;
+        if (this.currentQuestionIdx < this.questions.length) {
+          this.loadQuestion();
+        } else {
+          this.startPhase3();
+        }
+      }, 1100);
+    } else {
+      // Salah (positif-only feedback)
+      this.mistakesInQuestion++;
+      this.totalMistakes++;
+      Sound.retry();
+      this.showToast('💡', 'Coba lagi ya!', true);
+      Sound.speak('Coba lagi ya!');
+
+      if (element) {
+        element.classList.add('soft-shake');
+        setTimeout(() => element.classList.remove('soft-shake'), 400);
+      }
+
+      // Jika salah 2x: persempit pilihan jadi 2 opsi (bantuan implisit)
+      if (this.mistakesInQuestion >= 2) {
+        this.applyImplicitHelp(target);
+      }
+    }
+  },
+
+  applyImplicitHelp(target) {
+    const q = this.questions[this.currentQuestionIdx];
+    if (q.type === 'choice') {
+      const grid = document.getElementById('choices-grid');
+      const btns = Array.from(grid.children);
+      // Keep target button + 1 random wrong button, hide the others
+      const wrongBtns = btns.filter(b => b.textContent !== target);
+      if (wrongBtns.length > 1) {
+        // Hide excess wrong options
+        for (let i = 1; i < wrongBtns.length; i++) {
+          wrongBtns[i].style.visibility = 'hidden';
+        }
+      }
+    } else if (q.type === 'drag') {
+      const row = document.getElementById('draggable-items');
+      const items = Array.from(row.children);
+      const wrongItems = items.filter(it => it.textContent !== target);
+      if (wrongItems.length > 1) {
+        for (let i = 1; i < wrongItems.length; i++) {
+          wrongItems[i].style.visibility = 'hidden';
+        }
+      }
+    }
+    Sound.sparkle();
+  },
+
+  showToast(emoji, msg, isRetry = false) {
+    const toast = document.getElementById('feedback-toast');
+    document.getElementById('toast-emoji').textContent = emoji;
+    document.getElementById('toast-msg').textContent = msg;
+    toast.className = 'feedback-toast show' + (isRetry ? ' retry' : '');
+    setTimeout(() => {
+      toast.classList.remove('show');
+    }, 950);
+  },
+
+  /* ── FASE 3: PERAYAAN (RANDOM 3 JENIS) ── */
+  startPhase3() {
+    document.getElementById('phase2-container').style.display = 'none';
+    document.getElementById('phase3-container').style.display = 'flex';
+
+    Sound.fanfare();
+
+    // Hitung bintang:
+    // 3 Bintang jika kesalahan 0-1
+    // 2 Bintang jika kesalahan 2-3
+    // 1 Bintang jika kesalahan >= 4
+    let stars = 3;
+    if (this.totalMistakes >= 4) stars = 1;
+    else if (this.totalMistakes >= 2) stars = 2;
+
+    StorageManager.recordIsland('pulau1', stars);
+    App.syncProfileUI();
+
+    // Render Bintang
+    const starRow = document.getElementById('victory-stars-row');
+    starRow.innerHTML = '';
+    for (let i = 0; i < stars; i++) {
+      const s = document.createElement('span');
+      s.className = 'star-score-item';
+      s.style.animationDelay = (i * 0.2) + 's';
+      s.textContent = '⭐';
+      starRow.appendChild(s);
+    }
+
+    // Acak 1 dari 3 jenis perayaan:
+    // 1 = Bintang Jatuh (Shooting stars canvas)
+    // 2 = Confetti Emoji (Confetti canvas)
+    // 3 = Karakter Melompat Gembira
+    const celType = Math.floor(Math.random() * 3) + 1;
+    this.launchCelebration(celType);
+
+    Sound.speak(`Hore! Halaman 1 Buku Ajaib berhasil kamu temukan! Kamu dapat ${stars} bintang!`);
+
+    // Button actions
+    document.getElementById('btn-finish-to-map').onclick = () => {
+      Sound.pop();
+      PulauHuruf.cleanup();
+      App.showScreen('screen-map');
+    };
+
+    document.getElementById('btn-replay-pulau1').onclick = () => {
+      Sound.pop();
+      PulauHuruf.cleanup();
+      PulauHuruf.start();
+    };
+  },
+
+  launchCelebration(type) {
+    const canvas = document.getElementById('celebration-canvas');
+    const jumpingHero = document.getElementById('jumping-hero-box');
+    jumpingHero.style.display = 'none';
+
+    if (type === 1) {
+      // 1. Bintang Jatuh (Shooting Stars)
+      this.runCanvasParticles(canvas, 'stars');
+    } else if (type === 2) {
+      // 2. Confetti Emoji
+      this.runCanvasParticles(canvas, 'emoji');
+    } else {
+      // 3. Karakter Melompat Gembira
+      jumpingHero.textContent = StorageManager.data.char;
+      jumpingHero.style.display = 'block';
+      this.runCanvasParticles(canvas, 'sparkles');
+    }
+  },
+
+  runCanvasParticles(canvas, mode) {
+    const ctx = canvas.getContext('2d');
+    canvas.width = canvas.clientWidth || 800;
+    canvas.height = canvas.clientHeight || 600;
+
+    const particles = [];
+    const count = 45;
+    const emojis = ['🎉', '✨', '🎈', '⭐', '📜'];
+
+    for (let i = 0; i < count; i++) {
+      particles.push({
+        x: Math.random() * canvas.width,
+        y: -20 - Math.random() * 100,
+        vx: (Math.random() - 0.5) * 6,
+        vy: Math.random() * 4 + 3,
+        size: mode === 'emoji' ? 26 : Math.random() * 8 + 4,
+        emoji: emojis[Math.floor(Math.random() * emojis.length)],
+        color: ['#f59e0b', '#10b981', '#3b82f6', '#ec4899'][Math.floor(Math.random() * 4)],
+        rot: Math.random() * 360,
+        rotSpeed: (Math.random() - 0.5) * 8
+      });
+    }
+
+    let animId = null;
+    const loop = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      let alive = 0;
+      particles.forEach(p => {
+        p.x += p.vx;
+        p.y += p.vy;
+        p.rot += p.rotSpeed;
+
+        if (p.y < canvas.height + 40) {
+          alive++;
+          ctx.save();
+          ctx.translate(p.x, p.y);
+          ctx.rotate((p.rot * Math.PI) / 180);
+
+          if (mode === 'emoji') {
+            ctx.font = `${p.size}px serif`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(p.emoji, 0, 0);
+          } else {
+            // Stars / Sparkles
+            ctx.fillStyle = p.color;
+            ctx.beginPath();
+            ctx.arc(0, 0, p.size, 0, Math.PI * 2);
+            ctx.fill();
+          }
+          ctx.restore();
+        }
+      });
+
+      if (alive > 0) {
+        animId = (window.requestAnimationFrame || window.setTimeout)(loop, 16);
+      }
+    };
+    loop();
+    this.currentAnimId = animId;
+  },
+
+  cleanup() {
+    if (this.phase1Timer) clearInterval(this.phase1Timer);
+    if (this.currentAnimId) {
+      if (window.cancelAnimationFrame) window.cancelAnimationFrame(this.currentAnimId);
+      else clearTimeout(this.currentAnimId);
+    }
+    const canvas = document.getElementById('celebration-canvas');
+    if (canvas) {
+      const ctx = canvas.getContext('2d');
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+    const jumpingHero = document.getElementById('jumping-hero-box');
+    if (jumpingHero) jumpingHero.style.display = 'none';
+  }
+};
+
+// Initialize on page load
+window.addEventListener('DOMContentLoaded', () => {
+  App.init();
+});
+</script>
+
+<!-- ── PWA INSTALL BANNER ── -->
+<div id="pwa-banner" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:9999;background:linear-gradient(135deg,#4f46e5,#3730a3);color:#fff;padding:14px 20px;box-shadow:0 -4px 20px rgba(0,0,0,.25);align-items:center;gap:14px;flex-wrap:wrap">
+  <img src="icons/icon-72x72.png" alt="" style="width:48px;height:48px;border-radius:12px;flex-shrink:0">
+  <div style="flex:1;min-width:200px">
+    <div style="font-weight:700;font-size:1.05rem">Pasang di HP kamu! 📲</div>
+    <div style="font-size:.85rem;opacity:.9;margin-top:2px">Main tanpa internet — belajar kapan saja!</div>
+  </div>
+  <button id="pwa-install-btn" style="background:#fbbf24;color:#1e1b4b;border:none;border-radius:999px;padding:10px 22px;font-weight:700;font-size:1rem;cursor:pointer;box-shadow:0 4px 0 #d97706;white-space:nowrap">Pasang Sekarang ✨</button>
+  <button id="pwa-dismiss-btn" style="background:rgba(255,255,255,.2);color:#fff;border:none;border-radius:999px;padding:10px 16px;font-weight:700;font-size:.9rem;cursor:pointer;white-space:nowrap">Nanti dulu</button>
+</div>
+
+<script>
+/* ── SERVICE WORKER REGISTRATION ── */
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('sw.js')
+      .then(reg => console.log('[PWA] SW registered:', reg.scope))
+      .catch(err => console.warn('[PWA] SW failed:', err));
+  });
+}
+
+/* ── INSTALL PROMPT ── */
+let _deferredPrompt = null;
+const _banner = document.getElementById('pwa-banner');
+window.addEventListener('beforeinstallprompt', e => {
+  e.preventDefault();
+  _deferredPrompt = e;
+  if (sessionStorage.getItem('pwa-dismissed') !== '1') _banner.style.display = 'flex';
+});
+document.getElementById('pwa-install-btn').addEventListener('click', async () => {
+  _banner.style.display = 'none';
+  if (_deferredPrompt) { _deferredPrompt.prompt(); await _deferredPrompt.userChoice; _deferredPrompt = null; }
+});
+document.getElementById('pwa-dismiss-btn').addEventListener('click', () => {
+  _banner.style.display = 'none';
+  sessionStorage.setItem('pwa-dismissed', '1');
+});
+window.addEventListener('appinstalled', () => { _banner.style.display = 'none'; });
+</script>
+</body>
+</html>

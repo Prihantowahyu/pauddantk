@@ -1,0 +1,1825 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<meta name="theme-color" content="#ff6b6b">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Harsha Edu">
+<meta name="description" content="Game Edukasi Calistung interaktif untuk anak usia 5-7 tahun — Habibi, Shafiyyah & Arsha">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icons/icon-152x152.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192x192.png">
+<title>Petualangan bersama Harsha — Game Hub Calistung</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --primary:#ff6b6b;--blue:#4dabf7;--green:#40c057;--yellow:#ffd43b;--orange:#ff922b;--purple:#7950f2;--teal:#12b886;
+  --font:'Fredoka',cursive;--r-lg:24px;--r-md:16px;
+  --sh:0 8px 20px rgba(0,0,0,.12);
+}
+*{box-sizing:border-box;margin:0;padding:0;user-select:none;-webkit-tap-highlight-color:transparent;font-family:var(--font)}
+body{background:linear-gradient(180deg,#b9e2fe 0%,#e2f2ff 55%,#c8f5c3 85%,#8ae48f 100%);min-height:100vh;display:flex;flex-direction:column;overflow-x:hidden}
+
+/* ── CLOUDS ── */
+.clouds{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.cloud{position:absolute;background:#fff;border-radius:50px;opacity:.65;filter:blur(2px);animation:floatC 50s linear infinite}
+.c1{width:140px;height:50px;top:8%;left:-150px;animation-duration:55s}
+.c2{width:200px;height:65px;top:22%;left:-220px;animation-duration:70s;animation-delay:18s}
+.c3{width:170px;height:55px;top:3%;left:-180px;animation-duration:60s;animation-delay:35s}
+@keyframes floatC{from{transform:translateX(0)}to{transform:translateX(calc(100vw + 280px))}}
+
+/* ── HEADER ── */
+header{position:relative;z-index:10;display:flex;align-items:center;justify-content:space-between;padding:10px 20px;background:rgba(255,255,255,.9);backdrop-filter:blur(10px);box-shadow:0 2px 8px rgba(0,0,0,.08);border-bottom:3px solid #dde8f8;flex-wrap:wrap;gap:8px}
+.brand{display:flex;align-items:center;gap:10px}
+.brand-ico{width:48px;height:48px;background:linear-gradient(135deg,#ffd43b,#ff922b);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:26px;box-shadow:0 4px 10px rgba(255,146,43,.35);animation:pulse 3s infinite ease-in-out}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
+.brand-title{font-size:1.35rem;font-weight:700;color:#ff6b6b;text-shadow:1px 1px 0 #fff}
+.brand-sub{font-size:.8rem;color:#718096;font-weight:500}
+.stats{display:flex;align-items:center;gap:10px}
+.pill{display:flex;align-items:center;gap:6px;background:#fff;padding:6px 14px;border-radius:999px;border:3px solid #ffda79;box-shadow:0 3px 0 #ecd06f;font-size:1.1rem;font-weight:700;color:#d97706}
+.pill.coin{border-color:#ffd43b;box-shadow:0 3px 0 #e6b800;color:#b45309}
+.hdr-btns{display:flex;gap:8px}
+.ico-btn{width:48px;height:48px;border-radius:50%;border:none;background:#fff;box-shadow:0 3px 0 #cbd5e1;cursor:pointer;font-size:1.3rem;display:flex;align-items:center;justify-content:center;transition:all .15s}
+.ico-btn:active{transform:translateY(3px);box-shadow:0 1px 0 #cbd5e1}
+
+/* ── VIEWS ── */
+.view{display:none;width:100%;flex:1;flex-direction:column}
+.view.active{display:flex}
+
+/* ── HUB ── */
+#hub{position:relative;z-index:5;max-width:1300px;margin:0 auto;width:100%;padding:18px 20px 60px;flex-direction:column}
+.mascot-bar{display:flex;align-items:center;background:linear-gradient(135deg,#fff 0%,#fffbf0 100%);border:3px solid #ffe8cc;border-radius:var(--r-lg);padding:14px 20px;margin-bottom:20px;gap:16px;box-shadow:var(--sh)}
+.ciko-box{width:72px;height:72px;min-width:72px;cursor:pointer}
+.ciko-box:hover svg{transform:scale(1.1) rotate(5deg)}
+.ciko-box svg{width:100%;height:100%;filter:drop-shadow(0 4px 6px rgba(0,0,0,.15));transition:transform .25s cubic-bezier(.175,.885,.32,1.275)}
+.mascot-txt h2{font-size:1.25rem;font-weight:700;color:#e8590c;margin-bottom:4px}
+.mascot-txt p{font-size:.95rem;color:#4a5568;font-weight:500;line-height:1.4}
+
+/* ── GAME GRID ── */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:18px}
+.gcard{background:rgba(255,255,255,.95);border-radius:var(--r-lg);border:4px solid #fff;box-shadow:0 10px 20px rgba(0,0,0,.08),0 5px 0 rgba(0,0,0,.04);padding:18px 14px 16px;display:flex;flex-direction:column;align-items:center;text-align:center;cursor:pointer;transition:all .22s cubic-bezier(.175,.885,.32,1.275);min-height:270px;position:relative}
+.gcard:hover{transform:translateY(-6px);box-shadow:0 18px 30px rgba(0,0,0,.12),0 7px 0 rgba(0,0,0,.05)}
+.gcard:active{transform:translateY(2px);box-shadow:0 4px 10px rgba(0,0,0,.08)}
+.gcard.playable{border-color:#ffd43b;background:linear-gradient(180deg,#fff 0%,#fffdf0 100%)}
+.gbadge{position:absolute;top:12px;right:12px;font-size:.72rem;font-weight:700;padding:3px 9px;border-radius:999px}
+.badge-new{background:#40c057;color:#fff;animation:badgePulse 2s infinite ease-in-out}
+.badge-played{background:#339af0;color:#fff}
+@keyframes badgePulse{0%,100%{transform:scale(1)}50%{transform:scale(1.1)}}
+.gico{width:90px;height:90px;border-radius:24px;display:flex;align-items:center;justify-content:center;font-size:46px;margin:8px 0 12px;box-shadow:0 4px 12px rgba(0,0,0,.07);transition:transform .25s}
+.gcard:hover .gico{transform:scale(1.1) rotate(3deg)}
+.gtitle{font-size:1.15rem;font-weight:700;color:#2d3748;margin-bottom:4px;line-height:1.2}
+.gdesc{font-size:.85rem;color:#718096;font-weight:500;margin-bottom:12px;flex:1}
+.gfooter{width:100%;display:flex;align-items:center;justify-content:space-between;padding-top:8px;border-top:2px dashed #edf2f7}
+.gstars{display:flex;align-items:center;gap:3px;font-weight:700;color:#e8590c;font-size:.9rem}
+.btn-play{height:44px;padding:0 16px;border-radius:999px;border:none;background:linear-gradient(135deg,#ff6b6b,#fa5252);color:#fff;font-family:var(--font);font-weight:700;font-size:.9rem;box-shadow:0 4px 0 #c92a2a;cursor:pointer;display:flex;align-items:center;gap:5px;transition:all .15s}
+.btn-play:active{transform:translateY(3px);box-shadow:0 1px 0 #c92a2a}
+
+/* ── GAME TOP BAR ── */
+.gtop{display:flex;align-items:center;justify-content:space-between;padding:10px 16px;background:rgba(255,255,255,.92);border-radius:var(--r-md);margin-bottom:16px;box-shadow:var(--sh);border:3px solid #e8f3ff}
+.back-btn{min-width:56px;min-height:56px;border-radius:50%;border:none;background:#ff6b6b;color:#fff;font-size:1.5rem;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 5px 0 #c92a2a;transition:all .15s}
+.back-btn:active{transform:translateY(3px);box-shadow:0 2px 0 #c92a2a}
+.lvl-info{text-align:center}
+.lvl-title{font-size:1.2rem;font-weight:700;color:#2b8a3e}
+.lvl-prog{font-size:.88rem;color:#718096;font-weight:600;margin-top:2px}
+.star-pill{display:flex;align-items:center;gap:6px;background:#fff;padding:6px 14px;border-radius:999px;border:3px solid #ffda79;box-shadow:0 3px 0 #ecd06f;font-size:1.05rem;font-weight:700;color:#d97706;min-width:80px;justify-content:center}
+
+/* ── GAME WRAPPER ── */
+.game-wrap{position:relative;z-index:10;max-width:900px;margin:0 auto;width:100%;padding:14px 18px 40px;flex:1;flex-direction:column;display:flex}
+
+/* ── BOARD CARD (shared white card with colored border) ── */
+.board{background:#fff;border-radius:var(--r-lg);box-shadow:0 12px 24px rgba(0,0,0,.1),0 7px 0 rgba(0,0,0,.06);padding:22px 18px;display:flex;flex-direction:column;align-items:center;flex:1;min-height:360px}
+
+/* ── SHARED LETTER CHOICE BUTTONS ── */
+.choices{display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap;width:100%;max-width:560px}
+.btn-ch{min-width:68px;min-height:68px;border-radius:18px;border:none;background:linear-gradient(180deg,#4dabf7 0%,#339af0 100%);color:#fff;font-family:var(--font);font-size:1.9rem;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 0 #1c7ed6;transition:all .13s cubic-bezier(.175,.885,.32,1.275)}
+.btn-ch:hover{transform:translateY(-4px);box-shadow:0 9px 0 #1c7ed6}
+.btn-ch:active{transform:translateY(4px);box-shadow:0 2px 0 #1c7ed6}
+.btn-ch.wrong{animation:shake .5s ease;background:linear-gradient(180deg,#ffa94d,#ff922b);box-shadow:0 6px 0 #d9480f}
+.btn-ch.right{background:linear-gradient(180deg,#69db7c,#40c057);box-shadow:0 6px 0 #2b8a3e;animation:pop .4s ease}
+.btn-ch.orange{background:linear-gradient(180deg,#ff8f00,#ff6f00);box-shadow:0 6px 0 #bf360c}
+.btn-ch.purple{background:linear-gradient(180deg,#9775fa,#7950f2);box-shadow:0 6px 0 #5f3dc4}
+.btn-ch.green{background:linear-gradient(180deg,#69db7c,#40c057);box-shadow:0 6px 0 #2b8a3e}
+.btn-ch.red{background:linear-gradient(180deg,#ff6b6b,#fa5252);box-shadow:0 6px 0 #c92a2a}
+.btn-ch.teal{background:linear-gradient(180deg,#38d9a9,#20c997);box-shadow:0 6px 0 #0ca678}
+@keyframes shake{0%,100%{transform:translateX(0)}20%,60%{transform:translateX(-8px)}40%,80%{transform:translateX(8px)}}
+@keyframes pop{0%{transform:scale(.6)}80%{transform:scale(1.15)}100%{transform:scale(1)}}
+
+/* ── QUESTION DISPLAY ── */
+.q-emoji{font-size:90px;margin-bottom:12px;animation:floatWord 3s ease-in-out infinite alternate;filter:drop-shadow(0 4px 6px rgba(0,0,0,.12))}
+@keyframes floatWord{0%{transform:translateY(0) scale(1)}100%{transform:translateY(-8px) scale(1.04)}}
+.q-box{background:#f8f9fa;border:3px solid #e9ecef;border-radius:var(--r-md);padding:14px 24px;font-size:1.8rem;font-weight:700;color:#2d3748;text-align:center;margin-bottom:18px;width:100%;max-width:400px;box-shadow:inset 0 2px 6px rgba(0,0,0,.05)}
+.q-label{font-size:1.1rem;font-weight:600;color:#4a5568;margin-bottom:12px;text-align:center}
+.q-hint{display:flex;align-items:center;gap:8px;background:#e7f5ff;border:2px solid #74c0fc;border-radius:999px;padding:7px 18px;margin-bottom:18px;cursor:pointer;font-size:.95rem;font-weight:600;color:#1971c2;box-shadow:0 3px 0 #a5d8ff;transition:transform .15s}
+.q-hint:active{transform:translateY(2px)}
+
+/* ── LETTER SLOTS (Detective / Dapur / Bangun) ── */
+.slots{display:flex;align-items:center;justify-content:center;gap:10px;margin:12px 0 22px;flex-wrap:wrap}
+.slot{min-width:58px;height:70px;background:#edf2f7;border-radius:14px;border:3px solid #cbd5e1;display:flex;align-items:center;justify-content:center;font-size:2rem;font-weight:700;color:#334155;box-shadow:0 4px 0 #94a3b8;padding:0 8px}
+.slot.missing{background:#fff9db;border:4px dashed #f59f00;box-shadow:0 4px 0 #fab005;color:#e67700;animation:pulseMiss 1.8s infinite ease-in-out}
+.slot.ok{background:#d3f9d8;border:4px solid #2b8a3e;color:#2b8a3e;box-shadow:0 5px 0 #1b6329;animation:pop .4s ease}
+.slot.empty{background:#f1f3f5;border:3px dashed #ced4da;color:#adb5bd}
+@keyframes pulseMiss{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
+
+/* ── FEEDBACK TOAST ── */
+.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(120px);background:#fff;border-radius:999px;padding:11px 26px;display:flex;align-items:center;gap:10px;font-size:1.15rem;font-weight:700;box-shadow:0 10px 28px rgba(0,0,0,.18);border:4px solid #40c057;color:#2b8a3e;z-index:500;transition:transform .35s cubic-bezier(.175,.885,.32,1.275);pointer-events:none}
+.toast.show{transform:translateX(-50%) translateY(0)}
+.toast.retry{border-color:#ffd43b;color:#d97706}
+
+/* ── MODAL ── */
+.modal-bg{position:fixed;inset:0;background:rgba(15,23,42,.55);backdrop-filter:blur(4px);z-index:600;display:none;align-items:center;justify-content:center;padding:18px}
+.modal-bg.open{display:flex;animation:fadeM .25s ease-out}
+@keyframes fadeM{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}
+.modal-box{background:#fff;border-radius:var(--r-lg);border:5px solid #ffda79;box-shadow:0 20px 40px rgba(0,0,0,.25);max-width:460px;width:100%;padding:26px 22px;text-align:center;display:flex;flex-direction:column;align-items:center}
+.modal-ico{font-size:3.8rem;margin-bottom:10px;animation:bounceW 1.2s infinite alternate ease-in-out}
+@keyframes bounceW{0%{transform:translateY(0)}100%{transform:translateY(-12px)}}
+.modal-title{font-size:1.7rem;font-weight:700;color:#2d3748;margin-bottom:6px}
+.modal-desc{font-size:1rem;color:#718096;font-weight:500;margin-bottom:18px;line-height:1.45}
+.stars-row{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:18px;font-size:2.6rem}
+.star-item{animation:popS .4s ease backwards;filter:drop-shadow(0 3px 5px rgba(0,0,0,.15))}
+@keyframes popS{0%{transform:scale(0);opacity:0}80%{transform:scale(1.3)}100%{transform:scale(1);opacity:1}}
+.modal-btns{display:flex;gap:12px;width:100%;justify-content:center;flex-wrap:wrap}
+.btn-big{min-height:58px;padding:0 24px;border-radius:999px;border:none;background:linear-gradient(135deg,#40c057,#2f9e44);color:#fff;font-family:var(--font);font-size:1.1rem;font-weight:700;box-shadow:0 5px 0 #2b8a3e;cursor:pointer;display:flex;align-items:center;gap:7px;transition:all .15s}
+.btn-big:active{transform:translateY(3px);box-shadow:0 2px 0 #2b8a3e}
+.btn-sec{background:#edf2f7;color:#4a5568;box-shadow:0 5px 0 #cbd5e1}
+.btn-sec:active{transform:translateY(3px);box-shadow:0 2px 0 #cbd5e1}
+
+/* ── CONFETTI ── */
+#ccanvas{position:fixed;inset:0;pointer-events:none;z-index:700}
+
+/* ══════════════════════════════════════════════
+   GAME-SPECIFIC STYLES
+══════════════════════════════════════════════ */
+
+/* G1 EKSPEDISI */
+.island-map{width:100%;max-width:560px;position:relative;margin:0 auto}
+.map-bg{width:100%;background:linear-gradient(180deg,#74c0fc,#4dabf7);border-radius:var(--r-lg);border:4px solid #1971c2;padding:18px;display:grid;grid-template-columns:1fr 1fr;gap:14px;box-shadow:var(--sh)}
+.island-btn{border-radius:20px;border:none;padding:14px 10px;display:flex;flex-direction:column;align-items:center;gap:8px;cursor:pointer;font-family:var(--font);font-weight:700;transition:all .2s cubic-bezier(.175,.885,.32,1.275);min-height:90px;box-shadow:0 6px 0 rgba(0,0,0,.2);position:relative}
+.island-btn:hover{transform:translateY(-4px)}
+.island-btn:active{transform:translateY(3px)}
+.island-btn.done::after{content:"✅";position:absolute;top:6px;right:8px;font-size:1rem}
+.island-ico{font-size:2.2rem}
+.island-name{font-size:.9rem;color:#fff;text-align:center}
+.island-stars-sm{font-size:.8rem;color:#ffd43b;font-weight:700}
+.map-title{text-align:center;font-size:1.5rem;font-weight:700;color:#1a237e;margin-bottom:14px;background:rgba(255,255,255,.85);border-radius:12px;padding:8px}
+
+/* G2 DAPUR */
+.dapur-pot{font-size:70px;margin:10px 0;animation:floatWord 3s ease-in-out infinite alternate;filter:drop-shadow(0 4px 8px rgba(0,0,0,.15))}
+.dapur-label{font-size:1.2rem;font-weight:600;color:#4a5568;margin-bottom:14px}
+.ingredient-grid{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;max-width:400px}
+.ing-btn{min-width:64px;min-height:64px;border-radius:16px;border:none;background:linear-gradient(180deg,#ffa94d,#ff922b);color:#fff;font-family:var(--font);font-size:1.7rem;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 5px 0 #d9480f;transition:all .13s cubic-bezier(.175,.885,.32,1.275)}
+.ing-btn:hover{transform:translateY(-4px);box-shadow:0 8px 0 #d9480f}
+.ing-btn:active{transform:translateY(3px);box-shadow:0 2px 0 #d9480f}
+.ing-btn.used{opacity:.35;pointer-events:none;transform:none}
+.ing-btn.wrong{animation:shake .5s ease;background:linear-gradient(180deg,#ff6b6b,#fa5252);box-shadow:0 5px 0 #c92a2a}
+
+/* G5 BANGUN RUMAH */
+.house-svg-wrap{font-size:80px;margin-bottom:8px;animation:floatWord 3s ease-in-out infinite alternate}
+.build-progress{font-size:1.1rem;font-weight:700;color:#2b8a3e;margin-bottom:10px}
+
+/* G6 KEBUN */
+.kebun-plant{font-size:80px;margin-bottom:10px;animation:floatWord 3s ease-in-out infinite alternate;filter:drop-shadow(0 4px 8px rgba(0,0,0,.12))}
+.harvest-count{font-size:1.4rem;font-weight:700;color:#2b8a3e;background:#d3f9d8;border-radius:12px;padding:10px 20px;margin-bottom:14px;border:3px solid #2b8a3e}
+
+/* G7 KETUK SUKU */
+.suku-word{font-size:2.5rem;font-weight:700;color:#2d3748;margin-bottom:6px}
+.suku-parts{display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:18px;flex-wrap:wrap}
+.suku-part{background:#e7f5ff;border:3px solid #74c0fc;border-radius:12px;padding:8px 14px;font-size:1.6rem;font-weight:700;color:#1971c2;box-shadow:0 4px 0 #a5d8ff}
+.suku-sep{font-size:1.4rem;color:#adb5bd}
+.suku-q{font-size:1.25rem;font-weight:600;color:#4a5568;margin-bottom:14px}
+.suku-btns{display:flex;gap:14px;flex-wrap:wrap;justify-content:center}
+.btn-suku{min-width:70px;min-height:70px;border-radius:18px;border:none;font-family:var(--font);font-size:2rem;font-weight:700;cursor:pointer;box-shadow:0 6px 0;transition:all .13s cubic-bezier(.175,.885,.32,1.275);color:#fff}
+.btn-suku:hover{transform:translateY(-4px)}
+.btn-suku:active{transform:translateY(4px)}
+
+/* G8 TOKO MINI */
+.shop-board{width:100%;max-width:480px}
+.shop-list{background:#f8f9fa;border-radius:var(--r-md);padding:14px 16px;margin-bottom:16px;border:3px solid #e9ecef}
+.shop-item{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:2px dashed #dee2e6;font-size:1.2rem;font-weight:600;color:#2d3748}
+.shop-item:last-child{border-bottom:none}
+.shop-item-ico{font-size:1.5rem;margin-right:8px}
+.shop-total{font-size:1.1rem;font-weight:700;color:#495057;text-align:right;margin-top:8px;padding-top:8px;border-top:3px solid #adb5bd}
+.shop-q{font-size:1.3rem;font-weight:700;color:#2d3748;margin-bottom:14px;text-align:center;background:#fff9db;border-radius:12px;padding:10px;border:3px solid #f59f00}
+
+/* G9 PETERNAKAN */
+.farm-animal{font-size:100px;margin-bottom:10px;animation:floatWord 3s ease-in-out infinite alternate;filter:drop-shadow(0 4px 8px rgba(0,0,0,.12))}
+.farm-q{font-size:1.3rem;font-weight:700;color:#2d3748;margin-bottom:16px;text-align:center;background:#ebfbee;border-radius:12px;padding:10px;border:3px solid #40c057}
+
+/* G10 PUZZLE */
+.puzzle-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%;max-width:340px;margin-bottom:18px}
+.puzzle-piece{aspect-ratio:1;border-radius:14px;border:4px solid #e9ecef;display:flex;align-items:center;justify-content:center;font-size:3.5rem;background:#f1f3f5;transition:all .4s cubic-bezier(.175,.885,.32,1.275);position:relative;overflow:hidden}
+.puzzle-piece.revealed{background:#d3f9d8;border-color:#40c057;animation:pop .5s ease}
+.puzzle-piece.locked-p{background:#f1f3f5;color:#adb5bd}
+.puzzle-q-card{background:#fff9db;border:3px solid #f59f00;border-radius:var(--r-md);padding:12px 18px;width:100%;max-width:400px;text-align:center;margin-bottom:14px}
+.puzzle-q-text{font-size:1.4rem;font-weight:700;color:#2d3748}
+.puzzle-current{font-size:.9rem;color:#718096;margin-top:4px;font-weight:600}
+
+/* G11 ROKET */
+.roket-arena{background:linear-gradient(180deg,#0d0d2b 0%,#1a237e 40%,#283593 100%);border-radius:var(--r-lg);border:5px solid #4fc3f7;box-shadow:0 12px 24px rgba(0,0,0,.3),0 8px 0 #01579b;padding:22px 18px;display:flex;flex-direction:column;align-items:center;flex:1;overflow:hidden;position:relative}
+.roket-arena::before{content:"✦ ✧ ✦ ✧ ✦ ✧ ✦ ✧ ✦ ✧ ✦";position:absolute;top:10px;color:rgba(255,255,255,.2);font-size:.65rem;letter-spacing:8px;pointer-events:none}
+.rocket-ico{font-size:80px;filter:drop-shadow(0 0 16px rgba(79,195,247,.6));animation:rFloat 3s ease-in-out infinite alternate;margin-bottom:8px}
+@keyframes rFloat{from{transform:translateY(0)}to{transform:translateY(-14px)}}
+.fuel-wrap{width:100%;max-width:460px;margin-bottom:18px}
+.fuel-label{font-size:1rem;font-weight:700;color:#81d4fa;margin-bottom:5px;text-align:center}
+.fuel-track{background:rgba(255,255,255,.1);border-radius:999px;height:20px;border:3px solid #4fc3f7;overflow:hidden}
+.fuel-fill{height:100%;background:linear-gradient(90deg,#ffd43b,#ff9800,#ff6b6b);border-radius:999px;transition:width .5s ease;box-shadow:0 0 10px rgba(255,152,0,.5)}
+.roket-qcard{background:rgba(255,255,255,.1);border:3px solid rgba(255,255,255,.3);border-radius:var(--r-md);padding:16px 24px;text-align:center;margin-bottom:20px;width:100%;max-width:460px;backdrop-filter:blur(6px)}
+.roket-qtext{font-size:2.2rem;font-weight:700;color:#fff;text-shadow:0 0 20px rgba(79,195,247,.8)}
+.roket-qsub{font-size:.9rem;color:#b0bec5;margin-top:4px;font-weight:600}
+.btn-roket{min-width:72px;min-height:72px;border-radius:20px;border:none;background:linear-gradient(180deg,#4fc3f7,#0288d1);color:#fff;font-family:var(--font);font-size:1.8rem;font-weight:700;cursor:pointer;box-shadow:0 7px 0 #01579b,0 0 14px rgba(79,195,247,.3);transition:all .13s cubic-bezier(.175,.885,.32,1.275)}
+.btn-roket:hover{transform:translateY(-5px);box-shadow:0 11px 0 #01579b,0 0 20px rgba(79,195,247,.5)}
+.btn-roket:active{transform:translateY(4px);box-shadow:0 3px 0 #01579b}
+.btn-roket.right{background:linear-gradient(180deg,#69db7c,#40c057);box-shadow:0 7px 0 #2b8a3e}
+.btn-roket.wrong{animation:shake .5s ease;background:linear-gradient(180deg,#ffa94d,#ff922b);box-shadow:0 7px 0 #d9480f}
+.rdots{display:flex;gap:8px;margin-top:14px}
+.rdot{width:13px;height:13px;border-radius:50%;background:rgba(255,255,255,.25);border:2px solid rgba(255,255,255,.4);transition:all .3s}
+.rdot.on{background:#ffd43b;border-color:#ffa94d;box-shadow:0 0 8px rgba(255,212,59,.7)}
+
+/* G12 SALON */
+.salon-ciko{font-size:70px;transition:all .4s ease;filter:drop-shadow(0 4px 8px rgba(0,0,0,.15))}
+.accessories-row{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-bottom:14px;min-height:48px}
+.acc-badge{font-size:2rem;animation:pop .4s ease;filter:drop-shadow(0 2px 4px rgba(0,0,0,.15))}
+.salon-progress{font-size:1rem;font-weight:700;color:#e64980;margin-bottom:14px}
+.salon-qbox{background:#fff0f6;border:3px solid #f783ac;border-radius:var(--r-md);padding:12px 20px;text-align:center;margin-bottom:14px;width:100%;max-width:400px}
+.salon-qtext{font-size:1.4rem;font-weight:700;color:#2d3748}
+.btn-salon{min-width:72px;min-height:60px;border-radius:18px;border:none;background:linear-gradient(180deg,#f783ac,#e64980);color:#fff;font-family:var(--font);font-size:1.1rem;font-weight:700;cursor:pointer;padding:0 14px;box-shadow:0 5px 0 #a61e4d;transition:all .13s cubic-bezier(.175,.885,.32,1.275)}
+.btn-salon:hover{transform:translateY(-3px);box-shadow:0 8px 0 #a61e4d}
+.btn-salon:active{transform:translateY(3px);box-shadow:0 2px 0 #a61e4d}
+.btn-salon.right{background:linear-gradient(180deg,#69db7c,#40c057);box-shadow:0 5px 0 #2b8a3e}
+.btn-salon.wrong{animation:shake .5s ease;background:linear-gradient(180deg,#ffa94d,#ff922b);box-shadow:0 5px 0 #d9480f}
+
+/* G13 ULAR TANGGA */
+.board-wrap{display:flex;flex-direction:column;align-items:center;width:100%;max-width:500px;margin:0 auto}
+.ular-board{display:grid;grid-template-columns:repeat(5,1fr);gap:4px;width:100%;margin-bottom:14px}
+.cell{aspect-ratio:1;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:700;border:3px solid rgba(255,255,255,.6);position:relative;transition:all .3s;cursor:default}
+.cell-num{position:absolute;top:3px;left:5px;font-size:.65rem;font-weight:700;color:rgba(0,0,0,.5)}
+.cell.current{box-shadow:0 0 0 4px #ffd43b,0 0 12px rgba(255,212,59,.5);transform:scale(1.08);z-index:2}
+.cell.player-here{background:#ffd43b !important}
+.cell.snake-head{background:#ff6b6b !important}
+.cell.ladder-bot{background:#40c057 !important}
+.cell.goal{background:linear-gradient(135deg,#ffd43b,#ff922b) !important}
+.ular-info{display:flex;align-items:center;gap:12px;margin-bottom:12px;flex-wrap:wrap;justify-content:center}
+.ular-pill{background:#fff;border-radius:999px;padding:6px 14px;border:3px solid #e9ecef;font-size:1rem;font-weight:700;color:#2d3748;box-shadow:0 3px 0 #e9ecef}
+.dice-btn{min-width:64px;min-height:64px;border-radius:16px;border:none;background:linear-gradient(180deg,#ffd43b,#ff922b);color:#fff;font-family:var(--font);font-size:2rem;font-weight:700;cursor:pointer;box-shadow:0 6px 0 #d9480f;transition:all .15s}
+.dice-btn:active{transform:translateY(3px);box-shadow:0 2px 0 #d9480f}
+.ular-qcard{background:#fff9db;border:3px solid #f59f00;border-radius:var(--r-md);padding:12px 18px;width:100%;max-width:460px;text-align:center;margin-bottom:12px}
+.ular-qtext{font-size:1.3rem;font-weight:700;color:#2d3748}
+
+/* G3 LOMBA */
+.lari-arena{background:linear-gradient(180deg,#e0f7fa,#b2ebf2 60%,#80cbc4 100%);border-radius:var(--r-lg);border:5px solid #26c6da;box-shadow:0 12px 24px rgba(0,0,0,.1),0 8px 0 #00838f;padding:18px 18px 14px;flex:1;display:flex;flex-direction:column;overflow:hidden}
+.track-row{position:relative;height:86px;background:linear-gradient(90deg,#a5d6a7,#81c784,#66bb6a);border-radius:14px;border:3px solid #388e3c;margin-bottom:18px;overflow:hidden;box-shadow:inset 0 3px 8px rgba(0,0,0,.1)}
+.track-fill{position:absolute;top:0;left:0;bottom:0;background:rgba(255,255,255,.25);border-radius:12px;transition:width .4s ease}
+.runner{position:absolute;top:50%;transform:translateY(-50%);font-size:46px;transition:left .4s ease;filter:drop-shadow(0 3px 5px rgba(0,0,0,.2));animation:runBob .5s ease-in-out infinite alternate;z-index:3}
+@keyframes runBob{from{transform:translateY(-50%) scaleY(1)}to{transform:translateY(-52%) scaleY(.95)}}
+.finish-flag{position:absolute;right:8px;top:50%;transform:translateY(-50%);font-size:34px;z-index:3}
+.lari-q{text-align:center;margin-bottom:16px}
+.lari-q-text{font-size:1.9rem;font-weight:700;color:#1a237e;background:rgba(255,255,255,.88);border-radius:var(--r-md);padding:10px 22px;display:inline-block;border:3px solid #3949ab;box-shadow:0 4px 0 #283593}
+.lari-choices{display:flex;justify-content:center;align-items:center;gap:12px;flex-wrap:wrap}
+.btn-lari{min-width:76px;min-height:76px;border-radius:22px;border:none;background:linear-gradient(180deg,#ff8f00,#ff6f00);color:#fff;font-family:var(--font);font-size:1.9rem;font-weight:700;cursor:pointer;box-shadow:0 7px 0 #bf360c;transition:all .13s cubic-bezier(.175,.885,.32,1.275)}
+.btn-lari:hover{transform:translateY(-5px);box-shadow:0 11px 0 #bf360c}
+.btn-lari:active{transform:translateY(5px);box-shadow:0 2px 0 #bf360c}
+.btn-lari.right{background:linear-gradient(180deg,#69db7c,#40c057);box-shadow:0 7px 0 #2b8a3e;animation:pop .4s ease}
+.btn-lari.wrong{animation:shake .5s ease;background:linear-gradient(180deg,#ffa94d,#ff922b);box-shadow:0 7px 0 #d9480f}
+.lari-score{display:flex;align-items:center;justify-content:center;gap:16px;margin-top:12px;font-size:1.1rem;font-weight:700;color:#1a237e}
+.lari-pill{background:rgba(255,255,255,.88);border-radius:999px;padding:5px 16px;border:3px solid #3949ab;box-shadow:0 3px 0 #283593}
+
+/* RESPONSIVE */
+@media(max-width:720px){
+  .brand-title{font-size:1.1rem}
+  .brand-sub{display:none}
+  .grid{grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
+  .btn-ch,.btn-lari,.btn-roket,.btn-suku{min-width:60px;min-height:60px;font-size:1.6rem}
+  .slot{min-width:50px;height:60px;font-size:1.7rem}
+  .ular-board{gap:3px}
+  .cell{font-size:.65rem}
+}
+</style>
+</head>
+<body>
+<div class="clouds">
+  <div class="cloud c1"></div><div class="cloud c2"></div><div class="cloud c3"></div>
+</div>
+<canvas id="ccanvas"></canvas>
+
+<!-- HEADER -->
+<header>
+  <div class="brand">
+    <img src="logo_harsha.png" alt="Logo Harsha" style="width:52px;height:52px;object-fit:contain;filter:drop-shadow(0 4px 8px rgba(0,0,0,.15));border-radius:12px" onerror="this.style.display='none';this.nextElementSibling.querySelector('.brand-ico').style.display='flex'">
+    <div>
+      <h1 class="brand-title">Petualangan bersama Harsha</h1>
+      <p class="brand-sub">Habibi ★ Shafiyyah ★ Arsha — Belajar Calistung Ceria!</p>
+    </div>
+  </div>
+  <div class="stats">
+    <div class="pill"><span>⭐</span><span id="hdr-stars">0</span></div>
+    <div class="pill coin"><span>🪙</span><span id="hdr-coins">0</span></div>
+  </div>
+  <div class="hdr-btns">
+    <a href="nusa_pintar.html" style="text-decoration:none;display:flex;align-items:center;gap:8px;background:linear-gradient(135deg,#38bdf8,#0284c7);color:#fff;font-weight:700;padding:8px 18px;border-radius:999px;box-shadow:0 3px 0 #0369a1;font-size:1rem;transition:transform .15s" title="Buka Petualangan bersama Harsha">
+      <img src="logo_harsha.png" alt="Logo" style="width:22px;height:22px;object-fit:contain" onerror="this.style.display='none'">
+      <span>Petualangan Harsha (Baru!) 🚀</span>
+    </a>
+    <button class="ico-btn" id="snd-btn" title="Suara" aria-label="Toggle Suara">🔊</button>
+    <button class="ico-btn" id="rst-btn" title="Reset" aria-label="Reset Progres">🔄</button>
+  </div>
+</header>
+
+<!-- ═══ HUB MENU ═══ -->
+<main class="view active" id="hub" style="flex-direction:column">
+  <!-- FEATURED HARSHA ADVENTURE BANNER -->
+  <div class="mascot-bar" style="background:linear-gradient(135deg,#e0f2fe 0%,#ffffff 60%,#fef08a 100%);border:4px solid #38bdf8;box-shadow:0 10px 24px rgba(2,132,199,.18);position:relative;overflow:hidden">
+    <a href="nusa_pintar.html" style="text-decoration:none;display:flex;align-items:center;gap:18px;width:100%;flex-wrap:wrap">
+      <img src="logo_harsha.png" alt="Logo Harsha" style="width:96px;height:96px;object-fit:contain;filter:drop-shadow(0 6px 14px rgba(0,0,0,.15));animation:pulse 3s infinite ease-in-out;border-radius:16px" onerror="this.style.fontSize='80px';this.outerHTML='<span style=\'font-size:80px;animation:pulse 3s infinite ease-in-out\'>🏝️</span>'">
+      <div class="mascot-txt" style="flex:1;min-width:240px">
+        <div style="display:inline-block;background:#0284c7;color:#fff;font-size:0.75rem;font-weight:800;padding:3px 10px;border-radius:20px;margin-bottom:4px;letter-spacing:.5px">EDISI SPESIAL BARU ✨</div>
+        <h2 style="color:#0369a1;font-size:1.45rem;margin-bottom:4px">Petualangan bersama Harsha 🏝️📖</h2>
+        <p style="color:#334155;font-size:.95rem;line-height:1.4">Bantu <b>Habibi</b>, <b>Shafiyyah</b>, dan <b>Arsha</b> mengumpulkan Halaman Buku Ajaib di 5 Pulau Tropis! Penuh tantangan Calistung seru &amp; hadiah aksesoris kostum.</p>
+      </div>
+      <button class="btn-play" style="padding:14px 26px;font-size:1.15rem;background:linear-gradient(135deg,#0284c7,#0369a1);box-shadow:0 4px 0 #075985;color:#fff;border-radius:30px;pointer-events:none">
+        Mulai Petualangan 🚀
+      </button>
+    </a>
+  </div>
+  <div class="grid" id="hub-grid"></div>
+</main>
+
+<!-- ═══ G1: EKSPEDISI PULAU ═══ -->
+<section class="view" id="g1">
+  <div class="game-wrap">
+    <div class="gtop">
+      <button class="back-btn" data-back="g1">🏠</button>
+      <div class="lvl-info"><div class="lvl-title" id="g1-title">Ekspedisi Pulau Pintar</div><div class="lvl-prog" id="g1-prog">Pilih Pulau</div></div>
+      <div class="star-pill">⭐ <span id="g1-stars">0</span></div>
+    </div>
+    <div class="board" style="border:5px solid #4dabf7;box-shadow:0 12px 24px rgba(0,0,0,.1),0 8px 0 #1c7ed6">
+      <div id="g1-map-section">
+        <div class="map-title">🏝️ Pilih Pulau Petualanganmu!</div>
+        <div class="map-bg" id="g1-island-grid"></div>
+      </div>
+      <div id="g1-quiz-section" style="display:none;flex-direction:column;align-items:center;width:100%">
+        <div class="q-emoji" id="g1-emoji">🐱</div>
+        <div class="q-hint" id="g1-hint-btn"><span>🔊</span><span id="g1-hint-txt">Dengarkan</span></div>
+        <div class="q-box" id="g1-qbox">Apa ini?</div>
+        <div class="q-label">Pilih jawaban yang benar:</div>
+        <div class="choices" id="g1-choices"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ G2: DAPUR KATA ═══ -->
+<section class="view" id="g2">
+  <div class="game-wrap">
+    <div class="gtop">
+      <button class="back-btn" data-back="g2">🏠</button>
+      <div class="lvl-info"><div class="lvl-title" id="g2-title">Level 1</div><div class="lvl-prog" id="g2-prog">Soal 1 dari 4</div></div>
+      <div class="star-pill">⭐ <span id="g2-stars">0</span></div>
+    </div>
+    <div class="board" style="border:5px solid #ffa94d;box-shadow:0 12px 24px rgba(0,0,0,.1),0 8px 0 #d9480f">
+      <div class="dapur-pot" id="g2-pot">🍲</div>
+      <div class="dapur-label" id="g2-label">Susun huruf menjadi kata:</div>
+      <div class="slots" id="g2-slots"></div>
+      <div class="q-label">Ketuk huruf yang benar secara berurutan:</div>
+      <div class="ingredient-grid" id="g2-ingredients"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ G3: LOMBA LARI ═══ -->
+<section class="view" id="g3">
+  <div class="game-wrap">
+    <div class="gtop">
+      <button class="back-btn" data-back="g3">🏠</button>
+      <div class="lvl-info"><div class="lvl-title" id="g3-title">Level 1</div><div class="lvl-prog" id="g3-prog">Soal 1 dari 5</div></div>
+      <div class="star-pill">⭐ <span id="g3-stars">0</span></div>
+    </div>
+    <div class="lari-arena">
+      <div class="track-row" id="g3-track">
+        <div class="track-fill" id="g3-fill" style="width:0%"></div>
+        <div class="runner" id="g3-runner" style="left:4%">🦊</div>
+        <div class="finish-flag">🏁</div>
+      </div>
+      <div class="lari-q"><div class="lari-q-text" id="g3-qtext">Ketuk angka: <b>3</b></div></div>
+      <div class="lari-choices" id="g3-choices"></div>
+      <div class="lari-score">
+        <div class="lari-pill">✅ Benar: <span id="g3-correct">0</span></div>
+        <div class="lari-pill">🎯 Sisa: <span id="g3-remain">5</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ G4: DETEKTIF HURUF ═══ -->
+<section class="view" id="g4">
+  <div class="game-wrap">
+    <div class="gtop">
+      <button class="back-btn" data-back="g4">🏠</button>
+      <div class="lvl-info"><div class="lvl-title" id="g4-title">Level 1</div><div class="lvl-prog" id="g4-prog">Soal 1 dari 4</div></div>
+      <div class="star-pill">⭐ <span id="g4-stars">0</span></div>
+    </div>
+    <div class="board" style="border:5px solid #ffda79;box-shadow:0 12px 24px rgba(0,0,0,.1),0 8px 0 #e6b800">
+      <div class="q-emoji" id="g4-emoji">🎒</div>
+      <div class="q-hint" id="g4-hint-btn"><span>🔊</span><span id="g4-hint-txt">Dengarkan Kata: "TAS"</span></div>
+      <div class="slots" id="g4-slots"></div>
+      <div class="q-label">Ketuk huruf yang hilang:</div>
+      <div class="choices" id="g4-choices"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ G5: BANGUN RUMAH ═══ -->
+<section class="view" id="g5">
+  <div class="game-wrap">
+    <div class="gtop">
+      <button class="back-btn" data-back="g5">🏠</button>
+      <div class="lvl-info"><div class="lvl-title" id="g5-title">Level 1</div><div class="lvl-prog" id="g5-prog">Soal 1 dari 4</div></div>
+      <div class="star-pill">⭐ <span id="g5-stars">0</span></div>
+    </div>
+    <div class="board" style="border:5px solid #69db7c;box-shadow:0 12px 24px rgba(0,0,0,.1),0 8px 0 #2b8a3e">
+      <div class="house-svg-wrap" id="g5-house">🏗️</div>
+      <div class="build-progress" id="g5-progress">Susun huruf untuk membangun!</div>
+      <div class="slots" id="g5-slots"></div>
+      <div class="q-label">Ketuk huruf secara berurutan:</div>
+      <div class="ingredient-grid" id="g5-bricks"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ G6: KEBUN AJAIB ═══ -->
+<section class="view" id="g6">
+  <div class="game-wrap">
+    <div class="gtop">
+      <button class="back-btn" data-back="g6">🏠</button>
+      <div class="lvl-info"><div class="lvl-title" id="g6-title">Level 1</div><div class="lvl-prog" id="g6-prog">Soal 1 dari 4</div></div>
+      <div class="star-pill">⭐ <span id="g6-stars">0</span></div>
+    </div>
+    <div class="board" style="border:5px solid #69db7c;box-shadow:0 12px 24px rgba(0,0,0,.1),0 8px 0 #2b8a3e">
+      <div class="kebun-plant" id="g6-plant">🌱</div>
+      <div id="g6-harvest-info" style="display:none" class="harvest-count" id="g6-harvest"></div>
+      <div class="q-hint" id="g6-hint-btn" style="margin-bottom:14px"><span>🔊</span><span id="g6-hint-txt">Dengarkan</span></div>
+      <div class="slots" id="g6-slots"></div>
+      <div class="q-label" id="g6-label">Eja nama tanaman/buah ini:</div>
+      <div class="ingredient-grid" id="g6-letters"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ G7: KETUK SUKU KATA ═══ -->
+<section class="view" id="g7">
+  <div class="game-wrap">
+    <div class="gtop">
+      <button class="back-btn" data-back="g7">🏠</button>
+      <div class="lvl-info"><div class="lvl-title" id="g7-title">Level 1</div><div class="lvl-prog" id="g7-prog">Soal 1 dari 4</div></div>
+      <div class="star-pill">⭐ <span id="g7-stars">0</span></div>
+    </div>
+    <div class="board" style="border:5px solid #adb5bd;box-shadow:0 12px 24px rgba(0,0,0,.1),0 8px 0 #868e96">
+      <div class="q-emoji" id="g7-emoji">📚</div>
+      <div class="suku-word" id="g7-word">BUKU</div>
+      <div class="suku-parts" id="g7-parts"></div>
+      <div class="suku-q" id="g7-qtext">Ada berapa suku kata?</div>
+      <div class="suku-btns" id="g7-choices"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ G8: TOKO MINI ═══ -->
+<section class="view" id="g8">
+  <div class="game-wrap">
+    <div class="gtop">
+      <button class="back-btn" data-back="g8">🏠</button>
+      <div class="lvl-info"><div class="lvl-title" id="g8-title">Level 1</div><div class="lvl-prog" id="g8-prog">Soal 1 dari 4</div></div>
+      <div class="star-pill">⭐ <span id="g8-stars">0</span></div>
+    </div>
+    <div class="board" style="border:5px solid #74c0fc;box-shadow:0 12px 24px rgba(0,0,0,.1),0 8px 0 #1971c2">
+      <div style="font-size:2.5rem;margin-bottom:8px">🛒</div>
+      <div class="shop-board">
+        <div class="shop-list" id="g8-shoplist"></div>
+        <div class="shop-q" id="g8-shopq">Total belanja = ?</div>
+      </div>
+      <div class="q-label">Pilih jumlah uang yang tepat:</div>
+      <div class="choices" id="g8-choices"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ G9: PETERNAKAN ABJAD ═══ -->
+<section class="view" id="g9">
+  <div class="game-wrap">
+    <div class="gtop">
+      <button class="back-btn" data-back="g9">🏠</button>
+      <div class="lvl-info"><div class="lvl-title" id="g9-title">Level 1</div><div class="lvl-prog" id="g9-prog">Soal 1 dari 4</div></div>
+      <div class="star-pill">⭐ <span id="g9-stars">0</span></div>
+    </div>
+    <div class="board" style="border:5px solid #69db7c;box-shadow:0 12px 24px rgba(0,0,0,.1),0 8px 0 #2b8a3e">
+      <div class="farm-animal" id="g9-animal">🐱</div>
+      <div class="farm-q" id="g9-qtext">Nama hewan ini dimulai huruf apa?</div>
+      <div class="choices" id="g9-choices"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ G10: PUZZLE KATA ═══ -->
+<section class="view" id="g10">
+  <div class="game-wrap">
+    <div class="gtop">
+      <button class="back-btn" data-back="g10">🏠</button>
+      <div class="lvl-info"><div class="lvl-title" id="g10-title">Level 1</div><div class="lvl-prog" id="g10-prog">Soal 1 dari 4</div></div>
+      <div class="star-pill">⭐ <span id="g10-stars">0</span></div>
+    </div>
+    <div class="board" style="border:5px solid #38d9a9;box-shadow:0 12px 24px rgba(0,0,0,.1),0 8px 0 #0ca678">
+      <div class="puzzle-grid" id="g10-puzzle">
+        <div class="puzzle-piece locked-p" id="pp0">❓</div>
+        <div class="puzzle-piece locked-p" id="pp1">❓</div>
+        <div class="puzzle-piece locked-p" id="pp2">❓</div>
+        <div class="puzzle-piece locked-p" id="pp3">❓</div>
+      </div>
+      <div class="puzzle-q-card">
+        <div class="puzzle-q-text" id="g10-qtext">Apa nama hewan ini?</div>
+        <div class="puzzle-current" id="g10-piece-info">Buka bagian 1 dari 4</div>
+      </div>
+      <div class="choices" id="g10-choices"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ G11: MISI ROKET ═══ -->
+<section class="view" id="g11">
+  <div class="game-wrap">
+    <div class="gtop" style="border-color:#4fc3f7;background:#e3f2fd">
+      <button class="back-btn" style="background:#3949ab;box-shadow:0 5px 0 #1a237e" data-back="g11">🏠</button>
+      <div class="lvl-info"><div class="lvl-title" style="color:#1a237e" id="g11-title">Level 1</div><div class="lvl-prog" id="g11-prog">Soal 1 dari 5</div></div>
+      <div class="star-pill">⭐ <span id="g11-stars">0</span></div>
+    </div>
+    <div class="roket-arena" style="flex:1">
+      <div class="rocket-ico" id="g11-rocket">🚀</div>
+      <div class="fuel-wrap">
+        <div class="fuel-label" id="g11-fuel-label">Bahan Bakar: 0/5</div>
+        <div class="fuel-track"><div class="fuel-fill" id="g11-fuel-fill" style="width:0%"></div></div>
+      </div>
+      <div class="roket-qcard">
+        <div class="roket-qtext" id="g11-qtext">2 + 1 = ?</div>
+        <div class="roket-qsub">Pilih jawaban yang benar!</div>
+      </div>
+      <div class="choices" id="g11-choices" style="max-width:480px"></div>
+      <div class="rdots" id="g11-dots"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ G12: SALON KATA ═══ -->
+<section class="view" id="g12">
+  <div class="game-wrap">
+    <div class="gtop" style="border-color:#f783ac;background:#fff0f6">
+      <button class="back-btn" style="background:#e64980;box-shadow:0 5px 0 #a61e4d" data-back="g12">🏠</button>
+      <div class="lvl-info"><div class="lvl-title" style="color:#a61e4d" id="g12-title">Level 1</div><div class="lvl-prog" id="g12-prog">Soal 1 dari 5</div></div>
+      <div class="star-pill">⭐ <span id="g12-stars">0</span></div>
+    </div>
+    <div class="board" style="border:5px solid #f783ac;box-shadow:0 12px 24px rgba(0,0,0,.1),0 8px 0 #a61e4d">
+      <div class="salon-ciko" id="g12-ciko">🦊</div>
+      <div class="accessories-row" id="g12-accessories"></div>
+      <div class="salon-progress" id="g12-progress">Jawab soal untuk menghias Ciko!</div>
+      <div class="salon-qbox">
+        <div class="salon-qtext" id="g12-qtext">Pertanyaan</div>
+      </div>
+      <div class="choices" id="g12-choices"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ G13: ULAR TANGGA ═══ -->
+<section class="view" id="g13">
+  <div class="game-wrap">
+    <div class="gtop" style="border-color:#ffd43b;background:#fff9db">
+      <button class="back-btn" style="background:#fab005;box-shadow:0 5px 0 #e67700" data-back="g13">🏠</button>
+      <div class="lvl-info"><div class="lvl-title" style="color:#e67700" id="g13-title">Ular Tangga Calistung</div><div class="lvl-prog" id="g13-prog">Posisi: 1</div></div>
+      <div class="star-pill">⭐ <span id="g13-stars">0</span></div>
+    </div>
+    <div class="board" style="border:5px solid #ffd43b;box-shadow:0 12px 24px rgba(0,0,0,.1),0 8px 0 #e6b800;padding:14px">
+      <div class="board-wrap">
+        <div class="ular-info">
+          <div class="ular-pill">Posisi: <span id="g13-pos">1</span></div>
+          <button class="dice-btn" id="g13-dice">🎲 Lempar</button>
+          <div class="ular-pill" id="g13-diceresult" style="display:none">Dadu: <span id="g13-dnum">?</span></div>
+        </div>
+        <div class="ular-board" id="g13-board"></div>
+        <div id="g13-challenge-area" style="display:none;width:100%;flex-direction:column;align-items:center">
+          <div class="ular-qcard">
+            <div style="font-size:.85rem;font-weight:700;color:#718096;margin-bottom:4px" id="g13-challenge-label">Tantangan!</div>
+            <div class="ular-qtext" id="g13-qtext">Soal</div>
+          </div>
+          <div class="choices" id="g13-choices" style="max-width:440px"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MODALS -->
+<div class="modal-bg" id="vic-modal">
+  <div class="modal-box">
+    <div class="modal-ico">🎉🏆</div>
+    <h2 class="modal-title" id="vic-title">Hebat!</h2>
+    <p class="modal-desc" id="vic-desc">Kamu luar biasa!</p>
+    <div class="stars-row" id="vic-stars"></div>
+    <div class="modal-btns">
+      <button class="btn-big" id="vic-next">Lanjut 🚀</button>
+      <button class="btn-big btn-sec" id="vic-hub">Peta 🗺️</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"><span id="toast-ico">🌟</span><span id="toast-msg">Hebat!</span></div>
+
+<script>
+/* ═══════════════════════════════════════════════════════════
+   1. SOUND MANAGER (Web Audio API, zero external files)
+═══════════════════════════════════════════════════════════ */
+const SFX = {
+  ctx: null, on: true,
+  init() { if (!this.ctx) { const A = window.AudioContext || window.webkitAudioContext; if (A) this.ctx = new A(); } },
+  resume() { this.init(); if (this.ctx?.state === 'suspended') this.ctx.resume(); },
+  _osc(type, freq, dur, vol=.3, startFreq=null) {
+    this.resume(); if (!this.ctx || !this.on) return;
+    const o = this.ctx.createOscillator(), g = this.ctx.createGain(), t = this.ctx.currentTime;
+    o.type = type; o.frequency.setValueAtTime(startFreq||freq, t);
+    if (startFreq) o.frequency.exponentialRampToValueAtTime(freq, t+dur*.6);
+    g.gain.setValueAtTime(vol, t); g.gain.exponentialRampToValueAtTime(.001, t+dur);
+    o.connect(g); g.connect(this.ctx.destination); o.start(t); o.stop(t+dur+.01);
+  },
+  pop() { this._osc('sine', 880, .12, .28, 520); },
+  correct() {
+    [523.25,659.25,783.99,1046.5].forEach((f,i)=>{
+      this.resume(); if(!this.ctx||!this.on) return;
+      const o=this.ctx.createOscillator(),g=this.ctx.createGain(),t=this.ctx.currentTime+i*.08;
+      o.type='triangle'; o.frequency.setValueAtTime(f,t);
+      g.gain.setValueAtTime(.26,t); g.gain.exponentialRampToValueAtTime(.001,t+.28);
+      o.connect(g);g.connect(this.ctx.destination);o.start(t);o.stop(t+.3);
+    });
+  },
+  retry() { this._osc('sine',440,.25,.18,392); },
+  fanfare() {
+    [{f:523.25,d:.15},{f:659.25,d:.15},{f:783.99,d:.18},{f:783.99,d:.12},{f:880,d:.22},{f:1046.5,d:.45}]
+    .reduce((t,n)=>{
+      this.resume(); if(!this.ctx||!this.on) return t;
+      const o=this.ctx.createOscillator(),g=this.ctx.createGain();
+      o.type='triangle';o.frequency.setValueAtTime(n.f,t);
+      g.gain.setValueAtTime(.28,t);g.gain.exponentialRampToValueAtTime(.001,t+n.d);
+      o.connect(g);g.connect(this.ctx.destination);o.start(t);o.stop(t+n.d);
+      return t+n.d*.9;
+    }, this.ctx ? this.ctx.currentTime : 0);
+  },
+  speak(txt) {
+    if (!this.on || !('speechSynthesis' in window)) return;
+    speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(txt);
+    u.lang='id-ID'; u.rate=.85; u.pitch=1.1;
+    speechSynthesis.speak(u);
+  }
+};
+
+/* ═══════════════════════════════════════════════════════════
+   2. PROGRESS SYSTEM (Unified localStorage: "calistung_progress")
+═══════════════════════════════════════════════════════════ */
+const KEY = 'calistung_progress';
+const Prog = {
+  data: null,
+  IDS: ['ekspedisi_pulau','dapur_kata','lomba_lari','detektif_huruf','bangun_rumah',
+        'kebun_ajaib','ketuk_suku','toko_mini','peternakan','puzzle_kata',
+        'misi_roket','salon_kata','ular_tangga'],
+  default() {
+    const g = {}; this.IDS.forEach(id => g[id]={played:false,highLevel:0,stars:0,lp:{}});
+    return {totalStars:0,totalCoins:0,games:g};
+  },
+  load() {
+    try { const r=localStorage.getItem(KEY); if(r){ this.data=JSON.parse(r); this.IDS.forEach(id=>{ if(!this.data.games[id]) this.data.games[id]={played:false,highLevel:0,stars:0,lp:{}}; }); } else { this.data=this.default(); this.save(); } } catch(e){ this.data=this.default(); }
+  },
+  save() { try { localStorage.setItem(KEY,JSON.stringify(this.data)); } catch(e){} },
+  reset() { this.data=this.default(); this.save(); },
+  record(gameId, levelNum, stars, coins) {
+    const g = this.data.games[gameId]; if(!g) return;
+    g.played=true; if(levelNum>g.highLevel) g.highLevel=levelNum;
+    const prev=g.lp[levelNum]||0;
+    if(stars>prev){ const d=stars-prev; g.stars+=d; this.data.totalStars+=d; g.lp[levelNum]=stars; }
+    this.data.totalCoins+=coins; this.save();
+  },
+  gameStars(gameId, level) { return this.data.games[gameId]?.lp?.[level]||0; }
+};
+
+/* ═══════════════════════════════════════════════════════════
+   3. CONFETTI
+═══════════════════════════════════════════════════════════ */
+const Confetti = {
+  c: null, ctx: null, ps: [], aid: null,
+  init() { this.c=document.getElementById('ccanvas'); this.ctx=this.c.getContext('2d'); this._resize(); window.addEventListener('resize',()=>this._resize()); },
+  _resize() { if(!this.c) return; this.c.width=window.innerWidth; this.c.height=window.innerHeight; },
+  launch() {
+    this._resize(); const cols=['#ff6b6b','#ffd43b','#4dabf7','#69db7c','#da77f2','#ffa94d']; this.ps=[];
+    for(let i=0;i<80;i++) this.ps.push({x:window.innerWidth*.5,y:window.innerHeight*.4,vx:(Math.random()-.5)*14,vy:(Math.random()-.85)*16,s:Math.random()*9+5,c:cols[Math.floor(Math.random()*cols.length)],r:Math.random()*360,rs:(Math.random()-.5)*12,o:1});
+    if(this.aid) cancelAnimationFrame(this.aid); this._loop();
+  },
+  _loop() {
+    this.ctx.clearRect(0,0,this.c.width,this.c.height); let n=0;
+    this.ps.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.vy+=.35;p.r+=p.rs;p.o-=.009;if(p.o>0){n++;this.ctx.save();this.ctx.translate(p.x,p.y);this.ctx.rotate(p.r*Math.PI/180);this.ctx.globalAlpha=Math.max(0,p.o);this.ctx.fillStyle=p.c;this.ctx.fillRect(-p.s/2,-p.s/2,p.s,p.s);this.ctx.restore();}});
+    if(n>0) this.aid=requestAnimationFrame(()=>this._loop()); else this.ctx.clearRect(0,0,this.c.width,this.c.height);
+  }
+};
+
+/* ═══════════════════════════════════════════════════════════
+   4. GAMES CATALOG (all 13, all playable)
+═══════════════════════════════════════════════════════════ */
+const CATALOG = [
+  {id:'ekspedisi_pulau',n:1,title:'Ekspedisi Pulau Pintar',desc:'Eksplorasi 5 pulau huruf & angka',ico:'🏝️',bg:'#e3fafc',col:'#15aabf',screen:'g1',launch:()=>G1.start()},
+  {id:'dapur_kata',n:2,title:'Dapur Kata & Angka',desc:'Susun huruf jadi resep lezat',ico:'🍳',bg:'#fff4e6',col:'#fd7e14',screen:'g2',launch:()=>G2.start(0)},
+  {id:'lomba_lari',n:3,title:'Lomba Lari Angka',desc:'Ketuk angka benar sambil berlari',ico:'🏃',bg:'#f3f0ff',col:'#7950f2',screen:'g3',launch:()=>G3.start(0)},
+  {id:'detektif_huruf',n:4,title:'Detektif Huruf Hilang',desc:'Lengkapi huruf yang hilang',ico:'🔍',bg:'#fff9db',col:'#f59f00',screen:'g4',launch:()=>G4.start(0)},
+  {id:'bangun_rumah',n:5,title:'Bangun Rumah Kata',desc:'Susun balok huruf jadi kata',ico:'🏠',bg:'#ebfbee',col:'#40c057',screen:'g5',launch:()=>G5.start(0)},
+  {id:'kebun_ajaib',n:6,title:'Kebun Ajaib',desc:'Eja kata & panen buah berhitung',ico:'🍎',bg:'#fff0f6',col:'#e64980',screen:'g6',launch:()=>G6.start(0)},
+  {id:'ketuk_suku',n:7,title:'Ketuk Suku Kata',desc:'Hitung suku kata dengan tepat',ico:'🥁',bg:'#f1f3f5',col:'#495057',screen:'g7',launch:()=>G7.start(0)},
+  {id:'toko_mini',n:8,title:'Toko Mini Pintar',desc:'Simulasi kasir & belanja hitung',ico:'🛒',bg:'#e7f5ff',col:'#228be6',screen:'g8',launch:()=>G8.start(0)},
+  {id:'peternakan',n:9,title:'Peternakan Abjad',desc:'Cocokkan hewan dengan hurufnya',ico:'🐮',bg:'#f8f9fa',col:'#82c91e',screen:'g9',launch:()=>G9.start(0)},
+  {id:'puzzle_kata',n:10,title:'Puzzle Kata Bergambar',desc:'Buka potongan puzzle dengan jawaban',ico:'🧩',bg:'#e6fcf5',col:'#12b886',screen:'g10',launch:()=>G10.start(0)},
+  {id:'misi_roket',n:11,title:'Misi Roket Angka',desc:'Isi bahan bakar roket berhitung',ico:'🚀',bg:'#edf2ff',col:'#4c6ef5',screen:'g11',launch:()=>G11.start(0)},
+  {id:'salon_kata',n:12,title:'Salon Kata & Hadiah',desc:'Hias Ciko dengan jawaban kata',ico:'🎨',bg:'#fff0f6',col:'#f783ac',screen:'g12',launch:()=>G12.start(0)},
+  {id:'ular_tangga',n:13,title:'Ular Tangga Calistung',desc:'Board game tantangan seru',ico:'🎲',bg:'#fff3bf',col:'#fab005',screen:'g13',launch:()=>G13.start()}
+];
+
+/* ═══════════════════════════════════════════════════════════
+   5. SHARED HELPERS
+═══════════════════════════════════════════════════════════ */
+function showToast(ico, msg, isRetry=false) {
+  const t=document.getElementById('toast'), m=document.getElementById('toast-msg'), i=document.getElementById('toast-ico');
+  i.textContent=ico; m.textContent=msg;
+  t.classList.toggle('retry',isRetry); t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'), 1600);
+}
+
+function calcStars(mistakes) { if(mistakes>3) return 1; if(mistakes>1) return 2; return 3; }
+
+function showVictory(levelNum, stars, coins, totalLevels, onNext) {
+  SFX.fanfare(); Confetti.launch();
+  const m=document.getElementById('vic-modal');
+  document.getElementById('vic-title').textContent=`Luar Biasa! Level ${levelNum} Selesai!`;
+  document.getElementById('vic-desc').textContent=`Kamu mendapat ${stars} ⭐ dan ${coins} 🪙!`;
+  const sr=document.getElementById('vic-stars'); sr.innerHTML='';
+  for(let i=0;i<stars;i++){const s=document.createElement('span');s.className='star-item';s.style.animationDelay=i*.15+'s';s.textContent='⭐';sr.appendChild(s);}
+  const nb=document.getElementById('vic-next');
+  if(levelNum<totalLevels){ nb.innerHTML=`Lanjut Level ${levelNum+1} 🚀`; nb.onclick=()=>{m.classList.remove('open');onNext(levelNum);};
+  } else { nb.innerHTML='Ulangi dari Awal 🔁'; nb.onclick=()=>{m.classList.remove('open');onNext(0);}; }
+  m.classList.add('open');
+  UI.updateHeader();
+}
+
+function scramble(arr) { return [...arr].sort(()=>Math.random()-.5); }
+function rand(arr) { return arr[Math.floor(Math.random()*arr.length)]; }
+
+/* Generic choice renderer */
+function renderChoices(containerId, options, correctVal, onCorrect, onWrong, cls='btn-ch') {
+  const c=document.getElementById(containerId); c.innerHTML='';
+  options.forEach(opt=>{
+    const b=document.createElement('button'); b.className=cls; b.textContent=opt;
+    b.onclick=()=>{
+      SFX.pop();
+      if(String(opt)===String(correctVal)){ b.classList.add('right'); SFX.correct(); onCorrect(b); }
+      else { b.classList.add('wrong'); setTimeout(()=>b.classList.remove('wrong'),550); SFX.retry(); onWrong(b); }
+    };
+    c.appendChild(b);
+  });
+}
+
+/* Generic tap-to-spell engine (used by G2, G5, G6) */
+function tapSpell({word,slotId,ingredientId,onFinish}) {
+  const sEl=document.getElementById(slotId), iEl=document.getElementById(ingredientId);
+  const letters=scramble(word.split('')); let placed=0; sEl.innerHTML=''; iEl.innerHTML='';
+  // slots
+  word.split('').forEach((_,i)=>{
+    const s=document.createElement('div'); s.className='slot empty'; s.id=`slt_${slotId}_${i}`; sEl.appendChild(s);
+  });
+  // ingredient buttons
+  letters.forEach((lt,i)=>{
+    const b=document.createElement('button'); b.className='ing-btn'; b.textContent=lt;
+    b.onclick=()=>{
+      SFX.pop();
+      if(lt===word[placed]){
+        const s=document.getElementById(`slt_${slotId}_${placed}`);
+        s.textContent=lt; s.className='slot ok'; b.classList.add('used');
+        SFX.correct(); placed++;
+        if(placed===word.length) setTimeout(onFinish,600);
+      } else { b.classList.add('wrong'); setTimeout(()=>b.classList.remove('wrong'),550); SFX.retry(); showToast('💡','Coba huruf lain!',true); }
+    };
+    iEl.appendChild(b);
+  });
+}
+
+/* ═══════════════════════════════════════════════════════════
+   6. GAME DATA
+═══════════════════════════════════════════════════════════ */
+
+// G1 EKSPEDISI – island quizzes
+const G1_ISLANDS = [
+  {id:'i1',name:'Pulau Huruf A–E',ico:'🏝️',bg:'#4dabf7',questions:[
+    {q:'Apa huruf pertama dari APEL?',emoji:'🍎',ans:'A',opts:['A','B','C','D']},
+    {q:'Huruf apa yang ada di tengah BOLA?',emoji:'⚽',ans:'O',opts:['A','I','O','U']},
+    {q:'Apa ini?',emoji:'🐘',ans:'E',opts:['E','I','A','O'],qtext:'Pilih huruf awal dari: GAJAH\n(bukan E, ini G ya!)'},
+    {q:'Huruf vokal mana yang ada di kata BUS?',emoji:'🚌',ans:'U',opts:['A','I','U','E']},
+  ]},
+  {id:'i2',name:'Pulau Huruf F–L',ico:'🌴',bg:'#51cf66',questions:[
+    {q:'Apa huruf awal dari IKAN?',emoji:'🐠',ans:'I',opts:['I','A','U','E']},
+    {q:'Nama buah ini dimulai huruf apa?',emoji:'🍋',ans:'J',opts:['J','I','L','K'],hint:'JERUK'},
+    {q:'Huruf apa yang ada di KUCING?',emoji:'🐱',ans:'K',opts:['G','K','L','M']},
+    {q:'Apa huruf awal dari LEMON?',emoji:'🍋',ans:'L',opts:['L','M','K','J']},
+  ]},
+  {id:'i3',name:'Pulau Huruf M–R',ico:'🗻',bg:'#ff922b',questions:[
+    {q:'Apa huruf awal dari MANGGA?',emoji:'🥭',ans:'M',opts:['M','N','L','P']},
+    {q:'Huruf awal dari NASI?',emoji:'🍚',ans:'N',opts:['N','M','P','R']},
+    {q:'Apa huruf awal dari PISANG?',emoji:'🍌',ans:'P',opts:['P','B','R','K']},
+    {q:'Huruf awal dari ROTI?',emoji:'🍞',ans:'R',opts:['R','P','S','T']},
+  ]},
+  {id:'i4',name:'Pulau Angka 1–10',ico:'🏔️',bg:'#cc5de8',questions:[
+    {q:'Berapa jumlah jari satu tangan?',emoji:'✋',ans:'5',opts:['3','4','5','6']},
+    {q:'Angka setelah 7 adalah?',emoji:'7️⃣',ans:'8',opts:['6','8','9','10']},
+    {q:'Berapa jumlah kaki kucing?',emoji:'🐱',ans:'4',opts:['2','3','4','5']},
+    {q:'Berapa 3 + 2?',emoji:'🔢',ans:'5',opts:['4','5','6','7']},
+  ]},
+  {id:'i5',name:'Pulau Angka 11–20',ico:'🌋',bg:'#f03e3e',questions:[
+    {q:'Berapa 10 + 5?',emoji:'➕',ans:'15',opts:['13','14','15','16']},
+    {q:'Angka setelah 17 adalah?',emoji:'🔢',ans:'18',opts:['16','17','18','19']},
+    {q:'Berapa 20 - 3?',emoji:'➖',ans:'17',opts:['15','16','17','18']},
+    {q:'Berapa 11 + 7?',emoji:'🧮',ans:'18',opts:['17','18','19','20']},
+  ]}
+];
+
+// G2 DAPUR – words to spell
+const G2_DATA = [
+  {level:1,title:'Level 1: Resep Sederhana',items:[
+    {word:'NASI',pot:'🍚',hint:'Makanan pokok kita sehari-hari'},
+    {word:'SUSU',pot:'🥛',hint:'Minuman bergizi dari sapi'},
+    {word:'ROTI',pot:'🍞',hint:'Makanan untuk sarapan pagi'},
+    {word:'IKAN',pot:'🐟',hint:'Lauk bergizi dari laut'},
+  ]},
+  {level:2,title:'Level 2: Resep Sayur',items:[
+    {word:'SAYUR',pot:'🥦',hint:'Makanan sehat berwarna hijau'},
+    {word:'TOMAT',pot:'🍅',hint:'Buah merah untuk masak'},
+    {word:'WORTEL',pot:'🥕',hint:'Sayur oranye kesukaan kelinci'},
+    {word:'BAYAM',pot:'🥬',hint:'Sayuran hijau kaya zat besi'},
+  ]},
+  {level:3,title:'Level 3: Resep Buah',items:[
+    {word:'APEL',pot:'🍎',hint:'Buah merah manis dan segar'},
+    {word:'JERUK',pot:'🍊',hint:'Buah oranye kaya vitamin C'},
+    {word:'ANGGUR',pot:'🍇',hint:'Buah kecil-kecil berwarna ungu'},
+    {word:'MANGGA',pot:'🥭',hint:'Buah kuning manis tropis'},
+  ]},
+  {level:4,title:'Level 4: Resep Makanan',items:[
+    {word:'AYAM',pot:'🍗',hint:'Lauk dari hewan bertelur'},
+    {word:'TELUR',pot:'🥚',hint:'Bahan makanan dari ayam'},
+    {word:'MAKAN',pot:'🍽️',hint:'Kegiatan memasukkan makanan ke mulut'},
+    {word:'BUMBU',pot:'🌶️',hint:'Memberi rasa pada masakan'},
+  ]},
+  {level:5,title:'Level 5: Resep Spesial',items:[
+    {word:'PISANG',pot:'🍌',hint:'Buah panjang kuning kesukaan monyet'},
+    {word:'JAGUNG',pot:'🌽',hint:'Sayur kuning berbaris rapi'},
+    {word:'SEMANGKA',pot:'🍉',hint:'Buah besar merah segar'},
+    {word:'PEPAYA',pot:'🍈',hint:'Buah oranye di dalam'},
+  ]}
+];
+
+// G3 LOMBA LARI
+const G3_DATA = [
+  {level:1,title:'Level 1: Angka 1–5',mode:'num',qs:[
+    {t:'1',pool:[1,2,3,4]},{t:'3',pool:[2,3,5,4]},{t:'2',pool:[2,4,5,1]},{t:'5',pool:[3,5,1,2]},{t:'4',pool:[4,2,3,5]}]},
+  {level:2,title:'Level 2: Angka 6–10',mode:'num',qs:[
+    {t:'7',pool:[6,7,9,8]},{t:'9',pool:[8,9,6,10]},{t:'6',pool:[6,8,10,7]},{t:'10',pool:[9,10,7,8]},{t:'8',pool:[7,8,10,6]}]},
+  {level:3,title:'Level 3: Huruf Vokal',mode:'let',qs:[
+    {t:'A',pool:['A','I','U','E']},{t:'I',pool:['O','I','A','U']},{t:'U',pool:['E','U','I','O']},{t:'E',pool:['A','E','O','I']},{t:'O',pool:['U','I','O','A']}]},
+  {level:4,title:'Level 4: Angka 11–20',mode:'num',qs:[
+    {t:'11',pool:[11,12,15,14]},{t:'15',pool:[13,15,12,17]},{t:'20',pool:[19,20,16,18]},{t:'13',pool:[13,14,17,16]},{t:'18',pool:[15,18,20,12]}]},
+  {level:5,title:'Level 5: Huruf Konsonan',mode:'let',qs:[
+    {t:'B',pool:['B','D','P','R']},{t:'K',pool:['G','K','L','N']},{t:'M',pool:['M','N','L','P']},{t:'S',pool:['S','T','N','R']},{t:'T',pool:['B','D','T','K']}]}
+];
+
+// G4 DETEKTIF
+const G4_DATA = [
+  {level:1,title:'Level 1: Kata 3 Huruf',qs:[
+    {w:'TAS',mi:1,e:'🎒'},{w:'CAT',mi:1,e:'🎨'},{w:'BUS',mi:0,e:'🚌'},{w:'JAM',mi:2,e:'⏰'}]},
+  {level:2,title:'Level 2: Kata 4 Huruf Vokal',qs:[
+    {w:'BOLA',mi:1,e:'⚽'},{w:'BUKU',mi:3,e:'📖'},{w:'MEJA',mi:1,e:'🪑'},{w:'KUDA',mi:0,e:'🐴'}]},
+  {level:3,title:'Level 3: Huruf Konsonan',qs:[
+    {w:'TOPI',mi:0,e:'🧢'},{w:'ROTI',mi:2,e:'🍞'},{w:'SAPU',mi:2,e:'🧹'},{w:'SUSU',mi:0,e:'🥛'}]},
+  {level:4,title:'Level 4: Kata 5 Huruf',qs:[
+    {w:'GAJAH',mi:2,e:'🐘'},{w:'POHON',mi:3,e:'🌳'},{w:'RUMAH',mi:4,e:'🏡'},{w:'HAJAR',mi:2,e:'🪨'}]},
+  {level:5,title:'Level 5: Kata Angka',qs:[
+    {w:'SATU',mi:1,e:'1️⃣'},{w:'DUA',mi:0,e:'2️⃣'},{w:'TIGA',mi:2,e:'3️⃣'},{w:'LIMA',mi:1,e:'5️⃣'}]}
+];
+
+// G5 BANGUN RUMAH
+const G5_DATA = [
+  {level:1,title:'Level 1: Bagian Rumah',items:[
+    {word:'PINTU',house:'🚪'},{word:'ATAP',house:'🏠'},{word:'BATA',house:'🧱'},{word:'TIANG',house:'🏗️'}]},
+  {level:2,title:'Level 2: Benda di Rumah',items:[
+    {word:'KURSI',house:'🪑'},{word:'MEJA',house:'🪞'},{word:'LAMPU',house:'💡'},{word:'KASUR',house:'🛏️'}]},
+  {level:3,title:'Level 3: Peralatan Rumah',items:[
+    {word:'SAPU',house:'🧹'},{word:'EMBER',house:'🪣'},{word:'KUNCI',house:'🔑'},{word:'PANCI',house:'🍳'}]},
+  {level:4,title:'Level 4: Kata Panjang',items:[
+    {word:'JENDELA',house:'🏠'},{word:'GARASI',house:'🚗'},{word:'TAMAN',house:'🌿'},{word:'KOLAM',house:'💧'}]},
+  {level:5,title:'Level 5: Tantangan Ahli',items:[
+    {word:'DAPUR',house:'🍽️'},{word:'KAMAR',house:'🛏️'},{word:'BALKON',house:'🌤️'},{word:'TANGGA',house:'🪜'}]}
+];
+
+// G6 KEBUN
+const G6_DATA = [
+  {level:1,title:'Level 1: Buah Segar',items:[
+    {word:'APEL',plant:'🌳',fruit:'🍎',harvest:[3,2]},
+    {word:'PEAR',plant:'🌲',fruit:'🍐',harvest:[2,3]},
+    {word:'JAMBU',plant:'🌳',fruit:'🍈',harvest:[4,1]},
+    {word:'JERUK',plant:'🍊',fruit:'🍊',harvest:[2,2]},
+  ]},
+  {level:2,title:'Level 2: Buah Tropis',items:[
+    {word:'MANGGA',plant:'🌴',fruit:'🥭',harvest:[3,4]},
+    {word:'PISANG',plant:'🌴',fruit:'🍌',harvest:[5,3]},
+    {word:'PEPAYA',plant:'🌱',fruit:'🍈',harvest:[2,4]},
+    {word:'MELON',plant:'🌿',fruit:'🍈',harvest:[3,3]},
+  ]},
+  {level:3,title:'Level 3: Sayuran',items:[
+    {word:'TOMAT',plant:'🌱',fruit:'🍅',harvest:[4,3]},
+    {word:'WORTEL',plant:'🌿',fruit:'🥕',harvest:[3,5]},
+    {word:'BAYAM',plant:'🌾',fruit:'🥬',harvest:[5,2]},
+    {word:'LOBAK',plant:'🌱',fruit:'🥔',harvest:[2,6]},
+  ]},
+  {level:4,title:'Level 4: Buah Istimewa',items:[
+    {word:'NANAS',plant:'🌵',fruit:'🍍',harvest:[4,4]},
+    {word:'SEMANGKA',plant:'🌿',fruit:'🍉',harvest:[2,5]},
+    {word:'JAGUNG',plant:'🌾',fruit:'🌽',harvest:[6,3]},
+    {word:'STROBERI',plant:'🌱',fruit:'🍓',harvest:[5,5]},
+  ]},
+  {level:5,title:'Level 5: Kebun Raya',items:[
+    {word:'KIWI',plant:'🌿',fruit:'🥝',harvest:[7,3]},
+    {word:'ANGGUR',plant:'🌿',fruit:'🍇',harvest:[5,8]},
+    {word:'CERI',plant:'🌸',fruit:'🍒',harvest:[8,4]},
+    {word:'LEMON',plant:'🍃',fruit:'🍋',harvest:[6,7]},
+  ]}
+];
+
+// G7 KETUK SUKU KATA
+const G7_DATA = [
+  {level:1,title:'Level 1: 2 Suku Kata',qs:[
+    {word:'BUKU',e:'📖',parts:['BU','KU'],ans:2,opts:[1,2,3,4]},
+    {word:'MATA',e:'👁️',parts:['MA','TA'],ans:2,opts:[1,2,3,4]},
+    {word:'KAKI',e:'🦵',parts:['KA','KI'],ans:2,opts:[1,2,3,4]},
+    {word:'TOPI',e:'🧢',parts:['TO','PI'],ans:2,opts:[1,2,3,4]},
+  ]},
+  {level:2,title:'Level 2: 2 Suku Kata Lainnya',qs:[
+    {word:'MEJA',e:'🪑',parts:['ME','JA'],ans:2,opts:[1,2,3,4]},
+    {word:'BOLA',e:'⚽',parts:['BO','LA'],ans:2,opts:[1,2,3,4]},
+    {word:'NASI',e:'🍚',parts:['NA','SI'],ans:2,opts:[1,2,3,4]},
+    {word:'SAPI',e:'🐄',parts:['SA','PI'],ans:2,opts:[1,2,3,4]},
+  ]},
+  {level:3,title:'Level 3: 3 Suku Kata',qs:[
+    {word:'PISANG',e:'🍌',parts:['PI','SANG'],ans:2,opts:[1,2,3,4]},
+    {word:'SEMANGKA',e:'🍉',parts:['SE','MANG','KA'],ans:3,opts:[1,2,3,4]},
+    {word:'PEPAYA',e:'🍈',parts:['PE','PA','YA'],ans:3,opts:[1,2,3,4]},
+    {word:'KUCING',e:'🐱',parts:['KU','CING'],ans:2,opts:[1,2,3,4]},
+  ]},
+  {level:4,title:'Level 4: Campuran',qs:[
+    {word:'MANGGA',e:'🥭',parts:['MANG','GA'],ans:2,opts:[1,2,3,4]},
+    {word:'WORTEL',e:'🥕',parts:['WOR','TEL'],ans:2,opts:[1,2,3,4]},
+    {word:'KELAPA',e:'🥥',parts:['KE','LA','PA'],ans:3,opts:[1,2,3,4]},
+    {word:'BUNGA',e:'🌸',parts:['BU','NGA'],ans:2,opts:[1,2,3,4]},
+  ]},
+  {level:5,title:'Level 5: Kata Panjang',qs:[
+    {word:'INDONESIA',e:'🇮🇩',parts:['IN','DO','NE','SI','A'],ans:5,opts:[3,4,5,6]},
+    {word:'PELANGI',e:'🌈',parts:['PE','LA','NGI'],ans:3,opts:[2,3,4,5]},
+    {word:'KELUARGA',e:'👨‍👩‍👧‍👦',parts:['KE','LU','AR','GA'],ans:4,opts:[2,3,4,5]},
+    {word:'SEKOLAH',e:'🏫',parts:['SE','KO','LAH'],ans:3,opts:[2,3,4,5]},
+  ]}
+];
+
+// G8 TOKO MINI
+const G8_DATA = [
+  {level:1,title:'Level 1: Belanja 2 Barang',qs:[
+    {items:[{n:'Apel 🍎',p:3},{n:'Susu 🥛',p:2}],ans:5,opts:[4,5,6,7]},
+    {items:[{n:'Roti 🍞',p:4},{n:'Telur 🥚',p:3}],ans:7,opts:[5,6,7,8]},
+    {items:[{n:'Buku 📖',p:5},{n:'Pensil ✏️',p:2}],ans:7,opts:[6,7,8,9]},
+    {items:[{n:'Pisang 🍌',p:2},{n:'Jeruk 🍊',p:3}],ans:5,opts:[3,4,5,6]},
+  ]},
+  {level:2,title:'Level 2: Harga Lebih Besar',qs:[
+    {items:[{n:'Ayam 🍗',p:8},{n:'Sayur 🥦',p:4}],ans:12,opts:[10,11,12,13]},
+    {items:[{n:'Ikan 🐟',p:7},{n:'Tempe 🫘',p:5}],ans:12,opts:[11,12,13,14]},
+    {items:[{n:'Baju 👕',p:9},{n:'Sepatu 👟',p:6}],ans:15,opts:[13,14,15,16]},
+    {items:[{n:'Tas 🎒',p:10},{n:'Botol 🍼',p:4}],ans:14,opts:[12,13,14,15]},
+  ]},
+  {level:3,title:'Level 3: Belanja 3 Barang',qs:[
+    {items:[{n:'Apel 🍎',p:2},{n:'Jeruk 🍊',p:3},{n:'Pir 🍐',p:1}],ans:6,opts:[5,6,7,8]},
+    {items:[{n:'Buku 📖',p:4},{n:'Pensil ✏️',p:2},{n:'Penghapus 🟩',p:1}],ans:7,opts:[5,6,7,8]},
+    {items:[{n:'Nasi 🍚',p:5},{n:'Ayam 🍗',p:4},{n:'Es Teh 🧋',p:3}],ans:12,opts:[10,11,12,13]},
+    {items:[{n:'Susu 🥛',p:3},{n:'Roti 🍞',p:2},{n:'Keju 🧀',p:4}],ans:9,opts:[7,8,9,10]},
+  ]},
+  {level:4,title:'Level 4: Kembalian',qs:[
+    {items:[{n:'Permen 🍭',p:3}],bayar:10,isKembalian:true,ans:7,opts:[5,6,7,8]},
+    {items:[{n:'Minuman 🧃',p:4}],bayar:10,isKembalian:true,ans:6,opts:[4,5,6,7]},
+    {items:[{n:'Snack 🍿',p:5}],bayar:10,isKembalian:true,ans:5,opts:[3,4,5,6]},
+    {items:[{n:'Pensil 2 biji ✏️',p:6}],bayar:10,isKembalian:true,ans:4,opts:[2,3,4,5]},
+  ]},
+  {level:5,title:'Level 5: Belanja Campuran',qs:[
+    {items:[{n:'Buku 📖',p:7},{n:'Pulpen 🖊️',p:3},{n:'Tip-ex 🟦',p:2}],ans:12,opts:[10,11,12,13]},
+    {items:[{n:'Kue 🎂',p:8},{n:'Jus 🧃',p:4}],bayar:20,isKembalian:true,ans:8,opts:[6,7,8,9]},
+    {items:[{n:'Mainan 🪀',p:12},{n:'Baterai 🔋',p:5}],ans:17,opts:[15,16,17,18]},
+    {items:[{n:'Penggaris 📏',p:3},{n:'Crayon 🖍️',p:8},{n:'Gunting ✂️',p:4}],ans:15,opts:[13,14,15,16]},
+  ]}
+];
+
+// G9 PETERNAKAN
+const G9_DATA = [
+  {level:1,title:'Level 1: Hewan Peliharaan',qs:[
+    {a:'🐱',name:'KUCING',q:'Nama hewan ini dimulai huruf apa?',ans:'K',opts:['K','L','M','N']},
+    {a:'🐶',name:'ANJING',q:'Hewan ini namanya dimulai huruf?',ans:'A',opts:['A','B','I','O']},
+    {a:'🐹',name:'HAMSTER',q:'Huruf awal dari nama hewan ini?',ans:'H',opts:['H','G','I','J']},
+    {a:'🐰',name:'KELINCI',q:'Nama hewan ini dimulai huruf?',ans:'K',opts:['K','L','I','N']},
+  ]},
+  {level:2,title:'Level 2: Hewan Ternak',qs:[
+    {a:'🐄',name:'SAPI',q:'Huruf awal nama hewan ini?',ans:'S',opts:['S','T','R','P']},
+    {a:'🐔',name:'AYAM',q:'Nama hewan ini dimulai huruf?',ans:'A',opts:['A','B','E','I']},
+    {a:'🐑',name:'DOMBA',q:'Huruf awal dari nama hewan ini?',ans:'D',opts:['D','B','C','G']},
+    {a:'🐷',name:'BABI',q:'Hewan ini namanya dimulai huruf?',ans:'B',opts:['B','D','G','P']},
+  ]},
+  {level:3,title:'Level 3: Hewan Liar',qs:[
+    {a:'🐘',name:'GAJAH',q:'Huruf awal nama hewan ini?',ans:'G',opts:['G','H','J','K']},
+    {a:'🦁',name:'SINGA',q:'Nama hewan ini dimulai huruf?',ans:'S',opts:['S','L','G','R']},
+    {a:'🐒',name:'MONYET',q:'Huruf awal dari nama hewan ini?',ans:'M',opts:['M','N','B','L']},
+    {a:'🦊',name:'RUBAH',q:'Nama hewan ini dimulai huruf?',ans:'R',opts:['R','B','H','S']},
+  ]},
+  {level:4,title:'Level 4: Hewan Air',qs:[
+    {a:'🐠',name:'IKAN',q:'Huruf awal nama hewan ini?',ans:'I',opts:['I','A','U','E']},
+    {a:'🐬',name:'LUMBA',q:'Hewan ini namanya dimulai huruf?',ans:'L',opts:['L','M','D','B']},
+    {a:'🐢',name:'KURA',q:'Huruf awal dari nama hewan ini?',ans:'K',opts:['K','G','T','R']},
+    {a:'🦞',name:'UDANG',q:'Nama hewan ini dimulai huruf?',ans:'U',opts:['U','A','I','O']},
+  ]},
+  {level:5,title:'Level 5: Hitung Kaki Hewan',qs:[
+    {a:'🐱',name:'KUCING',q:'Berapa kaki kucing?',ans:'4',opts:['2','4','6','8']},
+    {a:'🐦',name:'BURUNG',q:'Berapa kaki burung?',ans:'2',opts:['2','4','6','8']},
+    {a:'🕷️',name:'LABA-LABA',q:'Berapa kaki laba-laba?',ans:'8',opts:['4','6','8','10']},
+    {a:'🐛',name:'ULAT',q:'Berapa kaki semut?',ans:'6',opts:['4','6','8','10']},
+  ]}
+];
+
+// G10 PUZZLE KATA
+const G10_DATA = [
+  {level:1,title:'Level 1: Hewan & Buah',pieces:['🐱','🐶','🍎','🍌'],qs:[
+    {q:'Hewan yang suka "meong"?',ans:'KUCING',opts:['KUCING','ANJING','BURUNG','IKAN']},
+    {q:'Hewan yang suka menggonggong?',ans:'ANJING',opts:['KUCING','ANJING','KUDA','SAPI']},
+    {q:'Buah merah manis ini namanya?',ans:'APEL',opts:['APEL','JERUK','PISANG','ANGGUR']},
+    {q:'Buah panjang kuning ini?',ans:'PISANG',opts:['MANGGA','PISANG','PEPAYA','LEMON']},
+  ]},
+  {level:2,title:'Level 2: Benda Sehari-hari',pieces:['📖','✏️','🎒','⏰'],qs:[
+    {q:'Benda untuk membaca cerita?',ans:'BUKU',opts:['BUKU','PENSIL','TAS','JAM']},
+    {q:'Benda untuk menulis?',ans:'PENSIL',opts:['BUKU','PENSIL','MEJA','KURSI']},
+    {q:'Benda untuk membawa buku ke sekolah?',ans:'TAS',opts:['TAS','SEPATU','BAJU','PECI']},
+    {q:'Benda penunjuk waktu?',ans:'JAM',opts:['KALENDER','JAM','BUKU','GAMBAR']},
+  ]},
+  {level:3,title:'Level 3: Makanan & Minuman',pieces:['🍚','🥛','🍞','🍊'],qs:[
+    {q:'Makanan pokok sehari-hari?',ans:'NASI',opts:['NASI','ROTI','MIE','KENTANG']},
+    {q:'Minuman sehat dari sapi?',ans:'SUSU',opts:['AIR','SUSU','JUS','TEH']},
+    {q:'Makanan untuk sarapan pagi?',ans:'ROTI',opts:['ROTI','NASI','MIE','BUBUR']},
+    {q:'Buah oranye kaya vitamin C?',ans:'JERUK',opts:['APEL','JERUK','PISANG','MANGGA']},
+  ]},
+  {level:4,title:'Level 4: Angka & Huruf',pieces:['5️⃣','🔤','➕','🎓'],qs:[
+    {q:'Berapa 3 + 2?',ans:'5',opts:['4','5','6','7']},
+    {q:'Huruf vokal ada berapa?',ans:'5',opts:['3','4','5','6']},
+    {q:'Berapa 10 - 4?',ans:'6',opts:['5','6','7','8']},
+    {q:'Berapa 7 + 8?',ans:'15',opts:['13','14','15','16']},
+  ]},
+  {level:5,title:'Level 5: Campuran',pieces:['🌈','🏫','👨‍👩‍👧‍👦','🌍'],qs:[
+    {q:'Ada berapa warna pelangi?',ans:'7',opts:['5','6','7','8']},
+    {q:'Tempat belajar kita namanya?',ans:'SEKOLAH',opts:['SEKOLAH','PASAR','PABRIK','KANTOR']},
+    {q:'Berapa orang dalam satu keluarga inti?',ans:'4',opts:['2','3','4','5']},
+    {q:'Berapa 9 + 6?',ans:'15',opts:['13','14','15','16']},
+  ]}
+];
+
+// G11 MISI ROKET
+const G11_DATA = [
+  {level:1,title:'Level 1: Tambah s.d. 5',qs:[{q:'1+1',a:2},{q:'2+2',a:4},{q:'3+1',a:4},{q:'1+4',a:5},{q:'2+3',a:5}]},
+  {level:2,title:'Level 2: Tambah s.d. 10',qs:[{q:'4+3',a:7},{q:'5+4',a:9},{q:'6+2',a:8},{q:'3+7',a:10},{q:'4+6',a:10}]},
+  {level:3,title:'Level 3: Kurang s.d. 10',qs:[{q:'5-2',a:3},{q:'8-3',a:5},{q:'10-4',a:6},{q:'7-2',a:5},{q:'9-5',a:4}]},
+  {level:4,title:'Level 4: Tambah s.d. 15',qs:[{q:'7+5',a:12},{q:'9+4',a:13},{q:'6+8',a:14},{q:'8+7',a:15},{q:'10+5',a:15}]},
+  {level:5,title:'Level 5: Campuran s.d. 20',qs:[{q:'10+7',a:17},{q:'15-5',a:10},{q:'12+8',a:20},{q:'18-6',a:12},{q:'9+9',a:18}]}
+];
+
+// G12 SALON KATA
+const G12_DATA = [
+  {level:1,title:'Level 1: Pilih Aksesori',accessories:['🎩','👓','🎀','🧣','👟'],qs:[
+    {q:'Huruf awal dari APEL?',ans:'A',opts:['A','B','C','D']},
+    {q:'Berapa 2 + 3?',ans:'5',opts:['4','5','6','7']},
+    {q:'Kata yang berarti tempat tinggal?',ans:'RUMAH',opts:['RUMAH','JALAN','POHON','BATU']},
+    {q:'Huruf vokal mana?',ans:'U',opts:['B','D','U','S']},
+    {q:'Berapa 10 - 3?',ans:'7',opts:['5','6','7','8']},
+  ]},
+  {level:2,title:'Level 2: Mode Lebih Stylish',accessories:['👒','🕶️','💎','🌟','🎪'],qs:[
+    {q:'Berapa 4 + 6?',ans:'10',opts:['8','9','10','11']},
+    {q:'Huruf awal dari IKAN?',ans:'I',opts:['I','A','U','E']},
+    {q:'Hewan yang bisa terbang?',ans:'BURUNG',opts:['BURUNG','IKAN','SAPI','GAJAH']},
+    {q:'Berapa 15 - 8?',ans:'7',opts:['5','6','7','8']},
+    {q:'Makanan pokok kita?',ans:'NASI',opts:['NASI','BAKSO','SOTO','GULAI']},
+  ]},
+  {level:3,title:'Level 3: Ciko Gaul!',accessories:['🤠','🪭','🦋','🌺','✨'],qs:[
+    {q:'Berapa 7 + 8?',ans:'15',opts:['13','14','15','16']},
+    {q:'Huruf pertama dari SEKOLAH?',ans:'S',opts:['S','T','K','R']},
+    {q:'Berapa suku kata PISANG?',ans:'2',opts:['1','2','3','4']},
+    {q:'Buah dari pohon nyiur?',ans:'KELAPA',opts:['KELAPA','PISANG','MANGGA','RAMBUTAN']},
+    {q:'Berapa 20 - 7?',ans:'13',opts:['11','12','13','14']},
+  ]},
+  {level:4,title:'Level 4: Super Stylish',accessories:['🎭','🌸','⭐','🦄','🎠'],qs:[
+    {q:'Berapa 9 + 9?',ans:'18',opts:['16','17','18','19']},
+    {q:'Berapa kaki kucing?',ans:'4',opts:['2','3','4','5']},
+    {q:'Huruf awal dari MANGGA?',ans:'M',opts:['M','N','A','G']},
+    {q:'Berapa 3 x 4?',ans:'12',opts:['10','11','12','13']},
+    {q:'Warna bendera Indonesia?',ans:'MERAH PUTIH',opts:['MERAH PUTIH','BIRU KUNING','HIJAU PUTIH','HITAM PUTIH']},
+  ]},
+  {level:5,title:'Level 5: Ciko Bintang!',accessories:['👑','💫','🎆','🏆','🌟'],qs:[
+    {q:'Berapa 15 + 5?',ans:'20',opts:['18','19','20','21']},
+    {q:'Ibu kota Indonesia?',ans:'JAKARTA',opts:['JAKARTA','BANDUNG','SURABAYA','MEDAN']},
+    {q:'Berapa 18 - 9?',ans:'9',opts:['7','8','9','10']},
+    {q:'Hewan terbesar di darat?',ans:'GAJAH',opts:['GAJAH','KUDA','SAPI','HARIMAU']},
+    {q:'Berapa 6 x 3?',ans:'18',opts:['16','17','18','19']},
+  ]}
+];
+
+// G13 ULAR TANGGA
+const G13_CHALLENGES = [
+  {q:'Berapa 2 + 3?',ans:'5',opts:['4','5','6','7']},
+  {q:'Huruf awal APEL?',ans:'A',opts:['A','B','C','D']},
+  {q:'Berapa 10 - 4?',ans:'6',opts:['5','6','7','8']},
+  {q:'Berapa suku kata BUKU?',ans:'2',opts:['1','2','3','4']},
+  {q:'Berapa 3 + 4?',ans:'7',opts:['6','7','8','9']},
+  {q:'Huruf awal IKAN?',ans:'I',opts:['A','I','U','E']},
+  {q:'Berapa 8 - 5?',ans:'3',opts:['2','3','4','5']},
+  {q:'Berapa 5 + 6?',ans:'11',opts:['10','11','12','13']},
+  {q:'Huruf awal MANGGA?',ans:'M',opts:['L','M','N','P']},
+  {q:'Berapa 15 - 7?',ans:'8',opts:['6','7','8','9']},
+  {q:'Berapa 4 + 9?',ans:'13',opts:['11','12','13','14']},
+  {q:'Huruf vokal ada berapa?',ans:'5',opts:['3','4','5','6']},
+  {q:'Berapa 12 + 6?',ans:'18',opts:['16','17','18','19']},
+  {q:'Nama hewan "meong"?',ans:'KUCING',opts:['ANJING','KUCING','SAPI','AYAM']},
+  {q:'Berapa 20 - 8?',ans:'12',opts:['10','11','12','13']},
+];
+// Snakes: 17→4, 20→9, 23→14  Ladders: 3→11, 7→18, 13→22
+const SNAKES={17:4,20:9,23:14}, LADDERS={3:11,7:18,13:22};
+
+/* ═══════════════════════════════════════════════════════════
+   7. GAME ENGINES
+═══════════════════════════════════════════════════════════ */
+
+/* ── G1: EKSPEDISI ── */
+const G1={
+  completedIslands:{},
+  start(){
+    this.completedIslands={}; G1_ISLANDS.forEach(i=>{ const lp=Prog.data.games['ekspedisi_pulau'].lp; if(lp[i.id]) this.completedIslands[i.id]=true; });
+    this.showMap();
+  },
+  showMap(){
+    document.getElementById('g1-map-section').style.display='';
+    document.getElementById('g1-quiz-section').style.display='none';
+    document.getElementById('g1-prog').textContent='Pilih Pulau';
+    const grid=document.getElementById('g1-island-grid'); grid.innerHTML='';
+    G1_ISLANDS.forEach(isl=>{
+      const btn=document.createElement('button'); btn.className='island-btn'+(this.completedIslands[isl.id]?' done':'');
+      btn.style.background=isl.bg;
+      const lp=Prog.data.games['ekspedisi_pulau'].lp[isl.id]||0;
+      btn.innerHTML=`<span class="island-ico">${isl.ico}</span><span class="island-name">${isl.name}</span><span class="island-stars-sm">⭐ ${lp}/3</span>`;
+      btn.onclick=()=>{ SFX.pop(); this.startIsland(isl); };
+      grid.appendChild(btn);
+    });
+  },
+  startIsland(isl){
+    this.currentIsland=isl; this.qIdx=0; this.mistakes=0;
+    document.getElementById('g1-map-section').style.display='none';
+    const qs=document.getElementById('g1-quiz-section'); qs.style.display='flex'; qs.style.flexDirection='column'; qs.style.alignItems='center';
+    this.loadQ();
+  },
+  loadQ(){
+    const q=this.currentIsland.questions[this.qIdx], total=this.currentIsland.questions.length;
+    document.getElementById('g1-prog').textContent=`Soal ${this.qIdx+1} dari ${total}`;
+    document.getElementById('g1-emoji').textContent=q.emoji;
+    document.getElementById('g1-qbox').textContent=q.q; document.getElementById('g1-hint-txt').textContent=q.q;
+    SFX.speak(q.q);
+    renderChoices('g1-choices',scramble(q.opts),q.ans,
+      ()=>{ showToast('🌟','Benar sekali!'); setTimeout(()=>this.next(),1000); },
+      ()=>{ this.mistakes++; showToast('💡','Coba lagi!',true); }
+    );
+  },
+  next(){
+    this.qIdx++;
+    if(this.qIdx<this.currentIsland.questions.length){ this.loadQ(); }
+    else {
+      const stars=calcStars(this.mistakes), coins=stars*5;
+      // store by island id as level key
+      const lp=Prog.data.games['ekspedisi_pulau'].lp;
+      const prev=lp[this.currentIsland.id]||0;
+      if(stars>prev){ const d=stars-prev; Prog.data.games['ekspedisi_pulau'].stars+=d; Prog.data.totalStars+=d; lp[this.currentIsland.id]=stars; }
+      Prog.data.games['ekspedisi_pulau'].played=true; Prog.data.totalCoins+=coins; Prog.save();
+      this.completedIslands[this.currentIsland.id]=true; UI.updateHeader();
+      const allDone=G1_ISLANDS.every(i=>this.completedIslands[i.id]);
+      SFX.fanfare(); Confetti.launch();
+      const vicM=document.getElementById('vic-modal');
+      document.getElementById('vic-title').textContent=`Pulau ${this.currentIsland.name} Selesai!`;
+      document.getElementById('vic-desc').textContent=`Kamu mendapat ${stars}⭐ dan ${coins}🪙!`;
+      const sr=document.getElementById('vic-stars'); sr.innerHTML='';
+      for(let i=0;i<stars;i++){const s=document.createElement('span');s.className='star-item';s.style.animationDelay=i*.15+'s';s.textContent='⭐';sr.appendChild(s);}
+      const nb=document.getElementById('vic-next');
+      nb.innerHTML=allDone?'Semua Pulau Selesai! 🏝️':'Pulau Berikutnya 🏝️';
+      nb.onclick=()=>{ vicM.classList.remove('open'); this.showMap(); };
+      document.getElementById('vic-hub').onclick=()=>{ vicM.classList.remove('open'); UI.goHub(); };
+      vicM.classList.add('open');
+    }
+  }
+};
+
+/* ── G2: DAPUR KATA ── */
+const G2={lvl:0,qi:0,mistakes:0,
+  start(l){ this.lvl=l; this.qi=0; this.mistakes=0; this.loadQ(); },
+  loadQ(){
+    const ld=G2_DATA[this.lvl], q=ld.items[this.qi];
+    document.getElementById('g2-title').textContent=ld.title;
+    document.getElementById('g2-prog').textContent=`Soal ${this.qi+1} dari ${ld.items.length}`;
+    document.getElementById('g2-pot').textContent=q.pot;
+    document.getElementById('g2-label').textContent=`Masak: ${q.hint}`;
+    const stars=Prog.gameStars('dapur_kata',this.lvl+1);
+    document.getElementById('g2-stars').textContent=stars;
+    SFX.speak(`Eja kata: ${q.word}`);
+    tapSpell({word:q.word,slotId:'g2-slots',ingredientId:'g2-ingredients',onFinish:()=>{
+      SFX.correct(); showToast('🍳','Masakan berhasil!');
+      setTimeout(()=>this.next(),900);
+    }});
+  },
+  next(){
+    this.qi++;
+    const ld=G2_DATA[this.lvl];
+    if(this.qi<ld.items.length){ this.loadQ(); }
+    else {
+      const stars=3,coins=stars*5;
+      Prog.record('dapur_kata',this.lvl+1,stars,coins); UI.updateHeader();
+      showVictory(this.lvl+1,stars,coins,G2_DATA.length,(next)=>this.start(Math.min(next,G2_DATA.length-1)));
+    }
+  }
+};
+
+/* ── G3: LOMBA LARI ── */
+const G3={lvl:0,qi:0,correct:0,mistakes:0,locked:false,
+  start(l){ this.lvl=l; this.qi=0; this.correct=0; this.mistakes=0; this.locked=false; this.loadQ(); },
+  loadQ(){
+    const ld=G3_DATA[this.lvl], q=ld.qs[this.qi]; this.locked=false;
+    document.getElementById('g3-title').textContent=ld.title;
+    document.getElementById('g3-prog').textContent=`Soal ${this.qi+1} dari ${ld.qs.length}`;
+    document.getElementById('g3-correct').textContent=this.correct;
+    document.getElementById('g3-remain').textContent=ld.qs.length-this.qi;
+    document.getElementById('g3-stars').textContent=Prog.gameStars('lomba_lari',this.lvl+1);
+    const pct=Math.max(4,(this.qi/ld.qs.length)*80);
+    document.getElementById('g3-runner').style.left=pct+'%';
+    document.getElementById('g3-fill').style.width=pct+'%';
+    const mode=ld.mode==='let'?'Ketuk huruf':'Ketuk angka';
+    document.getElementById('g3-qtext').innerHTML=`${mode}: <b>${q.t}</b>`;
+    SFX.speak(`${mode}: ${q.t}`);
+    const row=document.getElementById('g3-choices'); row.innerHTML='';
+    [...q.pool].sort(()=>Math.random()-.5).forEach(opt=>{
+      const b=document.createElement('button'); b.className='btn-lari'; b.textContent=opt;
+      b.onclick=()=>{
+        if(this.locked) return; SFX.pop();
+        if(String(opt)===String(q.t)){ this.locked=true; this.correct++; b.classList.add('right'); SFX.correct();
+          const np=Math.min(((this.qi+1)/ld.qs.length)*80+10,82);
+          document.getElementById('g3-runner').style.left=np+'%'; document.getElementById('g3-fill').style.width=np+'%';
+          showToast('🏃',rand(['Kencang!','Mantap!','Tepat!','Luar Biasa!']));
+          setTimeout(()=>this.next(),900);
+        } else { this.mistakes++; b.classList.add('wrong'); setTimeout(()=>b.classList.remove('wrong'),550); SFX.retry(); showToast('💡','Coba lagi!',true); }
+      };
+      row.appendChild(b);
+    });
+  },
+  next(){
+    const ld=G3_DATA[this.lvl]; this.qi++;
+    if(this.qi<ld.qs.length){ this.loadQ(); }
+    else {
+      document.getElementById('g3-runner').style.left='84%'; document.getElementById('g3-fill').style.width='90%';
+      const stars=calcStars(this.mistakes), coins=stars*5;
+      Prog.record('lomba_lari',this.lvl+1,stars,coins); UI.updateHeader();
+      setTimeout(()=>showVictory(this.lvl+1,stars,coins,G3_DATA.length,(n)=>G3.start(Math.min(n,G3_DATA.length-1))),600);
+    }
+  }
+};
+
+/* ── G4: DETEKTIF ── */
+const G4={lvl:0,qi:0,mistakes:0,locked:false,
+  start(l){ this.lvl=l; this.qi=0; this.mistakes=0; this.locked=false; this.loadQ(); },
+  loadQ(){
+    const ld=G4_DATA[this.lvl], q=ld.qs[this.qi]; this.locked=false;
+    document.getElementById('g4-title').textContent=ld.title;
+    document.getElementById('g4-prog').textContent=`Soal ${this.qi+1} dari ${ld.qs.length}`;
+    document.getElementById('g4-stars').textContent=Prog.gameStars('detektif_huruf',this.lvl+1);
+    document.getElementById('g4-emoji').textContent=q.e;
+    document.getElementById('g4-hint-txt').textContent=`Dengarkan: "${q.w}"`;
+    SFX.speak(q.w);
+    // slots
+    const sc=document.getElementById('g4-slots'); sc.innerHTML='';
+    q.w.split('').forEach((lt,i)=>{
+      const s=document.createElement('div');
+      s.className=i===q.mi?'slot missing':'slot'; s.textContent=i===q.mi?'?':lt;
+      sc.appendChild(s);
+    });
+    // choices
+    const correct=q.w[q.mi], vowels=['A','I','U','E','O'], cons='BCDFGHJKLMNPQRSTVWXYZ'.split('');
+    const pool=vowels.includes(correct)?vowels:cons;
+    const dis=scramble(pool.filter(c=>c!==correct));
+    const opts=scramble([correct,dis[0],dis[1],dis[2]]);
+    renderChoices('g4-choices',opts,correct,
+      (btn)=>{ this.locked=true; const sl=sc.querySelectorAll('.slot')[q.mi]; sl.className='slot ok'; sl.textContent=correct;
+        showToast('🔍',rand(['Tepat!','Pintar!','Luar Biasa!'])); setTimeout(()=>this.next(),1000); },
+      ()=>{ this.mistakes++; showToast('💡','Coba huruf lain!',true); }
+    );
+  },
+  next(){ this.qi++; const ld=G4_DATA[this.lvl];
+    if(this.qi<ld.qs.length){ this.loadQ(); }
+    else { const s=calcStars(this.mistakes),c=s*5; Prog.record('detektif_huruf',this.lvl+1,s,c); UI.updateHeader(); showVictory(this.lvl+1,s,c,G4_DATA.length,(n)=>G4.start(Math.min(n,G4_DATA.length-1))); }
+  }
+};
+document.getElementById('g4-hint-btn').onclick=()=>{ SFX.pop(); if(G4_DATA[G4.lvl]?.qs[G4.qi]) SFX.speak(G4_DATA[G4.lvl].qs[G4.qi].w); };
+
+/* ── G5: BANGUN RUMAH ── */
+const G5={lvl:0,qi:0,mistakes:0,
+  start(l){ this.lvl=l; this.qi=0; this.mistakes=0; this.loadQ(); },
+  loadQ(){
+    const ld=G5_DATA[this.lvl], q=ld.items[this.qi];
+    document.getElementById('g5-title').textContent=ld.title;
+    document.getElementById('g5-prog').textContent=`Soal ${this.qi+1} dari ${ld.items.length}`;
+    document.getElementById('g5-stars').textContent=Prog.gameStars('bangun_rumah',this.lvl+1);
+    document.getElementById('g5-house').textContent=q.house;
+    document.getElementById('g5-progress').textContent=`Susun kata: ${q.word.split('').map(()=>'_').join(' ')}`;
+    SFX.speak(`Eja kata: ${q.word}`);
+    tapSpell({word:q.word,slotId:'g5-slots',ingredientId:'g5-bricks',onFinish:()=>{
+      document.getElementById('g5-house').textContent='🏠'; document.getElementById('g5-progress').textContent='Rumah berhasil dibangun!';
+      SFX.correct(); showToast('🏠','Rumah berhasil!'); setTimeout(()=>this.next(),900);
+    }});
+  },
+  next(){ this.qi++; const ld=G5_DATA[this.lvl];
+    if(this.qi<ld.items.length){ this.loadQ(); }
+    else { const s=3,c=s*5; Prog.record('bangun_rumah',this.lvl+1,s,c); UI.updateHeader(); showVictory(this.lvl+1,s,c,G5_DATA.length,(n)=>G5.start(Math.min(n,G5_DATA.length-1))); }
+  }
+};
+
+/* ── G6: KEBUN AJAIB ── */
+const G6={lvl:0,qi:0,mistakes:0,phase:'spell',
+  start(l){ this.lvl=l; this.qi=0; this.mistakes=0; this.loadQ(); },
+  loadQ(){
+    const ld=G6_DATA[this.lvl], q=ld.items[this.qi]; this.phase='spell';
+    document.getElementById('g6-title').textContent=ld.title;
+    document.getElementById('g6-prog').textContent=`Soal ${this.qi+1} dari ${ld.items.length}`;
+    document.getElementById('g6-stars').textContent=Prog.gameStars('kebun_ajaib',this.lvl+1);
+    document.getElementById('g6-plant').textContent=q.plant;
+    document.getElementById('g6-harvest-info').style.display='none';
+    document.getElementById('g6-label').textContent=`Eja nama tanaman/buah ini:`;
+    document.getElementById('g6-hint-txt').textContent=q.word;
+    SFX.speak(`Eja kata: ${q.word}`);
+    tapSpell({word:q.word,slotId:'g6-slots',ingredientId:'g6-letters',onFinish:()=>{
+      document.getElementById('g6-plant').textContent=q.fruit;
+      this.showHarvestQ(q);
+    }});
+  },
+  showHarvestQ(q){
+    this.phase='harvest'; const [a,b]=q.harvest, ans=a+b;
+    document.getElementById('g6-slots').innerHTML=''; document.getElementById('g6-letters').innerHTML='';
+    document.getElementById('g6-label').textContent=`Kamu panen ${a} ${q.fruit} + ${b} ${q.fruit} = ?`;
+    document.getElementById('g6-harvest-info').style.display='block';
+    document.getElementById('g6-harvest').textContent=`${a} ${q.fruit} + ${b} ${q.fruit} = ?`;
+    const opts=scramble([ans,ans+1,ans-1,ans+2].filter(x=>x>=0));
+    renderChoices('g6-letters',opts.slice(0,4),ans,
+      ()=>{ showToast('🌾',`Panen ${ans} buah!`); SFX.correct(); setTimeout(()=>this.next(),900); },
+      ()=>{ this.mistakes++; showToast('💡','Hitung lagi yuk!',true); }
+    );
+  },
+  next(){ this.qi++; const ld=G6_DATA[this.lvl];
+    if(this.qi<ld.items.length){ this.loadQ(); }
+    else { const s=calcStars(this.mistakes),c=s*5; Prog.record('kebun_ajaib',this.lvl+1,s,c); UI.updateHeader(); showVictory(this.lvl+1,s,c,G6_DATA.length,(n)=>G6.start(Math.min(n,G6_DATA.length-1))); }
+  }
+};
+document.getElementById('g6-hint-btn').onclick=()=>{ SFX.pop(); SFX.speak(document.getElementById('g6-hint-txt').textContent); };
+
+/* ── G7: KETUK SUKU ── */
+const G7={lvl:0,qi:0,mistakes:0,
+  start(l){ this.lvl=l; this.qi=0; this.mistakes=0; this.loadQ(); },
+  loadQ(){
+    const ld=G7_DATA[this.lvl], q=ld.qs[this.qi];
+    document.getElementById('g7-title').textContent=ld.title;
+    document.getElementById('g7-prog').textContent=`Soal ${this.qi+1} dari ${ld.qs.length}`;
+    document.getElementById('g7-stars').textContent=Prog.gameStars('ketuk_suku',this.lvl+1);
+    document.getElementById('g7-emoji').textContent=q.e;
+    document.getElementById('g7-word').textContent=q.word;
+    // parts
+    const pc=document.getElementById('g7-parts'); pc.innerHTML='';
+    q.parts.forEach((p,i)=>{
+      if(i>0){const sp=document.createElement('span');sp.className='suku-sep';sp.textContent='–';pc.appendChild(sp);}
+      const s=document.createElement('div');s.className='suku-part';s.textContent=p;pc.appendChild(s);
+    });
+    document.getElementById('g7-qtext').textContent='Ada berapa suku kata?';
+    SFX.speak(`${q.word} — ada berapa suku kata?`);
+    const row=document.getElementById('g7-choices'); row.innerHTML='';
+    const colors=['#4dabf7','#40c057','#ff6b6b','#ffa94d'];
+    const shadows=['#1c7ed6','#2b8a3e','#c92a2a','#d9480f'];
+    q.opts.forEach((n,i)=>{
+      const b=document.createElement('button'); b.className='btn-suku';
+      b.style.background=`linear-gradient(180deg,${colors[i]},${colors[i]}cc)`;
+      b.style.boxShadow=`0 6px 0 ${shadows[i]}`; b.textContent=n;
+      b.onclick=()=>{
+        SFX.pop();
+        if(n===q.ans){ b.classList.add('right'); SFX.correct(); showToast('🥁',`Benar! ${q.ans} suku kata!`); setTimeout(()=>this.next(),900); }
+        else { b.classList.add('wrong'); setTimeout(()=>b.classList.remove('wrong'),550); this.mistakes++; SFX.retry(); showToast('💡','Hitung lagi!',true); }
+      };
+      row.appendChild(b);
+    });
+  },
+  next(){ this.qi++; const ld=G7_DATA[this.lvl];
+    if(this.qi<ld.qs.length){ this.loadQ(); }
+    else { const s=calcStars(this.mistakes),c=s*5; Prog.record('ketuk_suku',this.lvl+1,s,c); UI.updateHeader(); showVictory(this.lvl+1,s,c,G7_DATA.length,(n)=>G7.start(Math.min(n,G7_DATA.length-1))); }
+  }
+};
+
+/* ── G8: TOKO MINI ── */
+const G8={lvl:0,qi:0,mistakes:0,
+  start(l){ this.lvl=l; this.qi=0; this.mistakes=0; this.loadQ(); },
+  loadQ(){
+    const ld=G8_DATA[this.lvl], q=ld.qs[this.qi];
+    document.getElementById('g8-title').textContent=ld.title;
+    document.getElementById('g8-prog').textContent=`Soal ${this.qi+1} dari ${ld.qs.length}`;
+    document.getElementById('g8-stars').textContent=Prog.gameStars('toko_mini',this.lvl+1);
+    const sl=document.getElementById('g8-shoplist'); sl.innerHTML='';
+    q.items.forEach(it=>{ const d=document.createElement('div'); d.className='shop-item'; d.innerHTML=`<span>${it.n}</span><span>Rp${it.p}</span>`; sl.appendChild(d); });
+    if(q.isKembalian){
+      const total=q.items.reduce((s,i)=>s+i.p,0);
+      document.getElementById('g8-shopq').textContent=`Total Rp${total}. Bayar Rp${q.bayar}. Berapa kembaliannya?`;
+      SFX.speak(`Total belanja ${total} rupiah. Dibayar ${q.bayar} rupiah. Berapa uang kembaliannya?`);
+    } else {
+      document.getElementById('g8-shopq').textContent=`Berapa total belanjaan di atas?`;
+      SFX.speak(`Berapa total belanjaan di atas?`);
+    }
+    const opts=scramble(q.opts); renderChoices('g8-choices',opts,q.ans,
+      ()=>{ showToast('🛒','Pembayaran tepat!'); SFX.correct(); setTimeout(()=>this.next(),900); },
+      ()=>{ this.mistakes++; showToast('💡','Hitung lagi!',true); }
+    );
+  },
+  next(){ this.qi++; const ld=G8_DATA[this.lvl];
+    if(this.qi<ld.qs.length){ this.loadQ(); }
+    else { const s=calcStars(this.mistakes),c=s*5; Prog.record('toko_mini',this.lvl+1,s,c); UI.updateHeader(); showVictory(this.lvl+1,s,c,G8_DATA.length,(n)=>G8.start(Math.min(n,G8_DATA.length-1))); }
+  }
+};
+
+/* ── G9: PETERNAKAN ── */
+const G9={lvl:0,qi:0,mistakes:0,
+  start(l){ this.lvl=l; this.qi=0; this.mistakes=0; this.loadQ(); },
+  loadQ(){
+    const ld=G9_DATA[this.lvl], q=ld.qs[this.qi];
+    document.getElementById('g9-title').textContent=ld.title;
+    document.getElementById('g9-prog').textContent=`Soal ${this.qi+1} dari ${ld.qs.length}`;
+    document.getElementById('g9-stars').textContent=Prog.gameStars('peternakan',this.lvl+1);
+    document.getElementById('g9-animal').textContent=q.a;
+    document.getElementById('g9-qtext').textContent=q.q;
+    SFX.speak(q.q);
+    renderChoices('g9-choices',scramble(q.opts),q.ans,
+      ()=>{ showToast('🐄',`Benar! ${q.name}!`); SFX.correct(); setTimeout(()=>this.next(),900); },
+      ()=>{ this.mistakes++; showToast('💡','Coba lagi!',true); }
+    );
+  },
+  next(){ this.qi++; const ld=G9_DATA[this.lvl];
+    if(this.qi<ld.qs.length){ this.loadQ(); }
+    else { const s=calcStars(this.mistakes),c=s*5; Prog.record('peternakan',this.lvl+1,s,c); UI.updateHeader(); showVictory(this.lvl+1,s,c,G9_DATA.length,(n)=>G9.start(Math.min(n,G9_DATA.length-1))); }
+  }
+};
+
+/* ── G10: PUZZLE KATA ── */
+const G10={lvl:0,qi:0,mistakes:0,revealed:0,
+  start(l){ this.lvl=l; this.qi=0; this.mistakes=0; this.revealed=0; this.resetPuzzle(); this.loadQ(); },
+  resetPuzzle(){
+    const ld=G10_DATA[this.lvl];
+    ['pp0','pp1','pp2','pp3'].forEach((id,i)=>{
+      const el=document.getElementById(id); el.className='puzzle-piece locked-p'; el.textContent='❓';
+    });
+  },
+  loadQ(){
+    const ld=G10_DATA[this.lvl], q=ld.qs[this.qi];
+    document.getElementById('g10-title').textContent=ld.title;
+    document.getElementById('g10-prog').textContent=`Soal ${this.qi+1} dari ${ld.qs.length}`;
+    document.getElementById('g10-stars').textContent=Prog.gameStars('puzzle_kata',this.lvl+1);
+    document.getElementById('g10-qtext').textContent=q.q;
+    document.getElementById('g10-piece-info').textContent=`Buka bagian ${this.qi+1} dari 4`;
+    SFX.speak(q.q);
+    renderChoices('g10-choices',scramble(q.opts),q.ans,
+      ()=>{ this.revealPiece(this.qi,ld.pieces[this.qi]); showToast('🧩','Bagian terbuka!'); SFX.correct(); setTimeout(()=>this.next(),900); },
+      ()=>{ this.mistakes++; showToast('💡','Coba lagi!',true); }
+    );
+  },
+  revealPiece(idx,emoji){
+    const el=document.getElementById('pp'+idx);
+    el.className='puzzle-piece revealed'; el.textContent=emoji;
+  },
+  next(){ this.qi++; const ld=G10_DATA[this.lvl];
+    if(this.qi<ld.qs.length){ this.loadQ(); }
+    else { const s=calcStars(this.mistakes),c=s*5; Prog.record('puzzle_kata',this.lvl+1,s,c); UI.updateHeader(); showVictory(this.lvl+1,s,c,G10_DATA.length,(n)=>G10.start(Math.min(n,G10_DATA.length-1))); }
+  }
+};
+
+/* ── G11: MISI ROKET ── */
+const G11={lvl:0,qi:0,correct:0,mistakes:0,locked:false,
+  start(l){ this.lvl=l; this.qi=0; this.correct=0; this.mistakes=0; this.locked=false; this.loadQ(); },
+  loadQ(){
+    const ld=G11_DATA[this.lvl], q=ld.qs[this.qi]; this.locked=false;
+    document.getElementById('g11-title').textContent=ld.title;
+    document.getElementById('g11-prog').textContent=`Soal ${this.qi+1} dari ${ld.qs.length}`;
+    document.getElementById('g11-stars').textContent=Prog.gameStars('misi_roket',this.lvl+1);
+    document.getElementById('g11-qtext').textContent=`${q.q} = ?`;
+    SFX.speak(`Berapa hasil dari ${q.q}?`);
+    const fp=(this.correct/ld.qs.length)*100;
+    document.getElementById('g11-fuel-fill').style.width=fp+'%';
+    document.getElementById('g11-fuel-label').textContent=`Bahan Bakar: ${this.correct}/${ld.qs.length}`;
+    // dots
+    const dr=document.getElementById('g11-dots'); dr.innerHTML='';
+    for(let i=0;i<ld.qs.length;i++){const d=document.createElement('div');d.className='rdot'+(i<this.correct?' on':'');dr.appendChild(d);}
+    // wrong answers
+    const ans=q.a, wrongs=new Set();
+    while(wrongs.size<3){const off=Math.floor(Math.random()*5)+1;const c=Math.random()<.5?ans+off:ans-off;if(c!==ans&&c>=0&&c<=25)wrongs.add(c);}
+    const opts=scramble([ans,...wrongs]);
+    const row=document.getElementById('g11-choices'); row.innerHTML='';
+    opts.forEach(opt=>{
+      const b=document.createElement('button'); b.className='btn-roket btn-ch'; b.textContent=opt;
+      b.style.background='linear-gradient(180deg,#4fc3f7,#0288d1)'; b.style.boxShadow='0 7px 0 #01579b';
+      b.onclick=()=>{
+        if(this.locked) return; SFX.pop();
+        if(opt===ans){ this.locked=true; this.correct++; b.style.background='linear-gradient(180deg,#69db7c,#40c057)'; b.style.boxShadow='0 7px 0 #2b8a3e';
+          const re=document.getElementById('g11-rocket'); re.textContent='🔥🚀'; setTimeout(()=>re.textContent='🚀',400);
+          const np=(this.correct/ld.qs.length)*100;
+          document.getElementById('g11-fuel-fill').style.width=np+'%';
+          document.getElementById('g11-fuel-label').textContent=`Bahan Bakar: ${this.correct}/${ld.qs.length}`;
+          SFX.correct(); showToast('🚀','Bahan bakar bertambah!'); setTimeout(()=>this.next(),1000);
+        } else { this.mistakes++; b.style.background='linear-gradient(180deg,#ffa94d,#ff922b)'; b.style.boxShadow='0 7px 0 #d9480f';
+          b.classList.add('wrong'); setTimeout(()=>{ b.style.background=''; b.style.boxShadow=''; b.classList.remove('wrong'); },550);
+          SFX.retry(); showToast('🌙','Belum tepat!',true); }
+      };
+      row.appendChild(b);
+    });
+  },
+  next(){ this.qi++; const ld=G11_DATA[this.lvl];
+    if(this.qi<ld.qs.length){ this.loadQ(); }
+    else {
+      document.getElementById('g11-fuel-fill').style.width='100%';
+      document.getElementById('g11-fuel-label').textContent='Roket siap meluncur! 🚀';
+      const s=calcStars(this.mistakes),c=s*5; Prog.record('misi_roket',this.lvl+1,s,c); UI.updateHeader();
+      setTimeout(()=>showVictory(this.lvl+1,s,c,G11_DATA.length,(n)=>G11.start(Math.min(n,G11_DATA.length-1))),700);
+    }
+  }
+};
+
+/* ── G12: SALON KATA ── */
+const G12={lvl:0,qi:0,mistakes:0,accsEarned:[],
+  start(l){ this.lvl=l; this.qi=0; this.mistakes=0; this.accsEarned=[];
+    document.getElementById('g12-ciko').textContent='🦊';
+    document.getElementById('g12-accessories').innerHTML='';
+    this.loadQ();
+  },
+  loadQ(){
+    const ld=G12_DATA[this.lvl], q=ld.qs[this.qi];
+    document.getElementById('g12-title').textContent=ld.title;
+    document.getElementById('g12-prog').textContent=`Soal ${this.qi+1} dari ${ld.qs.length}`;
+    document.getElementById('g12-stars').textContent=Prog.gameStars('salon_kata',this.lvl+1);
+    document.getElementById('g12-progress').textContent=`${this.accsEarned.length} aksesori terpasang!`;
+    document.getElementById('g12-qtext').textContent=q.q;
+    SFX.speak(q.q);
+    renderChoices('g12-choices',scramble(q.opts),q.ans,
+      (btn)=>{ btn.className='btn-salon right'; SFX.correct();
+        const acc=G12_DATA[this.lvl].accessories[this.qi]; this.accsEarned.push(acc);
+        const ar=document.getElementById('g12-accessories'); const a=document.createElement('span'); a.className='acc-badge'; a.textContent=acc; ar.appendChild(a);
+        document.getElementById('g12-progress').textContent=`${this.accsEarned.length} aksesori terpasang!`;
+        showToast('🎨',`Aksesori ${acc} terpasang!`); setTimeout(()=>this.next(),900);
+      },
+      (btn)=>{ btn.classList.add('wrong'); setTimeout(()=>btn.classList.remove('wrong'),550); this.mistakes++; showToast('💡','Coba lagi!',true); }
+    );
+  },
+  next(){ this.qi++; const ld=G12_DATA[this.lvl];
+    if(this.qi<ld.qs.length){ this.loadQ(); }
+    else { const s=calcStars(this.mistakes),c=s*5; Prog.record('salon_kata',this.lvl+1,s,c); UI.updateHeader(); showVictory(this.lvl+1,s,c,G12_DATA.length,(n)=>G12.start(Math.min(n,G12_DATA.length-1))); }
+  }
+};
+
+/* ── G13: ULAR TANGGA ── */
+const G13={
+  pos:1, totalMoves:0, waitingChallenge:false, locked:false, levelMistakes:0,
+  COLORS:['#e3fafc','#ebfbee','#fff9db','#f3f0ff','#fff0f6','#e7f5ff','#f1f3f5','#fff4e6','#f8f9fa','#e6fcf5'],
+  start(){
+    this.pos=1; this.totalMoves=0; this.levelMistakes=0; this.waitingChallenge=false; this.locked=false;
+    document.getElementById('g13-title').textContent='Ular Tangga Calistung';
+    document.getElementById('g13-stars').textContent=Prog.gameStars('ular_tangga',1);
+    document.getElementById('g13-diceresult').style.display='none';
+    document.getElementById('g13-challenge-area').style.display='none';
+    document.getElementById('g13-dice').disabled=false;
+    this.buildBoard(); this.updatePos();
+  },
+  buildBoard(){
+    const bd=document.getElementById('g13-board'); bd.innerHTML='';
+    // Build rows 5 to 1 (top = 25..21, bottom = 1..5)
+    const cells=[];
+    for(let r=4;r>=0;r--){
+      const row=[];
+      for(let c=0;c<5;c++){ const num=r*5+(r%2===0?c+1:(5-c)); row.push(num); }
+      cells.push(...row);
+    }
+    cells.forEach(n=>{
+      const d=document.createElement('div'); d.className='cell'; d.id='cell'+n;
+      d.style.background=this.COLORS[n%this.COLORS.length];
+      const label=document.createElement('span'); label.className='cell-num'; label.textContent=n; d.appendChild(label);
+      if(SNAKES[n]){ const s=document.createElement('span'); s.style.fontSize='.9rem'; s.textContent='🐍'; d.appendChild(s); d.title=`Ular! Turun ke ${SNAKES[n]}`; }
+      if(LADDERS[n]){ const l=document.createElement('span'); l.style.fontSize='.9rem'; l.textContent='🪜'; d.appendChild(l); d.title=`Tangga! Naik ke ${LADDERS[n]}`; }
+      if(n===25){ const f=document.createElement('span'); f.style.fontSize='.9rem'; f.textContent='🏁'; d.appendChild(f); }
+      bd.appendChild(d);
+    });
+  },
+  updatePos(){
+    document.querySelectorAll('#g13-board .cell').forEach(c=>c.classList.remove('current'));
+    const cur=document.getElementById('cell'+this.pos);
+    if(cur){ cur.classList.add('current'); const p=document.createElement('span'); p.style.fontSize='1.1rem'; p.textContent='🦊'; cur.appendChild(p); setTimeout(()=>{ if(p.parentNode)p.remove(); },800); }
+    document.getElementById('g13-pos').textContent=this.pos;
+    document.getElementById('g13-prog').textContent=`Posisi: ${this.pos}/25`;
+  },
+  rollDice(){
+    if(this.locked) return; SFX.pop();
+    const d=Math.floor(Math.random()*6)+1;
+    document.getElementById('g13-diceresult').style.display='flex';
+    document.getElementById('g13-dnum').textContent=d;
+    document.getElementById('g13-dice').disabled=true;
+    let newPos=Math.min(this.pos+d,25);
+    setTimeout(()=>{
+      this.pos=newPos; this.updatePos();
+      if(SNAKES[this.pos]){ const to=SNAKES[this.pos]; showToast('🐍',`Aduh! Ular turun ke ${to}!`,true); SFX.retry(); setTimeout(()=>{ this.pos=to; this.updatePos(); this.showChallenge(); },1000); }
+      else if(LADDERS[this.pos]){ const to=LADDERS[this.pos]; showToast('🪜',`Hore! Tangga naik ke ${to}!`); SFX.correct(); setTimeout(()=>{ this.pos=to; this.updatePos(); this.showChallenge(); },1000); }
+      else if(this.pos===25){ this.win(); }
+      else { this.showChallenge(); }
+    },700);
+  },
+  showChallenge(){
+    const ch=G13_CHALLENGES[Math.floor(Math.random()*G13_CHALLENGES.length)];
+    this.currentChallenge=ch;
+    document.getElementById('g13-challenge-area').style.display='flex';
+    document.getElementById('g13-challenge-label').textContent='Tantangan!';
+    document.getElementById('g13-qtext').textContent=ch.q;
+    SFX.speak(ch.q);
+    renderChoices('g13-choices',scramble(ch.opts),ch.ans,
+      ()=>{ showToast('🎲','Tantangan berhasil!'); document.getElementById('g13-challenge-area').style.display='none'; document.getElementById('g13-dice').disabled=false; },
+      ()=>{ this.levelMistakes++; showToast('💡','Coba lagi!',true); }
+    );
+  },
+  win(){
+    const s=calcStars(this.levelMistakes),c=s*5+10; Prog.record('ular_tangga',1,s,c); UI.updateHeader();
+    SFX.fanfare(); Confetti.launch();
+    const m=document.getElementById('vic-modal');
+    document.getElementById('vic-title').textContent='Selamat! Kamu Menang!';
+    document.getElementById('vic-desc').textContent=`Kamu sampai di garis finish! Dapat ${s}⭐ dan ${c}🪙!`;
+    const sr=document.getElementById('vic-stars'); sr.innerHTML='';
+    for(let i=0;i<s;i++){const st=document.createElement('span');st.className='star-item';st.style.animationDelay=i*.15+'s';st.textContent='⭐';sr.appendChild(st);}
+    document.getElementById('vic-next').innerHTML='Main Lagi 🎲';
+    document.getElementById('vic-next').onclick=()=>{ m.classList.remove('open'); G13.start(); };
+    document.getElementById('vic-hub').onclick=()=>{ m.classList.remove('open'); UI.goHub(); };
+    m.classList.add('open');
+  }
+};
+
+/* ═══════════════════════════════════════════════════════════
+   8. UI CONTROLLER
+═══════════════════════════════════════════════════════════ */
+const UI={
+  init(){
+    Prog.load(); Confetti.init();
+    this.buildGrid(); this.updateHeader(); this.bindEvents();
+  },
+  updateHeader(){
+    document.getElementById('hdr-stars').textContent=Prog.data.totalStars;
+    document.getElementById('hdr-coins').textContent=Prog.data.totalCoins;
+    document.getElementById('snd-btn').textContent=SFX.on?'🔊':'🔇';
+  },
+  buildGrid(){
+    const g=document.getElementById('hub-grid'); g.innerHTML='';
+
+    // Special Harsha Adventure Card
+    const hCard=document.createElement('div');
+    hCard.className='gcard playable';
+    hCard.style.border='4px solid #38bdf8';
+    hCard.style.boxShadow='0 8px 22px rgba(2,132,199,.22)';
+    hCard.innerHTML=`
+      <span class="gbadge" style="background:#0284c7;color:#fff">PETUALANGAN UTAMA ✨</span>
+      <div class="gico" style="background:#e0f2fe;display:flex;align-items:center;justify-content:center">
+        <img src="logo_harsha.png" alt="HSA" style="width:68px;height:68px;object-fit:contain">
+      </div>
+      <h3 class="gtitle" style="color:#0369a1">🌟 Petualangan bersama Harsha</h3>
+      <p class="gdesc">Eksplorasi 5 Pulau Calistung bersama Habibi, Shafiyyah, &amp; Arsha!</p>
+      <div class="gfooter">
+        <div class="gstars" style="color:#0369a1;font-weight:800">🏝️ 5 Pulau</div>
+        <button class="btn-play" style="background:linear-gradient(135deg,#0284c7,#0369a1)">Main 🚀</button>
+      </div>
+    `;
+    hCard.onclick=()=>{ SFX.pop(); window.location.href='nusa_pintar.html'; };
+    g.appendChild(hCard);
+
+    CATALOG.forEach(game=>{
+      const gd=Prog.data.games[game.id]||{played:false,stars:0,highLevel:0};
+      const card=document.createElement('div'); card.className='gcard playable';
+      const badge=gd.played?`<span class="gbadge badge-played">Level ${gd.highLevel}/5</span>`:`<span class="gbadge badge-new">MAIN SEKARANG</span>`;
+      card.innerHTML=`${badge}<div class="gico" style="background:${game.bg};color:${game.col}">${game.ico}</div><h3 class="gtitle">${game.n}. ${game.title}</h3><p class="gdesc">${game.desc}</p><div class="gfooter"><div class="gstars">⭐ ${gd.stars||0}</div><button class="btn-play">Main 🎮</button></div>`;
+      card.onclick=()=>{ SFX.pop(); this.switchTo(game.screen); game.launch(); };
+      g.appendChild(card);
+    });
+  },
+  switchTo(screenId){
+    document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+    const t=document.getElementById(screenId); if(t){ t.classList.add('active'); window.scrollTo({top:0,behavior:'smooth'}); }
+  },
+  goHub(){ this.switchTo('hub'); this.buildGrid(); this.updateHeader(); },
+  bindEvents(){
+    // Back buttons
+    document.querySelectorAll('.back-btn').forEach(btn=>{
+      btn.onclick=()=>{ SFX.pop(); this.goHub(); };
+    });
+    // Victory hub button
+    document.getElementById('vic-hub').onclick=()=>{ document.getElementById('vic-modal').classList.remove('open'); this.goHub(); };
+    // Sound toggle
+    document.getElementById('snd-btn').onclick=()=>{ SFX.on=!SFX.on; SFX.pop(); this.updateHeader(); showToast(SFX.on?'🔊':'🔇',SFX.on?'Suara aktif!':'Suara mati'); };
+    // Reset
+    document.getElementById('rst-btn').onclick=()=>{
+      SFX.pop(); if(confirm('Reset semua bintang dan progres?')){ Prog.reset(); this.updateHeader(); this.buildGrid(); showToast('🔄','Progres direset!'); }
+    };
+    // Ciko mascot
+    document.getElementById('ciko-btn').onclick=()=>{
+      SFX.pop();
+      const q=rand(['Halo! Yuk kumpulkan semua bintang!','Belajar itu seru bersama Ciko!','Kamu pasti bisa menyelesaikan semua game!','Semangat belajar hari ini!']);
+      document.getElementById('ciko-speech').textContent=q; SFX.speak(q);
+    };
+    // G1 Hint & G13 Dice bindings
+    const hb=document.getElementById('g1-hint-btn'); if(hb) hb.onclick=()=>{ SFX.pop(); SFX.speak(document.getElementById('g1-hint-txt').textContent); };
+    const db=document.getElementById('g13-dice'); if(db) db.onclick=()=>G13.rollDice();
+  }
+};
+
+window.addEventListener('DOMContentLoaded',()=>UI.init());
+</script>
+
+<!-- ── PWA INSTALL BANNER ── -->
+<div id="pwa-banner" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:9999;background:linear-gradient(135deg,#0284c7,#0369a1);color:#fff;padding:14px 20px;box-shadow:0 -4px 20px rgba(0,0,0,.25);align-items:center;gap:14px;flex-wrap:wrap">
+  <img src="icons/icon-72x72.png" alt="" style="width:48px;height:48px;border-radius:12px;flex-shrink:0">
+  <div style="flex:1;min-width:200px">
+    <div style="font-family:'Fredoka',cursive;font-weight:700;font-size:1.05rem">Pasang di HP kamu! 📲</div>
+    <div style="font-size:.85rem;opacity:.9;margin-top:2px">Main tanpa internet — belajar kapan saja!</div>
+  </div>
+  <button id="pwa-install-btn" style="background:#ffd43b;color:#1e3a5f;border:none;border-radius:999px;padding:10px 22px;font-family:'Fredoka',cursive;font-weight:700;font-size:1rem;cursor:pointer;box-shadow:0 4px 0 #c9a800;white-space:nowrap">Pasang Sekarang ✨</button>
+  <button id="pwa-dismiss-btn" style="background:rgba(255,255,255,.2);color:#fff;border:none;border-radius:999px;padding:10px 16px;font-family:'Fredoka',cursive;font-weight:700;font-size:.9rem;cursor:pointer;white-space:nowrap">Nanti dulu</button>
+</div>
+
+<script>
+/* ── SERVICE WORKER REGISTRATION ── */
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('sw.js')
+      .then(reg => console.log('[PWA] Service Worker registered:', reg.scope))
+      .catch(err => console.warn('[PWA] SW registration failed:', err));
+  });
+}
+
+/* ── INSTALL PROMPT (Android Chrome) ── */
+let deferredPrompt = null;
+const pwaBanner = document.getElementById('pwa-banner');
+const installBtn = document.getElementById('pwa-install-btn');
+const dismissBtn = document.getElementById('pwa-dismiss-btn');
+
+window.addEventListener('beforeinstallprompt', e => {
+  e.preventDefault();
+  deferredPrompt = e;
+  if (sessionStorage.getItem('pwa-dismissed') !== '1') {
+    pwaBanner.style.display = 'flex';
+  }
+});
+
+installBtn && installBtn.addEventListener('click', async () => {
+  pwaBanner.style.display = 'none';
+  if (deferredPrompt) {
+    deferredPrompt.prompt();
+    const { outcome } = await deferredPrompt.userChoice;
+    console.log('[PWA] Install outcome:', outcome);
+    deferredPrompt = null;
+  }
+});
+
+dismissBtn && dismissBtn.addEventListener('click', () => {
+  pwaBanner.style.display = 'none';
+  sessionStorage.setItem('pwa-dismissed', '1');
+});
+
+window.addEventListener('appinstalled', () => {
+  pwaBanner.style.display = 'none';
+  deferredPrompt = null;
+  console.log('[PWA] App installed successfully!');
+});
+</script>
+</body>
+</html>
+
