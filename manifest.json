@@ -2,8 +2,8 @@
   "name": "Petualangan bersama Harsha",
   "short_name": "Harsha Edu",
   "description": "Game Edukasi Calistung untuk anak usia 5-7 tahun — Habibi, Shafiyyah & Arsha",
-  "start_url": "/belajartk/index.html",
-  "scope": "/belajartk/",
+  "start_url": ".",
+  "scope": ".",
   "display": "standalone",
   "orientation": "portrait-primary",
   "background_color": "#b9e2fe",
@@ -30,3 +30,4 @@
     }
   ]
 }
+
