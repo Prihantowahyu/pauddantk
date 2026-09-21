@@ -1359,6 +1359,57 @@ body.dark-mode .modal-desc { color: #cbd5e1 !important; }
   </button>
 </div>
 
+
+<!-- ═══ MODAL BUKU PANDUAN GURU & ORANG TUA ═══ -->
+<div class="modal-bg" id="guide-modal">
+  <div class="modal-box" style="max-width:620px;max-height:85vh;overflow-y:auto;text-align:left">
+    <div style="text-align:center;margin-bottom:12px">
+      <div style="font-size:3rem">📘🏫</div>
+      <h2 class="modal-title" style="color:#0369a1">Panduan Guru &amp; Orang Tua</h2>
+      <p class="modal-desc" style="margin-bottom:8px">Cara memaksimalkan aplikasi Petualangan bersama Harsha</p>
+    </div>
+
+    <div style="background:#f8fafc;border:2px solid #cbd5e1;border-radius:14px;padding:14px;margin-bottom:12px">
+      <h3 style="color:#1e3a5f;font-size:1.05rem;margin-bottom:6px">🧒 1. Sistem 3 Profil Sesuai Usia</h3>
+      <ul style="padding-left:20px;font-size:.88rem;color:#334155;line-height:1.6">
+        <li><strong>👶 Arsha (Usia 4 th / TK-A):</strong> Pengenalan bentuk abjad, angka 1–5, dan motorik dasar.</li>
+        <li><strong>👧 Shafiyyah (Usia 5 th / TK-B):</strong> Memenggal suku kata, membaca kata 2 suku kata, berhitung 1–10.</li>
+        <li><strong>👦 Habibi (Usia 6–7 th / SD-1):</strong> Mengeja kata lengkap, penjumlahan/pengurangan 1–20, logika.</li>
+      </ul>
+    </div>
+
+    <div style="background:#f0fdf4;border:2px solid #86efac;border-radius:14px;padding:14px;margin-bottom:12px">
+      <h3 style="color:#166534;font-size:1.05rem;margin-bottom:6px">🏫 2. Pemanfaatan untuk Guru di Sekolah</h3>
+      <ul style="padding-left:20px;font-size:.88rem;color:#166534;line-height:1.6">
+        <li><strong>Sentra Calistung:</strong> Jadikan tablet kelas sebagai pojok bermain interaktif bergantian.</li>
+        <li><strong>Cetak Lembar Kerja Fisik:</strong> Buka ubin <em>"Lembar Kerja Ceria"</em> dan gunakan tombol print untuk membagikan tugas tracing &amp; labirin fisik.</li>
+        <li><strong>Kuis Kelompok:</strong> Tampilkan <em>Lomba Lari Angka</em> atau <em>Ular Tangga</em> di proyektor kelas untuk ice breaking ceria.</li>
+      </ul>
+    </div>
+
+    <div style="background:#eff6ff;border:2px solid #93c5fd;border-radius:14px;padding:14px;margin-bottom:12px">
+      <h3 style="color:#1e40af;font-size:1.05rem;margin-bottom:6px">🏡 3. Fitur Ramah Orang Tua di Rumah</h3>
+      <ul style="padding-left:20px;font-size:.88rem;color:#1e3a5f;line-height:1.6">
+        <li><strong>⏳ Batas Waktu Layar:</strong> Atur waktu istirahat (15/25/35 menit) agar anak tidak lelah menatap layar.</li>
+        <li><strong>🔒 Kunci Pengaman:</strong> Tombol reset dan cadangan dilindungi soal hitungan agar tidak terhapus tidak sengaja.</li>
+        <li><strong>📜 Sertifikat Cetak:</strong> Cetak sertifikat kelulusan anak dengan nama asli untuk dipajang di dinding kamar.</li>
+        <li><strong>💾 Cadangkan Data:</strong> Simpan kemajuan bintang anak ke file cadangan sebelum ganti ponsel.</li>
+      </ul>
+    </div>
+
+    <div style="background:#fffbeb;border:2px solid #fde68a;border-radius:14px;padding:14px;margin-bottom:16px">
+      <h3 style="color:#92400e;font-size:1.05rem;margin-bottom:6px">📲 4. Cara Main Offline di HP (PWA)</h3>
+      <p style="font-size:.88rem;color:#78350f;line-height:1.6">
+        Buka di Chrome HP -> Ketuk <strong>"Pasang di HP kamu! 📲"</strong> di bawah layar (atau Titik 3 -> Tambahkan ke Layar Utama). Aplikasi akan terpasang di HP dan bisa dibuka <strong>tanpa kuota internet</strong>!
+      </p>
+    </div>
+
+    <div class="modal-btns">
+      <button class="btn-big" id="btn-close-guide" style="width:100%;justify-content:center">Saya Mengerti ✨</button>
+    </div>
+  </div>
+</div>
+
 <div class="modal-bg" id="vic-modal">
   <div class="modal-box">
     <div class="modal-ico">🎉🏆</div>
@@ -3459,6 +3510,13 @@ const UI = {
     const cDoa = document.getElementById('btn-close-doa');
     if (cDoa) cDoa.onclick = () => document.getElementById('doa-modal').classList.remove('open');
 
+    
+    // Guide Modal
+    const gBtn = document.getElementById('btn-open-guide');
+    if (gBtn) gBtn.onclick = () => { SFX.pop(); document.getElementById('guide-modal').classList.add('open'); };
+    const cgBtn = document.getElementById('btn-close-guide');
+    if (cgBtn) cgBtn.onclick = () => document.getElementById('guide-modal').classList.remove('open');
+
     // Back buttons
     document.querySelectorAll('.back-btn').forEach(btn => {
       btn.onclick = () => { SFX.pop(); this.goHub(); };
@@ -3679,7 +3737,12 @@ window.addEventListener('appinstalled', () => {
     <a href="https://www.instagram.com/prihanto.wahyu/" target="_blank" rel="noopener">@prihantowhy</a>
     &nbsp;·&nbsp; 🐛 Jika ada bug, itu fitur tersembunyi 🙈
   </div>
-  <div style="margin-top:3px;font-size:.75rem;opacity:.5">
+  <div style="margin-top:8px">
+    <button id="btn-open-guide" style="background:#e0f2fe;color:#0369a1;border:2px solid #38bdf8;border-radius:999px;padding:8px 18px;font-family:var(--font);font-weight:700;font-size:.88rem;cursor:pointer;display:inline-flex;align-items:center;gap:6px;box-shadow:0 3px 0 #0284c7;transition:all .15s">
+      📖 Buku Panduan Guru &amp; Orang Tua
+    </button>
+  </div>
+  <div style="margin-top:8px;font-size:.75rem;opacity:.6">
     No copas tanpa izin ya! Tapi boleh disebarkan ke orang tua & guru 🏫✨
   </div>
 </footer>
