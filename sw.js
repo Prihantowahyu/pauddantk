@@ -3,7 +3,7 @@
    Menggunakan path RELATIF agar bekerja di GitHub Pages maupun XAMPP
    ───────────────────────────────────────────────────────────── */
 
-const CACHE_NAME = 'harsha-edu-v3';
+const CACHE_NAME = 'harsha-edu-v4';
 
 // Aset yang di-pre-cache — path relatif terhadap sw.js
 const PRE_CACHE_ASSETS = [
@@ -22,7 +22,6 @@ self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME).then(cache => {
       console.log('[SW] Pre-caching assets...');
-      // addAll bisa gagal jika salah satu file 404, gunakan individual put
       return Promise.allSettled(
         PRE_CACHE_ASSETS.map(url =>
           fetch(url).then(res => {
@@ -57,27 +56,39 @@ self.addEventListener('fetch', event => {
   const url = new URL(event.request.url);
   if (!url.protocol.startsWith('http')) return;
 
-  // Jangan cache request ke domain lain (misal Google Fonts)
   const isSameOrigin = url.origin === self.location.origin;
+  const isHtml = event.request.mode === 'navigate' || url.pathname.endsWith('.html') || url.pathname.endsWith('/');
 
+  // 1. Network-First untuk HTML agar perubahan terbaru langsung terlihat
+  if (isHtml) {
+    event.respondWith(
+      fetch(event.request).then(networkResponse => {
+        if (networkResponse && networkResponse.status === 200 && isSameOrigin) {
+          const clone = networkResponse.clone();
+          caches.open(CACHE_NAME).then(cache => cache.put(event.request, clone));
+        }
+        return networkResponse;
+      }).catch(() => {
+        return caches.match(event.request).then(cached => cached || caches.match('./index.html'));
+      })
+    );
+    return;
+  }
+
+  // 2. Cache-First dengan background revalidate untuk aset statis (gambar, font, css)
   event.respondWith(
     caches.match(event.request).then(cachedResponse => {
-      // Kembalikan cache dulu, update di background
       if (cachedResponse) {
         if (isSameOrigin) {
-          // Stale-while-revalidate
           fetch(event.request).then(networkResponse => {
             if (networkResponse && networkResponse.status === 200) {
-              caches.open(CACHE_NAME).then(cache => {
-                cache.put(event.request, networkResponse);
-              });
+              caches.open(CACHE_NAME).then(cache => cache.put(event.request, networkResponse));
             }
           }).catch(() => {});
         }
         return cachedResponse;
       }
 
-      // Tidak ada di cache — fetch dari network
       return fetch(event.request).then(networkResponse => {
         if (!networkResponse || networkResponse.status !== 200) {
           return networkResponse;
@@ -85,18 +96,12 @@ self.addEventListener('fetch', event => {
 
         if (isSameOrigin) {
           const responseToCache = networkResponse.clone();
-          caches.open(CACHE_NAME).then(cache => {
-            cache.put(event.request, responseToCache);
-          });
+          caches.open(CACHE_NAME).then(cache => cache.put(event.request, responseToCache));
         }
 
         return networkResponse;
       }).catch(() => {
-        // Fallback ke index.html jika navigasi
-        if (event.request.mode === 'navigate') {
-          return caches.match('./index.html');
-        }
-        return new Response('Network error', { status: 408 });
+        return new Response('Offline', { status: 503 });
       });
     })
   );

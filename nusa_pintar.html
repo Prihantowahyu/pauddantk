@@ -1123,43 +1123,43 @@
       </div>
 
       <!-- Pulau 2: Terkunci -->
-      <div class="island-node locked" title="Pulau Suku Kata (Terkunci)">
+      <div class="island-node locked" id="node-pulau2" title="Pulau Suku Kata">
         <div class="island-bubble">
           <span class="island-emoji">🌴</span>
-          <span class="island-lock-ico">🔒</span>
+          <span class="island-lock-ico" id="lock-pulau2">🔒</span>
         </div>
         <div class="island-label">2. Pulau Suku Kata</div>
-        <div class="island-status-pill">Terkunci</div>
+        <div class="island-status-pill" id="pulau2-stars-badge">Terkunci</div>
       </div>
 
       <!-- Pulau 3: Terkunci -->
-      <div class="island-node locked" title="Pulau Kata (Terkunci)">
+      <div class="island-node locked" id="node-pulau3" title="Pulau Kata">
         <div class="island-bubble">
           <span class="island-emoji">🌋</span>
-          <span class="island-lock-ico">🔒</span>
+          <span class="island-lock-ico" id="lock-pulau3">🔒</span>
         </div>
         <div class="island-label">3. Pulau Kata</div>
-        <div class="island-status-pill">Terkunci</div>
+        <div class="island-status-pill" id="pulau3-stars-badge">Terkunci</div>
       </div>
 
       <!-- Pulau 4: Terkunci -->
-      <div class="island-node locked" title="Pulau Angka (Terkunci)">
+      <div class="island-node locked" id="node-pulau4" title="Pulau Angka">
         <div class="island-bubble">
           <span class="island-emoji">🏰</span>
-          <span class="island-lock-ico">🔒</span>
+          <span class="island-lock-ico" id="lock-pulau4">🔒</span>
         </div>
         <div class="island-label">4. Pulau Angka</div>
-        <div class="island-status-pill">Terkunci</div>
+        <div class="island-status-pill" id="pulau4-stars-badge">Terkunci</div>
       </div>
 
       <!-- Pulau 5: Terkunci -->
-      <div class="island-node locked" title="Pulau Berhitung (Terkunci)">
+      <div class="island-node locked" id="node-pulau5" title="Pulau Berhitung">
         <div class="island-bubble">
           <span class="island-emoji">👑</span>
-          <span class="island-lock-ico">🔒</span>
+          <span class="island-lock-ico" id="lock-pulau5">🔒</span>
         </div>
         <div class="island-label">5. Pulau Berhitung</div>
-        <div class="island-status-pill">Terkunci</div>
+        <div class="island-status-pill" id="pulau5-stars-badge">Terkunci</div>
       </div>
     </div>
   </section>
@@ -1178,7 +1178,7 @@
         </a>
       </div>
 
-      <div style="font-size:1.3rem;font-weight:900;color:#065f46">
+      <div style="font-size:1.3rem;font-weight:900;color:#065f46" id="island-title-header">
         Pulau Huruf 🔤
       </div>
 
@@ -1284,6 +1284,9 @@
           </div>
 
           <div style="display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin-top:10px">
+            <button class="btn-action" id="btn-next-island" style="display:none;background:linear-gradient(135deg,#10b981,#059669);box-shadow:0 6px 0 #047857">
+              <span>Lanjut ke Pulau Berikutnya ➡️</span>
+            </button>
             <button class="btn-action" id="btn-finish-to-map">
               <span>Kembali ke Peta</span> <span>🗺️</span>
             </button>
@@ -1298,13 +1301,13 @@
       </div>
 
     </div>
-
-    <!-- Floating Feedback Toast -->
-    <div class="feedback-toast" id="feedback-toast">
-      <span class="feedback-emoji" id="toast-emoji">🌟</span>
-      <span class="feedback-text" id="toast-msg">Hebat!</span>
-    </div>
   </section>
+
+  <!-- Floating Feedback Toast -->
+  <div class="feedback-toast" id="feedback-toast">
+    <span class="feedback-emoji" id="toast-emoji">🌟</span>
+    <span class="feedback-text" id="toast-msg">Hebat!</span>
+  </div>
 
 </div>
 
@@ -1394,7 +1397,11 @@ const StorageManager = {
     color: '#facc15',
     accessories: [],
     islands: {
-      pulau1: { completed: false, stars: 0 }
+      pulau1: { completed: false, stars: 0 },
+      pulau2: { completed: false, stars: 0 },
+      pulau3: { completed: false, stars: 0 },
+      pulau4: { completed: false, stars: 0 },
+      pulau5: { completed: false, stars: 0 }
     },
     totalStars: 0
   },
@@ -1404,7 +1411,12 @@ const StorageManager = {
       if (saved) {
         const parsed = JSON.parse(saved);
         this.data = Object.assign(this.data, parsed);
-        if (!this.data.islands) this.data.islands = { pulau1: { completed: false, stars: 0 } };
+        if (!this.data.islands) this.data.islands = {};
+        for (let i = 1; i <= 5; i++) {
+          if (!this.data.islands['pulau' + i]) {
+            this.data.islands['pulau' + i] = { completed: false, stars: 0 };
+          }
+        }
         if (!this.data.accessories) this.data.accessories = [];
       }
     } catch(e) {
@@ -1416,14 +1428,20 @@ const StorageManager = {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(this.data));
     } catch(e) {}
   },
+  isIslandUnlocked(num) {
+    if (num <= 1) return true;
+    const prevKey = 'pulau' + (num - 1);
+    return !!(this.data.islands && this.data.islands[prevKey] && this.data.islands[prevKey].completed);
+  },
   recordIsland(islandKey, stars) {
+    if (!this.data.islands) this.data.islands = {};
     if (!this.data.islands[islandKey]) {
       this.data.islands[islandKey] = { completed: false, stars: 0 };
     }
     const currentStars = this.data.islands[islandKey].stars || 0;
     if (stars > currentStars) {
       const diff = stars - currentStars;
-      this.data.totalStars += diff;
+      this.data.totalStars = (this.data.totalStars || 0) + diff;
       this.data.islands[islandKey].stars = stars;
     }
     this.data.islands[islandKey].completed = true;
@@ -1473,24 +1491,63 @@ const App = {
     document.getElementById('header-char').textContent = d.char;
     document.getElementById('header-avatar-circle').style.background = d.color;
     document.getElementById('header-name').textContent = d.name || 'Penjelajah';
-    document.getElementById('header-stars').textContent = d.totalStars;
+    document.getElementById('header-stars').textContent = d.totalStars || 0;
 
-    // Pulau 1 Island status badge
-    const p1Status = d.islands.pulau1;
-    const badge = document.getElementById('pulau1-stars-badge');
-    if (p1Status && p1Status.completed) {
-      badge.textContent = `⭐ ${p1Status.stars}/3 Selesai!`;
-      badge.style.background = '#fef08a';
-      badge.style.color = '#854d0e';
-    } else {
-      badge.textContent = 'Ayo Mulai! ✨';
+    // Update 5 Island nodes on world map
+    for (let i = 1; i <= 5; i++) {
+      const node = document.getElementById('node-pulau' + i);
+      const badge = document.getElementById('pulau' + i + '-stars-badge');
+      const lockIco = document.getElementById('lock-pulau' + i);
+      const isUnlocked = StorageManager.isIslandUnlocked(i);
+      const pStatus = d.islands ? d.islands['pulau' + i] : null;
+
+      if (node) {
+        if (isUnlocked) {
+          node.classList.remove('locked');
+          node.classList.add('unlocked');
+          if (lockIco) lockIco.style.display = 'none';
+
+          if (badge) {
+            if (pStatus && pStatus.completed) {
+              badge.textContent = `⭐ ${pStatus.stars}/3 Selesai!`;
+              badge.style.background = '#fef08a';
+              badge.style.color = '#854d0e';
+            } else {
+              badge.textContent = 'Ayo Mulai! ✨';
+              badge.style.background = '#dcfce7';
+              badge.style.color = '#15803d';
+            }
+          }
+
+          node.onclick = () => {
+            Sound.pop();
+            PulauEngine.start(i);
+          };
+        } else {
+          node.classList.remove('unlocked');
+          node.classList.add('locked');
+          if (lockIco) lockIco.style.display = 'flex';
+
+          if (badge) {
+            badge.textContent = 'Terkunci 🔒';
+            badge.style.background = '#f1f5f9';
+            badge.style.color = '#64748b';
+          }
+
+          node.onclick = () => {
+            Sound.retry();
+            PulauEngine.showToast('🔒', `Selesaikan Pulau ${i - 1} dulu ya!`, true);
+            Sound.speak(`Selesaikan Pulau ${i - 1} dulu ya!`);
+          };
+        }
+      }
     }
 
-    // Pulau 1 Stage Hero
+    // Pulau Stage Hero
     document.getElementById('stage-hero-char').textContent = d.char;
     document.getElementById('stage-hero-circle').style.background = d.color;
     document.getElementById('stage-hero-name').textContent = d.name || 'Penjelajah';
-    document.getElementById('p1-stars-display').textContent = d.totalStars;
+    document.getElementById('p1-stars-display').textContent = d.totalStars || 0;
 
     // Equipped accessories
     const hasHat = d.accessories.includes('🎩');
@@ -1547,7 +1604,7 @@ const App = {
       StorageManager.save();
       App.syncProfileUI();
       App.showScreen('screen-map');
-      Sound.speak(`Selamat datang di peta dunia Nusa Pintar, ${StorageManager.data.name}! Pilih Pulau Huruf.`);
+      Sound.speak(`Selamat datang di peta dunia Nusa Pintar, ${StorageManager.data.name}! Pilih pulaumu.`);
     };
 
     // 5. Edit profile button
@@ -1556,64 +1613,292 @@ const App = {
       App.showScreen('screen-start');
     };
 
-    // 6. Pulau 1 Node click -> Pulau Huruf
-    document.getElementById('node-pulau1').onclick = () => {
-      Sound.pop();
-      PulauHuruf.start();
-    };
-
-    // 7. Back to map button
+    // 6. Back to map button
     document.getElementById('btn-back-to-map').onclick = () => {
       Sound.pop();
-      PulauHuruf.cleanup();
+      PulauEngine.cleanup();
+      App.syncProfileUI();
       App.showScreen('screen-map');
     };
   }
 };
 
 /* ═══════════════════════════════════════════════════════════
-   4. PULAU HURUF CONTROLLER (3 FASE)
+   4. ISLANDS CONFIGURATION (5 PULAU NUSA PINTAR)
 ═══════════════════════════════════════════════════════════ */
-const PulauHuruf = {
+const ISLANDS_CONFIG = {
+  1: {
+    num: 1,
+    name: 'Pulau Huruf',
+    emoji: '🔤',
+    bubbleEmoji: '🏝️',
+    bgTheme: 'linear-gradient(180deg, #ecfdf5 0%, #d1fae5 100%)',
+    decor1Emoji: '🌳',
+    decor1Name: 'Pohon Apel',
+    decor1Msg: '🍎 Pohon berbuah apel manis!',
+    decor2Emoji: '🌸',
+    decor2Name: 'Bunga Pelangi',
+    decor2Msg: '✨ Bunga warna-warni mekar!',
+    welcomeMsg: (name) => `Halo ${name}! Selamat datang di Pulau Huruf! Ketuk objek lucu di pulau ini ya! 🌳🌸🎁`,
+    speechWelcome: (name) => `Halo ${name}! Selamat datang di Pulau Huruf!`,
+    victoryTitle: 'Hebat Sekali! ⭐',
+    victoryDesc: 'Halaman 1 Buku Ajaib Berhasil Ditemukan!',
+    victorySpeech: (stars) => `Hore! Halaman satu Buku Ajaib berhasil kamu temukan! Kamu dapat ${stars} bintang!`,
+    questions: [
+      {
+        type: 'choice',
+        instruction: 'Mana huruf',
+        target: 'A',
+        options: ['A', 'I', 'U', 'E'],
+        speech: 'Cari huruf A'
+      },
+      {
+        type: 'drag',
+        instruction: 'Seret huruf',
+        target: 'B',
+        options: ['B', 'D', 'M'],
+        speech: 'Seret huruf B ke dalam kotak'
+      },
+      {
+        type: 'choice',
+        instruction: 'Cari huruf',
+        target: 'M',
+        options: ['M', 'K', 'C', 'D'],
+        speech: 'Mana huruf M?'
+      },
+      {
+        type: 'choice',
+        instruction: 'Hati-hati, cari huruf',
+        target: 'U',
+        options: ['U', 'O', 'C', 'I', 'E'],
+        speech: 'Hati-hati dengan huruf mirip, cari huruf U'
+      }
+    ]
+  },
+  2: {
+    num: 2,
+    name: 'Pulau Suku Kata',
+    emoji: '🌴',
+    bubbleEmoji: '🌴',
+    bgTheme: 'linear-gradient(180deg, #fef3c7 0%, #fde68a 100%)',
+    decor1Emoji: '🌴',
+    decor1Name: 'Pohon Kelapa',
+    decor1Msg: '🥥 Kelapa manis jatuh!',
+    decor2Emoji: '🌺',
+    decor2Name: 'Bunga Sepatu',
+    decor2Msg: '🌺 Harum sekali bunganya!',
+    welcomeMsg: (name) => `Wah hebat ${name}! Selamat datang di Pulau Suku Kata! Ayo susun suku kata ceria! 🌴🥥🎁`,
+    speechWelcome: (name) => `Selamat datang di Pulau Suku Kata, ${name}!`,
+    victoryTitle: 'Luar Biasa! ⭐',
+    victoryDesc: 'Halaman 2 Buku Ajaib Berhasil Ditemukan!',
+    victorySpeech: (stars) => `Hebat! Halaman dua Buku Ajaib terbuka! Kamu dapat ${stars} bintang!`,
+    questions: [
+      {
+        type: 'choice',
+        instruction: 'Mana suku kata',
+        target: 'BA',
+        options: ['BA', 'DA', 'MA', 'PA'],
+        speech: 'Cari suku kata BA'
+      },
+      {
+        type: 'drag',
+        instruction: 'Seret suku kata',
+        target: 'BO',
+        options: ['BO', 'DO', 'KO'],
+        speech: 'Seret suku kata BO ke dalam kotak'
+      },
+      {
+        type: 'choice',
+        instruction: 'Suara huruf B dan U adalah',
+        target: 'BU',
+        options: ['BU', 'BI', 'BA', 'BE'],
+        speech: 'Suara huruf B dan U adalah BU. Mana tulisan BU?'
+      },
+      {
+        type: 'choice',
+        instruction: 'Mana suku kata',
+        target: 'MA',
+        options: ['MA', 'NA', 'WA', 'SA'],
+        speech: 'Cari suku kata MA'
+      }
+    ]
+  },
+  3: {
+    num: 3,
+    name: 'Pulau Kata',
+    emoji: '🌋',
+    bubbleEmoji: '🌋',
+    bgTheme: 'linear-gradient(180deg, #ffedd5 0%, #fed7aa 100%)',
+    decor1Emoji: '🌋',
+    decor1Name: 'Gunung Megah',
+    decor1Msg: '🌋 Asap gembira membubung!',
+    decor2Emoji: '💎',
+    decor2Name: 'Batu Permata',
+    decor2Msg: '💎 Berkilau indah sekali!',
+    welcomeMsg: (name) => `Keren ${name}! Kamu sampai di Pulau Kata! Ayo temukan kata-kata ajaib! 🌋💎🎁`,
+    speechWelcome: (name) => `Selamat datang di Pulau Kata, ${name}!`,
+    victoryTitle: 'Pintar Sekali! ⭐',
+    victoryDesc: 'Halaman 3 Buku Ajaib Berhasil Ditemukan!',
+    victorySpeech: (stars) => `Keren sekali! Halaman tiga Buku Ajaib terbuka! Kamu dapat ${stars} bintang!`,
+    questions: [
+      {
+        type: 'choice',
+        instruction: 'Mana kata',
+        target: 'BOLA ⚽',
+        options: ['BOLA ⚽', 'BUKU 📖', 'BAPAK 👨', 'BATU 🪨'],
+        speech: 'Cari kata BOLA'
+      },
+      {
+        type: 'drag',
+        instruction: 'Seret kata',
+        target: 'BUKU 📖',
+        options: ['BUKU 📖', 'KUKU 💅', 'BULU 🪶'],
+        speech: 'Seret kata BUKU ke dalam kotak'
+      },
+      {
+        type: 'choice',
+        instruction: 'Mana kata',
+        target: 'MATA 👁️',
+        options: ['MATA 👁️', 'KATA 💬', 'BATA 🧱', 'PITA 🎀'],
+        speech: 'Cari kata MATA'
+      },
+      {
+        type: 'choice',
+        instruction: 'Mana kata',
+        target: 'SAPI 🐄',
+        options: ['SAPI 🐄', 'TOPI 🎩', 'TALI 🪢', 'PADI 🌾'],
+        speech: 'Cari kata SAPI'
+      }
+    ]
+  },
+  4: {
+    num: 4,
+    name: 'Pulau Angka',
+    emoji: '🏰',
+    bubbleEmoji: '🏰',
+    bgTheme: 'linear-gradient(180deg, #e0e7ff 0%, #c7d2fe 100%)',
+    decor1Emoji: '🏰',
+    decor1Name: 'Istana Megah',
+    decor1Msg: '🏰 Pintu istana terbuka lebar!',
+    decor2Emoji: '⭐',
+    decor2Name: 'Bintang Emas',
+    decor2Msg: '⭐ Bintang harapan bersinar!',
+    welcomeMsg: (name) => `Halo Juara ${name}! Selamat datang di Pulau Angka Istana Ajaib! 🏰⭐🎁`,
+    speechWelcome: (name) => `Selamat datang di Pulau Angka, ${name}!`,
+    victoryTitle: 'Hebat Luar Biasa! ⭐',
+    victoryDesc: 'Halaman 4 Buku Ajaib Berhasil Ditemukan!',
+    victorySpeech: (stars) => `Luar biasa! Halaman empat Buku Ajaib berhasil kamu dapatkan! Kamu dapat ${stars} bintang!`,
+    questions: [
+      {
+        type: 'choice',
+        instruction: 'Mana angka',
+        target: '3',
+        options: ['3', '8', '5', '2'],
+        speech: 'Cari angka 3'
+      },
+      {
+        type: 'drag',
+        instruction: 'Seret angka',
+        target: '5',
+        options: ['5', '2', '6'],
+        speech: 'Seret angka 5 ke dalam kotak'
+      },
+      {
+        type: 'choice',
+        instruction: 'Ada berapa bintang? ⭐⭐⭐⭐',
+        target: '4',
+        options: ['4', '3', '5', '6'],
+        speech: 'Ada berapa bintang? Hitung ya, satu, dua, tiga, empat!'
+      },
+      {
+        type: 'choice',
+        instruction: 'Mana angka',
+        target: '7',
+        options: ['7', '1', '4', '9'],
+        speech: 'Cari angka 7'
+      }
+    ]
+  },
+  5: {
+    num: 5,
+    name: 'Pulau Berhitung',
+    emoji: '👑',
+    bubbleEmoji: '👑',
+    bgTheme: 'linear-gradient(180deg, #fae8ff 0%, #f5d0fe 100%)',
+    decor1Emoji: '👑',
+    decor1Name: 'Mahkota Juara',
+    decor1Msg: '👑 Mahkota kebesaran penjelajah!',
+    decor2Emoji: '🏆',
+    decor2Name: 'Piala Emas',
+    decor2Msg: '🏆 Kamu anak hebat dan pintar!',
+    welcomeMsg: (name) => `Hore ${name}! Ini pulau puncak: Pulau Berhitung! Taklukkan untuk jadi Juara Nusa Pintar! 👑🏆🎁`,
+    speechWelcome: (name) => `Selamat datang di Pulau Berhitung, ${name}! Pulau penutup buku ajaib!`,
+    victoryTitle: 'Juara Nusa Pintar! 👑',
+    victoryDesc: 'Semua 5 Halaman Buku Ajaib Lengkap! Kamu Penjelajah Terhebat! 👑📜✨',
+    victorySpeech: (stars) => `Selamat! Semua lima halaman buku ajaib sudah lengkap! Kamu resmi jadi Juara Nusa Pintar!`,
+    questions: [
+      {
+        type: 'choice',
+        instruction: 'Hitung: 1 + 1 =',
+        target: '2',
+        options: ['2', '3', '1', '4'],
+        speech: 'Satu ditambah satu sama dengan berapa?'
+      },
+      {
+        type: 'drag',
+        instruction: 'Hitung: 2 + 1 = Seret angka',
+        target: '3',
+        options: ['3', '4', '5'],
+        speech: 'Dua ditambah satu sama dengan berapa? Seret angkanya!'
+      },
+      {
+        type: 'choice',
+        instruction: 'Hitung buah: 🍎🍎🍎 (Ada berapa?)',
+        target: '3',
+        options: ['3', '2', '4', '5'],
+        speech: 'Hitung buah apel: ada berapa apel?'
+      },
+      {
+        type: 'choice',
+        instruction: 'Hitung: 3 + 2 =',
+        target: '5',
+        options: ['5', '4', '6', '3'],
+        speech: 'Tiga ditambah dua sama dengan berapa?'
+      }
+    ]
+  }
+};
+
+/* ═══════════════════════════════════════════════════════════
+   5. PULAU ENGINE (Mendukung 5 Pulau Bertahap)
+═══════════════════════════════════════════════════════════ */
+const PulauEngine = {
+  currentIslandNum: 1,
   currentQuestionIdx: 0,
   mistakesInQuestion: 0,
   totalMistakes: 0,
   phase1Timer: null,
-  questions: [
-    {
-      type: 'choice',
-      instruction: 'Mana huruf',
-      target: 'A',
-      options: ['A', 'I', 'U', 'E'],
-      speech: 'Cari huruf A'
-    },
-    {
-      type: 'drag',
-      instruction: 'Seret huruf',
-      target: 'B',
-      options: ['B', 'D', 'M'],
-      speech: 'Seret huruf B ke dalam kotak'
-    },
-    {
-      type: 'choice',
-      instruction: 'Cari huruf',
-      target: 'M',
-      options: ['M', 'K', 'C', 'D'],
-      speech: 'Mana huruf M?'
-    },
-    {
-      type: 'choice',
-      instruction: 'Hati-hati, cari huruf',
-      target: 'U',
-      options: ['U', 'O', 'C', 'I', 'E'],
-      speech: 'Hati-hati dengan huruf mirip, cari huruf U'
-    }
-  ],
+  currentAnimId: null,
 
-  start() {
-    App.showScreen('screen-pulau1');
+  start(islandNum = 1) {
+    this.cleanup();
+    this.currentIslandNum = islandNum;
+    this.cfg = ISLANDS_CONFIG[islandNum] || ISLANDS_CONFIG[1];
+    this.questions = this.cfg.questions;
     this.currentQuestionIdx = 0;
     this.totalMistakes = 0;
+
+    // Update screen header & background
+    const screenEl = document.getElementById('screen-pulau1');
+    if (screenEl) {
+      screenEl.style.background = this.cfg.bgTheme;
+    }
+    const headerTitle = document.getElementById('island-title-header');
+    if (headerTitle) {
+      headerTitle.textContent = `${this.cfg.name} ${this.cfg.emoji}`;
+    }
+
+    App.showScreen('screen-pulau1');
     this.startPhase1();
   },
 
@@ -1624,9 +1909,9 @@ const PulauHuruf = {
     document.getElementById('phase3-container').style.display = 'none';
 
     const pName = StorageManager.data.name || 'Sahabat Cilik';
-    const welcomeMsg = `Halo ${pName}! Selamat datang di Pulau Huruf! Ketuk objek lucu di pulau ini ya! 🌳🌸🎁`;
+    const welcomeMsg = this.cfg.welcomeMsg(pName);
     document.getElementById('p1-welcome-txt').textContent = welcomeMsg;
-    Sound.speak(`Halo ${pName}! Selamat datang di Pulau Huruf!`);
+    Sound.speak(this.cfg.speechWelcome(pName));
 
     // Reset chest visual
     const chest = document.getElementById('decor-chest');
@@ -1634,22 +1919,34 @@ const PulauHuruf = {
     if (chestIco) chestIco.textContent = '🎁';
     if (chest) chest.onclick = () => this.openBonusChest();
 
-    // Decorative items reactions
-    document.getElementById('decor-tree').onclick = () => {
-      Sound.pop();
-      const el = document.getElementById('decor-tree');
-      el.classList.add('soft-shake');
-      setTimeout(() => el.classList.remove('soft-shake'), 400);
-      this.showToast('🍎', 'Pohon berbuah apel lezat!');
-    };
+    // Decorative items reactions with dynamic island themes
+    const decor1 = document.getElementById('decor-tree');
+    if (decor1) {
+      const ico = decor1.querySelector('.decor-emoji');
+      const badge = decor1.querySelector('.decor-badge');
+      if (ico) ico.textContent = this.cfg.decor1Emoji;
+      if (badge) badge.textContent = this.cfg.decor1Name;
+      decor1.onclick = () => {
+        Sound.pop();
+        decor1.classList.add('soft-shake');
+        setTimeout(() => decor1.classList.remove('soft-shake'), 400);
+        this.showToast(this.cfg.decor1Emoji, this.cfg.decor1Msg);
+      };
+    }
 
-    document.getElementById('decor-flower').onclick = () => {
-      Sound.sparkle();
-      const el = document.getElementById('decor-flower');
-      el.style.transform = 'scale(1.3) rotate(360deg)';
-      setTimeout(() => el.style.transform = '', 600);
-      this.showToast('✨', 'Bunga pelangi bermekaran!');
-    };
+    const decor2 = document.getElementById('decor-flower');
+    if (decor2) {
+      const ico = decor2.querySelector('.decor-emoji');
+      const badge = decor2.querySelector('.decor-badge');
+      if (ico) ico.textContent = this.cfg.decor2Emoji;
+      if (badge) badge.textContent = this.cfg.decor2Name;
+      decor2.onclick = () => {
+        Sound.sparkle();
+        decor2.style.transform = 'scale(1.3) rotate(360deg)';
+        setTimeout(() => decor2.style.transform = '', 600);
+        this.showToast(this.cfg.decor2Emoji, this.cfg.decor2Msg);
+      };
+    }
 
     // Skip to Phase 2 button
     document.getElementById('btn-skip-to-phase2').onclick = () => {
@@ -1750,13 +2047,12 @@ const PulauHuruf = {
     document.getElementById('drag-drop-container').style.display = 'flex';
 
     const dropzone = document.getElementById('letter-dropzone');
-    dropzone.innerHTML = `<span style="font-size:2.2rem">📥</span><span>Seret huruf ${q.target} ke Sini!</span>`;
+    dropzone.innerHTML = `<span style="font-size:2.2rem">📥</span><span>Seret ke Sini!</span>`;
     dropzone.className = 'dropzone-box';
 
     const row = document.getElementById('draggable-items');
     row.innerHTML = '';
 
-    // Drag events setup (supports both HTML5 drag & touch/tap)
     dropzone.ondragover = (e) => { e.preventDefault(); dropzone.classList.add('dragover'); };
     dropzone.ondragleave = () => dropzone.classList.remove('dragover');
     dropzone.ondrop = (e) => {
@@ -1777,7 +2073,7 @@ const PulauHuruf = {
         e.dataTransfer.setData('text', opt);
       };
 
-      // Also support tap-to-select fallback for tablets
+      // Tap-to-select fallback
       item.onclick = () => {
         Sound.pop();
         this.handleAnswer(opt, q.target, item);
@@ -1817,7 +2113,7 @@ const PulauHuruf = {
         setTimeout(() => element.classList.remove('soft-shake'), 400);
       }
 
-      // Jika salah 2x: persempit pilihan jadi 2 opsi (bantuan implisit)
+      // Jika salah 2x: persempit pilihan jadi 2 opsi
       if (this.mistakesInQuestion >= 2) {
         this.applyImplicitHelp(target);
       }
@@ -1829,10 +2125,8 @@ const PulauHuruf = {
     if (q.type === 'choice') {
       const grid = document.getElementById('choices-grid');
       const btns = Array.from(grid.children);
-      // Keep target button + 1 random wrong button, hide the others
       const wrongBtns = btns.filter(b => b.textContent !== target);
       if (wrongBtns.length > 1) {
-        // Hide excess wrong options
         for (let i = 1; i < wrongBtns.length; i++) {
           wrongBtns[i].style.visibility = 'hidden';
         }
@@ -1852,12 +2146,13 @@ const PulauHuruf = {
 
   showToast(emoji, msg, isRetry = false) {
     const toast = document.getElementById('feedback-toast');
+    if (!toast) return;
     document.getElementById('toast-emoji').textContent = emoji;
     document.getElementById('toast-msg').textContent = msg;
     toast.className = 'feedback-toast show' + (isRetry ? ' retry' : '');
     setTimeout(() => {
       toast.classList.remove('show');
-    }, 950);
+    }, 1100);
   },
 
   /* ── FASE 3: PERAYAAN (RANDOM 3 JENIS) ── */
@@ -1867,15 +2162,13 @@ const PulauHuruf = {
 
     Sound.fanfare();
 
-    // Hitung bintang:
-    // 3 Bintang jika kesalahan 0-1
-    // 2 Bintang jika kesalahan 2-3
-    // 1 Bintang jika kesalahan >= 4
     let stars = 3;
     if (this.totalMistakes >= 4) stars = 1;
     else if (this.totalMistakes >= 2) stars = 2;
 
-    StorageManager.recordIsland('pulau1', stars);
+    // Record progress in storage
+    const currentKey = 'pulau' + this.currentIslandNum;
+    StorageManager.recordIsland(currentKey, stars);
     App.syncProfileUI();
 
     // Render Bintang
@@ -1889,26 +2182,46 @@ const PulauHuruf = {
       starRow.appendChild(s);
     }
 
-    // Acak 1 dari 3 jenis perayaan:
-    // 1 = Bintang Jatuh (Shooting stars canvas)
-    // 2 = Confetti Emoji (Confetti canvas)
-    // 3 = Karakter Melompat Gembira
+    // Set victory texts
+    document.getElementById('victory-title').textContent = this.cfg.victoryTitle;
+    document.getElementById('victory-desc').textContent = this.cfg.victoryDesc;
+
+    // Acak 1 dari 3 jenis perayaan
     const celType = Math.floor(Math.random() * 3) + 1;
     this.launchCelebration(celType);
 
-    Sound.speak(`Hore! Halaman 1 Buku Ajaib berhasil kamu temukan! Kamu dapat ${stars} bintang!`);
+    Sound.speak(this.cfg.victorySpeech(stars));
+
+    // Tombol Lanjut ke Pulau Berikutnya (jika < 5)
+    const nextBtn = document.getElementById('btn-next-island');
+    if (nextBtn) {
+      if (this.currentIslandNum < 5) {
+        const nextNum = this.currentIslandNum + 1;
+        const nextCfg = ISLANDS_CONFIG[nextNum];
+        nextBtn.style.display = 'inline-flex';
+        nextBtn.innerHTML = `<span>Lanjut ke Pulau ${nextNum} (${nextCfg.name}) 🚀</span>`;
+        nextBtn.onclick = () => {
+          Sound.pop();
+          PulauEngine.cleanup();
+          PulauEngine.start(nextNum);
+        };
+      } else {
+        nextBtn.style.display = 'none';
+      }
+    }
 
     // Button actions
     document.getElementById('btn-finish-to-map').onclick = () => {
       Sound.pop();
-      PulauHuruf.cleanup();
+      PulauEngine.cleanup();
+      App.syncProfileUI();
       App.showScreen('screen-map');
     };
 
     document.getElementById('btn-replay-pulau1').onclick = () => {
       Sound.pop();
-      PulauHuruf.cleanup();
-      PulauHuruf.start();
+      PulauEngine.cleanup();
+      PulauEngine.start(this.currentIslandNum);
     };
   },
 
@@ -1918,13 +2231,10 @@ const PulauHuruf = {
     jumpingHero.style.display = 'none';
 
     if (type === 1) {
-      // 1. Bintang Jatuh (Shooting Stars)
       this.runCanvasParticles(canvas, 'stars');
     } else if (type === 2) {
-      // 2. Confetti Emoji
       this.runCanvasParticles(canvas, 'emoji');
     } else {
-      // 3. Karakter Melompat Gembira
       jumpingHero.textContent = StorageManager.data.char;
       jumpingHero.style.display = 'block';
       this.runCanvasParticles(canvas, 'sparkles');
@@ -1938,7 +2248,7 @@ const PulauHuruf = {
 
     const particles = [];
     const count = 45;
-    const emojis = ['🎉', '✨', '🎈', '⭐', '📜'];
+    const emojis = ['🎉', '✨', '🎈', '⭐', '📜', '🏆'];
 
     for (let i = 0; i < count; i++) {
       particles.push({
@@ -1948,7 +2258,7 @@ const PulauHuruf = {
         vy: Math.random() * 4 + 3,
         size: mode === 'emoji' ? 26 : Math.random() * 8 + 4,
         emoji: emojis[Math.floor(Math.random() * emojis.length)],
-        color: ['#f59e0b', '#10b981', '#3b82f6', '#ec4899'][Math.floor(Math.random() * 4)],
+        color: ['#f59e0b', '#10b981', '#3b82f6', '#ec4899', '#8b5cf6'][Math.floor(Math.random() * 5)],
         rot: Math.random() * 360,
         rotSpeed: (Math.random() - 0.5) * 8
       });
@@ -1975,7 +2285,6 @@ const PulauHuruf = {
             ctx.textBaseline = 'middle';
             ctx.fillText(p.emoji, 0, 0);
           } else {
-            // Stars / Sparkles
             ctx.fillStyle = p.color;
             ctx.beginPath();
             ctx.arc(0, 0, p.size, 0, Math.PI * 2);
@@ -2008,6 +2317,10 @@ const PulauHuruf = {
     if (jumpingHero) jumpingHero.style.display = 'none';
   }
 };
+
+// Aliases for backwards compatibility
+window.PulauHuruf = PulauEngine;
+window.PulauEngine = PulauEngine;
 
 // Initialize on page load
 window.addEventListener('DOMContentLoaded', () => {
