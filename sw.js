@@ -1,9 +1,9 @@
-/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-   Service Worker â€” Petualangan bersama Harsha
+/* -----------------------------------------------------------
+   Service Worker — Petualangan bersama Harsha
    Offline-first: App Shell Cache + Network Fallback
-   â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+----------------------------------------------------------- */
 
-const CACHE_NAME  = 'harsha-edu-v13';
+const CACHE_NAME  = 'harsha-edu-v14';
 const FONT_CACHE  = 'harsha-fonts-v1';
 const OFFLINE_URL = './offline.html';
 
@@ -26,7 +26,7 @@ const SHELL_ASSETS = [
   './icons/icon-512x512.png',
 ];
 
-/* INSTALL â€” cache semua halaman & aset */
+/* INSTALL — cache semua halaman & aset */
 self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME).then(cache => {
@@ -41,7 +41,7 @@ self.addEventListener('install', event => {
   );
 });
 
-/* ACTIVATE â€” hapus cache lama */
+/* ACTIVATE — hapus cache lama */
 self.addEventListener('activate', event => {
   event.waitUntil(
     caches.keys().then(keys =>
@@ -54,54 +54,66 @@ self.addEventListener('activate', event => {
   );
 });
 
-/* FETCH â€” strategi per tipe */
+/* FETCH — strategi per tipe */
 self.addEventListener('fetch', event => {
   const req = event.request;
   if (req.method !== 'GET') return;
-  const url = new URL(req.url);
-  if (!url.protocol.startsWith('http')) return;
 
-  /* 1. Google Fonts â€” Cache-First */
-  if (url.hostname.includes('fonts.googleapis.com') || url.hostname.includes('fonts.gstatic.com')) {
+  const url = new URL(req.url);
+
+  // 1. Google Fonts
+  if (url.hostname.includes('fonts.gstatic.com') || url.hostname.includes('fonts.googleapis.com')) {
     event.respondWith(
-      caches.open(FONT_CACHE).then(fc =>
-        fc.match(req).then(cached => {
-          if (cached) { fetch(req).then(r => { if (r && r.ok) fc.put(req, r.clone()); }).catch(() => {}); return cached; }
-          return fetch(req).then(r => { if (r && r.ok) fc.put(req, r.clone()); return r; }).catch(() => new Response('', {status:503}));
+      caches.open(FONT_CACHE).then(cache =>
+        cache.match(req).then(cached => {
+          if (cached) return cached;
+          return fetch(req)
+            .then(res => {
+              if (res.ok) cache.put(req, res.clone());
+              return res;
+            })
+            .catch(() => new Response('', { status: 200 }));
         })
       )
     );
     return;
   }
 
-  const same = url.origin === self.location.origin;
-
-  /* 2. Navigasi HTML â€” Network-First, fallback offline.html */
-  if (req.mode === 'navigate' || url.pathname.endsWith('.html') || url.pathname === '/' || url.pathname === '') {
-    event.respondWith(
-      fetch(req).then(r => {
-        if (r && r.ok && same) caches.open(CACHE_NAME).then(c => c.put(req, r.clone()));
-        return r;
-      }).catch(() =>
-        caches.match(req)
-          .then(c => c || caches.match(OFFLINE_URL))
-          .then(c => c || caches.match('./index.html'))
-      )
-    );
-    return;
-  }
-
-  /* 3. Aset Statis â€” Cache-First dengan background revalidate */
-  if (same) {
+  // 2. HTML navigation
+  if (req.mode === 'navigate') {
     event.respondWith(
       caches.match(req).then(cached => {
-        const net = fetch(req).then(r => { if (r && r.ok) caches.open(CACHE_NAME).then(c => c.put(req, r.clone())); return r; }).catch(() => null);
-        return cached || net.then(r => r || new Response('Not found', {status:404}));
+        if (cached) {
+          fetch(req).then(res => {
+            if (res && res.ok) caches.open(CACHE_NAME).then(c => c.put(req, res));
+          }).catch(() => {});
+          return cached;
+        }
+        return fetch(req)
+          .then(res => {
+            if (res.ok) {
+              const clone = res.clone();
+              caches.open(CACHE_NAME).then(c => c.put(req, clone));
+            }
+            return res;
+          })
+          .catch(() => caches.match(OFFLINE_URL));
       })
     );
     return;
   }
 
-  /* 4. Lainnya â€” passthrough */
-  event.respondWith(fetch(req).catch(() => new Response('Offline', {status:503})));
+  // 3. Static assets
+  event.respondWith(
+    caches.match(req).then(cached => {
+      if (cached) return cached;
+      return fetch(req).then(res => {
+        if (res && res.ok) {
+          const clone = res.clone();
+          caches.open(CACHE_NAME).then(c => c.put(req, clone));
+        }
+        return res;
+      }).catch(() => new Response('', { status: 404 }));
+    })
+  );
 });

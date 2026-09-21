@@ -1240,7 +1240,7 @@
         <div class="question-card">
           <button class="speaker-btn" id="btn-repeat-speech" title="Dengarkan Suara">🔊</button>
           <div class="question-text" id="q-instruction-text">
-            Mana huruf <span class="question-target-letter" id="q-target-letter">A</span>?
+            Mana huruf <span class="question-target-letter">A</span>?
           </div>
         </div>
 
@@ -2022,7 +2022,7 @@ const PulauEngine = {
     const q = this.questions[this.currentQuestionIdx];
 
     document.getElementById('q-progress-text').textContent = `Soal ${this.currentQuestionIdx + 1} dari ${this.questions.length}`;
-    document.getElementById('q-instruction-text').innerHTML = `${q.instruction} <span class="question-target-letter" id="q-target-letter">${q.target}</span>`;
+    document.getElementById('q-instruction-text').innerHTML = `${q.instruction} <span class="question-target-letter">${q.target}</span>`;
     
     // Repeat speech button
     document.getElementById('btn-repeat-speech').onclick = () => {
