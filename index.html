@@ -22,6 +22,8 @@
   --sh:0 8px 20px rgba(0,0,0,.12);
 }
 *{box-sizing:border-box;margin:0;padding:0;user-select:none;-webkit-tap-highlight-color:transparent;font-family:var(--font)}
+button,.card,.btn-ch,.btn-lari,.ing-btn,.slot,.island-btn,.ico-btn,.q-hint,.dice-btn,a{touch-action:manipulation}
+button:active,.btn-ch:active,.btn-lari:active,.ing-btn:active,.island-btn:active,.ico-btn:active,.q-hint:active{transform:scale(0.95)!important;transition:transform 0.06s ease!important}
 body{background:linear-gradient(180deg,#b9e2fe 0%,#e2f2ff 55%,#c8f5c3 85%,#8ae48f 100%);min-height:100vh;display:flex;flex-direction:column;overflow-x:hidden}
 
 /* ── FOOTER NOTE ── */
@@ -1794,14 +1796,51 @@ const SFX = {
       return t + n.d * .9;
     }, this.ctx ? this.ctx.currentTime : 0);
   },
+  chime() {
+    this.resume();
+    if (!this.ctx || !this.on) return;
+    try {
+      [587.33, 880].forEach((f, i) => {
+        const o = this.ctx.createOscillator(), g = this.ctx.createGain(), t = this.ctx.currentTime + i * 0.11;
+        o.type = 'sine';
+        o.frequency.setValueAtTime(f, t);
+        g.gain.setValueAtTime(0.2, t);
+        g.gain.exponentialRampToValueAtTime(0.001, t + 0.3);
+        o.connect(g);
+        g.connect(this.ctx.destination);
+        o.start(t);
+        o.stop(t + 0.32);
+      });
+    } catch(e){}
+  },
   speak(txt) {
-    if (!this.on || !('speechSynthesis' in window)) return;
-    speechSynthesis.cancel();
-    const u = new SpeechSynthesisUtterance(txt);
-    u.lang = 'id-ID';
-    u.rate = .88;
-    u.pitch = 1.15;
-    speechSynthesis.speak(u);
+    if (!this.on) return;
+    this.resume();
+    if (!('speechSynthesis' in window)) {
+      this.chime();
+      return;
+    }
+    try {
+      window.speechSynthesis.cancel();
+      setTimeout(() => {
+        try {
+          const u = new SpeechSynthesisUtterance(txt);
+          u.lang = 'id-ID';
+          u.rate = 0.88;
+          u.pitch = 1.15;
+          const voices = window.speechSynthesis.getVoices() || [];
+          const idVoice = voices.find(v => v.lang && (v.lang.startsWith('id') || v.lang.includes('ID') || (v.name && v.name.toLowerCase().includes('indonesia'))));
+          if (idVoice) u.voice = idVoice;
+          window._harshaActiveUtterance = u;
+          u.onerror = () => this.chime();
+          window.speechSynthesis.speak(u);
+        } catch (err) {
+          this.chime();
+        }
+      }, 50);
+    } catch (e) {
+      this.chime();
+    }
   }
 };
 
@@ -2028,10 +2067,27 @@ function showVictory(levelNum, stars, coins, totalLevels, onNext) {
 function scramble(arr) { return [...arr].sort(()=>Math.random()-.5); }
 function rand(arr) { return arr[Math.floor(Math.random()*arr.length)]; }
 
-/* Generic choice renderer */
+/* Generic choice renderer with dynamic age-based difficulty */
 function renderChoices(containerId, options, correctVal, onCorrect, onWrong, cls='btn-ch') {
   const c=document.getElementById(containerId); c.innerHTML='';
-  options.forEach(opt=>{
+  const prof = (typeof Prog !== 'undefined' && Prog.getActiveProfile) ? Prog.getActiveProfile() : { age: 5 };
+  let opts = [...options];
+
+  // Adaptasi Pilihan Jawaban Sesuai Profil Usia:
+  if (opts.length > 2) {
+    if (prof.age <= 4) {
+      // Usia 4 (TK-A Arsha): 2 pilihan ramah balita (1 benar, 1 salah)
+      const distractors = opts.filter(o => String(o) !== String(correctVal));
+      opts = scramble([correctVal, distractors[0] || 'X']);
+    } else if (prof.age <= 5) {
+      // Usia 5 (TK-B Shafiyyah): 3 pilihan (1 benar, 2 salah)
+      const distractors = opts.filter(o => String(o) !== String(correctVal));
+      opts = scramble([correctVal, distractors[0], distractors[1] || distractors[0]]);
+    }
+    // Usia 7 (SD-1 Habibi): Penuh (4 pilihan standar)
+  }
+
+  opts.forEach(opt=>{
     const b=document.createElement('button'); b.className=cls; b.textContent=opt;
     b.onclick=()=>{
       SFX.pop();
@@ -2050,6 +2106,18 @@ function tapSpell({word,slotId,ingredientId,onFinish}) {
   word.split('').forEach((_,i)=>{
     const s=document.createElement('div'); s.className='slot empty'; s.id=`slt_${slotId}_${i}`; sEl.appendChild(s);
   });
+  const prof = (typeof Prog !== 'undefined' && Prog.getActiveProfile) ? Prog.getActiveProfile() : { age: 5 };
+  // Visual tracing hint for TK-A (Arsha, age 4)
+  if (prof.age <= 4) {
+    word.split('').forEach((lt, i) => {
+      const slt = document.getElementById(`slt_${slotId}_${i}`);
+      if (slt) {
+        slt.innerHTML = `<span style="opacity:0.35;font-size:0.85em;color:#94a3b8;position:absolute">${lt}</span>`;
+        slt.style.position = 'relative';
+      }
+    });
+  }
+
   // ingredient buttons
   letters.forEach((lt,i)=>{
     const b=document.createElement('button'); b.className='ing-btn'; b.textContent=lt;
@@ -2537,7 +2605,16 @@ const G3={lvl:0,qi:0,correct:0,mistakes:0,locked:false,shuffledQs:[],
     document.getElementById('g3-qtext').innerHTML=`${mode}: <b>${q.t}</b>`;
     SFX.speak(`${mode}: ${q.t}`);
     const row=document.getElementById('g3-choices'); row.innerHTML='';
-    [...q.pool].sort(()=>Math.random()-.5).forEach(opt=>{
+    const prof = Prog.getActiveProfile();
+    let g3pool = [...q.pool];
+    if (prof.age <= 4) {
+      const distractors = g3pool.filter(o => String(o) !== String(q.t));
+      g3pool = [q.t, distractors[0] || '1'];
+    } else if (prof.age <= 5) {
+      const distractors = g3pool.filter(o => String(o) !== String(q.t));
+      g3pool = [q.t, distractors[0], distractors[1] || distractors[0]];
+    }
+    scramble(g3pool).forEach(opt=>{
       const b=document.createElement('button'); b.className='btn-lari'; b.textContent=opt;
       b.onclick=()=>{
         if(this.locked) return; SFX.pop();
@@ -3642,9 +3719,13 @@ const UI = {
     const sndBtn = document.getElementById('snd-btn');
     if (sndBtn) sndBtn.onclick = () => {
       SFX.on = !SFX.on;
-      SFX.pop();
       this.updateHeader();
-      showToast(SFX.on ? '🔊' : '🔇', SFX.on ? 'Suara aktif!' : 'Suara mati');
+      if (SFX.on) {
+        SFX.correct();
+        showToast('🔊', 'Suara diaktifkan!');
+      } else {
+        showToast('🔇', 'Suara dimatikan');
+      }
     };
 
     // Dark Mode Toggle

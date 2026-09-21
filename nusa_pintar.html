@@ -37,6 +37,8 @@
       -webkit-user-select: none;
       -webkit-tap-highlight-color: transparent;
     }
+    button, .choice-btn, .speaker-btn, .island-card, .btn-action { touch-action: manipulation; }
+    button:active, .choice-btn:active, .speaker-btn:active, .island-card:active { transform: scale(0.95)!important; transition: transform 0.06s ease!important; }
 
     body {
       font-family: var(--font-family);
@@ -1373,15 +1375,28 @@ const Sound = {
     this.playTone(1200, 'sine', 0.18, 0.2, 800);
   },
   speak(text) {
-    if (!('speechSynthesis' in window)) return;
+    this.resume();
+    if (!('speechSynthesis' in window)) {
+      this.sparkle();
+      return;
+    }
     try {
       window.speechSynthesis.cancel();
-      const u = new SpeechSynthesisUtterance(text);
-      u.lang = 'id-ID';
-      u.rate = 0.95;
-      u.pitch = 1.25; // ramah untuk anak-anak
-      window.speechSynthesis.speak(u);
-    } catch(e) {}
+      setTimeout(() => {
+        try {
+          const u = new SpeechSynthesisUtterance(text);
+          u.lang = 'id-ID';
+          u.rate = 0.95;
+          u.pitch = 1.25; // ramah untuk anak-anak
+          const voices = window.speechSynthesis.getVoices() || [];
+          const idVoice = voices.find(v => v.lang && (v.lang.startsWith('id') || v.lang.includes('ID') || (v.name && v.name.toLowerCase().includes('indonesia'))));
+          if (idVoice) u.voice = idVoice;
+          window._nusaActiveUtterance = u;
+          u.onerror = () => this.sparkle();
+          window.speechSynthesis.speak(u);
+        } catch(e) { this.sparkle(); }
+      }, 50);
+    } catch(e) { this.sparkle(); }
   }
 };
 
