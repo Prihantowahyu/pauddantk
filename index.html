@@ -80,8 +80,9 @@ header{position:relative;z-index:10;display:flex;align-items:center;justify-cont
 
 /* ── GAME TOP BAR ── */
 .gtop{display:flex;align-items:center;justify-content:space-between;padding:10px 16px;background:rgba(255,255,255,.92);border-radius:var(--r-md);margin-bottom:16px;box-shadow:var(--sh);border:3px solid #e8f3ff}
-.back-btn{min-width:56px;min-height:56px;border-radius:50%;border:none;background:#ff6b6b;color:#fff;font-size:1.5rem;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 5px 0 #c92a2a;transition:all .15s}
-.back-btn:active{transform:translateY(3px);box-shadow:0 2px 0 #c92a2a}
+.back-btn{min-height:46px;padding:0 16px;border-radius:999px;border:none;background:linear-gradient(135deg,#ff6b6b,#fa5252);color:#fff;font-family:var(--font);font-size:1rem;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px;box-shadow:0 4px 0 #c92a2a;transition:all .15s;white-space:nowrap}
+.back-btn:hover{transform:translateY(-2px);box-shadow:0 6px 0 #c92a2a}
+.back-btn:active{transform:translateY(2px);box-shadow:0 2px 0 #c92a2a}
 .lvl-info{text-align:center}
 .lvl-title{font-size:1.2rem;font-weight:700;color:#2b8a3e}
 .lvl-prog{font-size:.88rem;color:#718096;font-weight:600;margin-top:2px}
@@ -350,7 +351,7 @@ header{position:relative;z-index:10;display:flex;align-items:center;justify-cont
 <section class="view" id="g1">
   <div class="game-wrap">
     <div class="gtop">
-      <button class="back-btn" data-back="g1">🏠</button>
+      <button class="back-btn" data-back="g1" title="Kembali ke Beranda"><span>🏠</span> <span>Beranda</span></button>
       <div class="lvl-info"><div class="lvl-title" id="g1-title">Ekspedisi Pulau Pintar</div><div class="lvl-prog" id="g1-prog">Pilih Pulau</div></div>
       <div class="star-pill">⭐ <span id="g1-stars">0</span></div>
     </div>
@@ -374,7 +375,7 @@ header{position:relative;z-index:10;display:flex;align-items:center;justify-cont
 <section class="view" id="g2">
   <div class="game-wrap">
     <div class="gtop">
-      <button class="back-btn" data-back="g2">🏠</button>
+      <button class="back-btn" data-back="g2" title="Kembali ke Beranda"><span>🏠</span> <span>Beranda</span></button>
       <div class="lvl-info"><div class="lvl-title" id="g2-title">Level 1</div><div class="lvl-prog" id="g2-prog">Soal 1 dari 4</div></div>
       <div class="star-pill">⭐ <span id="g2-stars">0</span></div>
     </div>
@@ -392,7 +393,7 @@ header{position:relative;z-index:10;display:flex;align-items:center;justify-cont
 <section class="view" id="g3">
   <div class="game-wrap">
     <div class="gtop">
-      <button class="back-btn" data-back="g3">🏠</button>
+      <button class="back-btn" data-back="g3" title="Kembali ke Beranda"><span>🏠</span> <span>Beranda</span></button>
       <div class="lvl-info"><div class="lvl-title" id="g3-title">Level 1</div><div class="lvl-prog" id="g3-prog">Soal 1 dari 5</div></div>
       <div class="star-pill">⭐ <span id="g3-stars">0</span></div>
     </div>
@@ -416,7 +417,7 @@ header{position:relative;z-index:10;display:flex;align-items:center;justify-cont
 <section class="view" id="g4">
   <div class="game-wrap">
     <div class="gtop">
-      <button class="back-btn" data-back="g4">🏠</button>
+      <button class="back-btn" data-back="g4" title="Kembali ke Beranda"><span>🏠</span> <span>Beranda</span></button>
       <div class="lvl-info"><div class="lvl-title" id="g4-title">Level 1</div><div class="lvl-prog" id="g4-prog">Soal 1 dari 4</div></div>
       <div class="star-pill">⭐ <span id="g4-stars">0</span></div>
     </div>
@@ -434,7 +435,7 @@ header{position:relative;z-index:10;display:flex;align-items:center;justify-cont
 <section class="view" id="g5">
   <div class="game-wrap">
     <div class="gtop">
-      <button class="back-btn" data-back="g5">🏠</button>
+      <button class="back-btn" data-back="g5" title="Kembali ke Beranda"><span>🏠</span> <span>Beranda</span></button>
       <div class="lvl-info"><div class="lvl-title" id="g5-title">Level 1</div><div class="lvl-prog" id="g5-prog">Soal 1 dari 4</div></div>
       <div class="star-pill">⭐ <span id="g5-stars">0</span></div>
     </div>
@@ -452,7 +453,7 @@ header{position:relative;z-index:10;display:flex;align-items:center;justify-cont
 <section class="view" id="g6">
   <div class="game-wrap">
     <div class="gtop">
-      <button class="back-btn" data-back="g6">🏠</button>
+      <button class="back-btn" data-back="g6" title="Kembali ke Beranda"><span>🏠</span> <span>Beranda</span></button>
       <div class="lvl-info"><div class="lvl-title" id="g6-title">Level 1</div><div class="lvl-prog" id="g6-prog">Soal 1 dari 4</div></div>
       <div class="star-pill">⭐ <span id="g6-stars">0</span></div>
     </div>
@@ -471,7 +472,7 @@ header{position:relative;z-index:10;display:flex;align-items:center;justify-cont
 <section class="view" id="g7">
   <div class="game-wrap">
     <div class="gtop">
-      <button class="back-btn" data-back="g7">🏠</button>
+      <button class="back-btn" data-back="g7" title="Kembali ke Beranda"><span>🏠</span> <span>Beranda</span></button>
       <div class="lvl-info"><div class="lvl-title" id="g7-title">Level 1</div><div class="lvl-prog" id="g7-prog">Soal 1 dari 4</div></div>
       <div class="star-pill">⭐ <span id="g7-stars">0</span></div>
     </div>
@@ -489,7 +490,7 @@ header{position:relative;z-index:10;display:flex;align-items:center;justify-cont
 <section class="view" id="g8">
   <div class="game-wrap">
     <div class="gtop">
-      <button class="back-btn" data-back="g8">🏠</button>
+      <button class="back-btn" data-back="g8" title="Kembali ke Beranda"><span>🏠</span> <span>Beranda</span></button>
       <div class="lvl-info"><div class="lvl-title" id="g8-title">Level 1</div><div class="lvl-prog" id="g8-prog">Soal 1 dari 4</div></div>
       <div class="star-pill">⭐ <span id="g8-stars">0</span></div>
     </div>
@@ -509,7 +510,7 @@ header{position:relative;z-index:10;display:flex;align-items:center;justify-cont
 <section class="view" id="g9">
   <div class="game-wrap">
     <div class="gtop">
-      <button class="back-btn" data-back="g9">🏠</button>
+      <button class="back-btn" data-back="g9" title="Kembali ke Beranda"><span>🏠</span> <span>Beranda</span></button>
       <div class="lvl-info"><div class="lvl-title" id="g9-title">Level 1</div><div class="lvl-prog" id="g9-prog">Soal 1 dari 4</div></div>
       <div class="star-pill">⭐ <span id="g9-stars">0</span></div>
     </div>
@@ -525,7 +526,7 @@ header{position:relative;z-index:10;display:flex;align-items:center;justify-cont
 <section class="view" id="g10">
   <div class="game-wrap">
     <div class="gtop">
-      <button class="back-btn" data-back="g10">🏠</button>
+      <button class="back-btn" data-back="g10" title="Kembali ke Beranda"><span>🏠</span> <span>Beranda</span></button>
       <div class="lvl-info"><div class="lvl-title" id="g10-title">Level 1</div><div class="lvl-prog" id="g10-prog">Soal 1 dari 4</div></div>
       <div class="star-pill">⭐ <span id="g10-stars">0</span></div>
     </div>
@@ -549,7 +550,7 @@ header{position:relative;z-index:10;display:flex;align-items:center;justify-cont
 <section class="view" id="g11">
   <div class="game-wrap">
     <div class="gtop" style="border-color:#4fc3f7;background:#e3f2fd">
-      <button class="back-btn" style="background:#3949ab;box-shadow:0 5px 0 #1a237e" data-back="g11">🏠</button>
+      <button class="back-btn" style="background:#3949ab;box-shadow:0 5px 0 #1a237e" data-back="g11" title="Kembali ke Beranda"><span>🏠</span> <span>Beranda</span></button>
       <div class="lvl-info"><div class="lvl-title" style="color:#1a237e" id="g11-title">Level 1</div><div class="lvl-prog" id="g11-prog">Soal 1 dari 5</div></div>
       <div class="star-pill">⭐ <span id="g11-stars">0</span></div>
     </div>
@@ -573,7 +574,7 @@ header{position:relative;z-index:10;display:flex;align-items:center;justify-cont
 <section class="view" id="g12">
   <div class="game-wrap">
     <div class="gtop" style="border-color:#f783ac;background:#fff0f6">
-      <button class="back-btn" style="background:#e64980;box-shadow:0 5px 0 #a61e4d" data-back="g12">🏠</button>
+      <button class="back-btn" style="background:#e64980;box-shadow:0 5px 0 #a61e4d" data-back="g12" title="Kembali ke Beranda"><span>🏠</span> <span>Beranda</span></button>
       <div class="lvl-info"><div class="lvl-title" style="color:#a61e4d" id="g12-title">Level 1</div><div class="lvl-prog" id="g12-prog">Soal 1 dari 5</div></div>
       <div class="star-pill">⭐ <span id="g12-stars">0</span></div>
     </div>
@@ -593,7 +594,7 @@ header{position:relative;z-index:10;display:flex;align-items:center;justify-cont
 <section class="view" id="g13">
   <div class="game-wrap">
     <div class="gtop" style="border-color:#ffd43b;background:#fff9db">
-      <button class="back-btn" style="background:#fab005;box-shadow:0 5px 0 #e67700" data-back="g13">🏠</button>
+      <button class="back-btn" style="background:#fab005;box-shadow:0 5px 0 #e67700" data-back="g13" title="Kembali ke Beranda"><span>🏠</span> <span>Beranda</span></button>
       <div class="lvl-info"><div class="lvl-title" style="color:#e67700" id="g13-title">Ular Tangga Calistung</div><div class="lvl-prog" id="g13-prog">Posisi: 1</div></div>
       <div class="star-pill">⭐ <span id="g13-stars">0</span></div>
     </div>
@@ -626,7 +627,7 @@ header{position:relative;z-index:10;display:flex;align-items:center;justify-cont
     <div class="stars-row" id="vic-stars"></div>
     <div class="modal-btns">
       <button class="btn-big" id="vic-next">Lanjut 🚀</button>
-      <button class="btn-big btn-sec" id="vic-hub">Peta 🗺️</button>
+      <button class="btn-big btn-sec" id="vic-hub">🏠 Kembali ke Beranda</button>
     </div>
   </div>
 </div>
