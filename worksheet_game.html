@@ -1,0 +1,1945 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#4f46e5">
+  <meta name="description" content="Lembar Kerja Ceria Digital — Game Edukasi Worksheet PAUD/TK: Labirin, Koding Penjumlahan, dan Tracing Huruf A-Z">
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="icons/icon-152x152.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192x192.png">
+  <title>Lembar Kerja Ceria — Game Edukasi Worksheet</title>
+  <style>
+    :root {
+      --primary: #4f46e5;
+      --primary-dark: #3730a3;
+      --sky-bg: linear-gradient(180deg, #dbeafe 0%, #eff6ff 40%, #f0fdf4 100%);
+      --card-bg: #ffffff;
+      --font: 'Fredoka', 'Quicksand', 'Nunito', 'Comic Sans MS', sans-serif;
+      --radius: 20px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      user-select: none;
+      -webkit-user-select: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      font-family: var(--font);
+      background: var(--sky-bg);
+      min-height: 100vh;
+      color: #1e293b;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-bottom: 30px;
+      overflow-x: hidden;
+    }
+
+    /* ── HEADER ── */
+    header {
+      width: 100%;
+      max-width: 960px;
+      padding: 12px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+      border-radius: 0 0 24px 24px;
+      margin-bottom: 16px;
+    }
+
+    .btn-home {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: linear-gradient(135deg, #ff6b6b, #fa5252);
+      color: #fff;
+      font-family: var(--font);
+      font-size: 1rem;
+      font-weight: 800;
+      padding: 10px 18px;
+      border-radius: 999px;
+      border: none;
+      text-decoration: none;
+      box-shadow: 0 4px 0 #c92a2a;
+      cursor: pointer;
+      transition: all 0.15s;
+      white-space: nowrap;
+    }
+    .btn-home:hover { transform: translateY(-2px); box-shadow: 0 6px 0 #c92a2a; }
+    .btn-home:active { transform: translateY(2px); box-shadow: 0 2px 0 #c92a2a; }
+
+    .header-title-wrap {
+      text-align: center;
+      flex: 1;
+    }
+    .header-title {
+      font-size: 1.25rem;
+      font-weight: 900;
+      color: #1e3a8a;
+      line-height: 1.2;
+    }
+    .header-sub {
+      font-size: 0.8rem;
+      color: #64748b;
+      font-weight: 600;
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .ico-btn {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: none;
+      background: #f1f5f9;
+      color: #334155;
+      font-size: 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 3px 0 #cbd5e1;
+      transition: all 0.15s;
+    }
+    .ico-btn:active { transform: translateY(2px); box-shadow: 0 1px 0 #cbd5e1; }
+
+    /* ── CONTAINER ── */
+    .container {
+      width: 100%;
+      max-width: 960px;
+      padding: 0 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+
+    /* ── NAVIGATION TABS (3 WORKSHEET MODES) ── */
+    .mode-tabs {
+      display: flex;
+      gap: 10px;
+      width: 100%;
+      max-width: 800px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 6px;
+    }
+
+    .tab-btn {
+      flex: 1;
+      min-width: 180px;
+      padding: 12px 16px;
+      border-radius: 18px;
+      border: 3px solid transparent;
+      background: #ffffff;
+      color: #475569;
+      font-family: var(--font);
+      font-size: 1.05rem;
+      font-weight: 800;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      box-shadow: 0 6px 14px rgba(0,0,0,0.06), 0 3px 0 #cbd5e1;
+      transition: all 0.2s;
+    }
+    .tab-btn.active {
+      background: linear-gradient(135deg, #38bdf8, #0284c7);
+      color: #ffffff;
+      border-color: #bae6fd;
+      box-shadow: 0 8px 20px rgba(2, 132, 199, 0.3), 0 4px 0 #0369a1;
+      transform: translateY(-2px);
+    }
+    .tab-btn:active { transform: translateY(2px); }
+
+    /* ── SECTIONS / VIEWS ── */
+    .view-panel {
+      width: 100%;
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      animation: popIn 0.3s ease-out;
+    }
+    .view-panel.active {
+      display: flex;
+    }
+    @keyframes popIn {
+      from { opacity: 0; transform: scale(0.98); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    /* ── WORKSHEET PAPER CARD (Skeuomorphic Worksheet Look) ── */
+    .worksheet-card {
+      width: 100%;
+      max-width: 780px;
+      background: #ffffff;
+      border-radius: 28px;
+      border: 5px solid #93c5fd;
+      box-shadow: 0 16px 36px rgba(30, 58, 138, 0.1), 0 8px 0 #3b82f6;
+      padding: 24px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+    }
+
+    .worksheet-header-banner {
+      width: 100%;
+      text-align: center;
+      margin-bottom: 18px;
+    }
+    .worksheet-big-title {
+      font-size: 2.2rem;
+      font-weight: 900;
+      color: #0369a1;
+      letter-spacing: -0.5px;
+      text-shadow: 2px 2px 0 #bae6fd;
+    }
+    .worksheet-desc {
+      font-size: 1.05rem;
+      color: #334155;
+      font-weight: 600;
+      margin-top: 4px;
+      line-height: 1.4;
+    }
+
+    /* Level Selector Pills */
+    .level-selector {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 18px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .lvl-pill {
+      padding: 8px 18px;
+      border-radius: 999px;
+      background: #f1f5f9;
+      color: #475569;
+      font-weight: 800;
+      font-size: 0.95rem;
+      cursor: pointer;
+      border: 2px solid #cbd5e1;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.15s;
+    }
+    .lvl-pill.active {
+      background: #0284c7;
+      color: #ffffff;
+      border-color: #0369a1;
+      box-shadow: 0 3px 0 #075985;
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       1. LABIRIN (MENCARI JALAN) STYLES
+    ═══════════════════════════════════════════════════════════ */
+    .maze-game-wrapper {
+      position: relative;
+      width: 100%;
+      max-width: 520px;
+      aspect-ratio: 1 / 1;
+      background: #f8fafc;
+      border-radius: 20px;
+      border: 4px solid #1e293b;
+      box-shadow: 0 10px 24px rgba(0,0,0,0.08);
+      overflow: hidden;
+      touch-action: none;
+    }
+
+    #maze-canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .maze-marker {
+      position: absolute;
+      width: 48px;
+      height: 48px;
+      pointer-events: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.4rem;
+      transition: all 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      z-index: 10;
+      filter: drop-shadow(0 4px 6px rgba(0,0,0,0.25));
+    }
+
+    .start-badge, .goal-badge {
+      position: absolute;
+      z-index: 5;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      pointer-events: none;
+      font-size: 2.2rem;
+      filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
+    }
+    .badge-tag {
+      font-size: 0.75rem;
+      font-weight: 900;
+      padding: 2px 8px;
+      border-radius: 10px;
+      background: #ffffff;
+      color: #0f172a;
+      border: 2px solid #0f172a;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    /* Virtual D-Pad Controller */
+    .dpad-controller {
+      margin-top: 18px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      width: 100%;
+      max-width: 240px;
+    }
+    .dpad-row {
+      display: flex;
+      gap: 10px;
+    }
+    .dpad-btn {
+      width: 64px;
+      height: 64px;
+      border-radius: 18px;
+      border: none;
+      background: linear-gradient(180deg, #38bdf8, #0284c7);
+      color: #ffffff;
+      font-size: 1.8rem;
+      font-weight: 900;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 6px 0 #0369a1;
+      transition: all 0.1s;
+    }
+    .dpad-btn:active {
+      transform: translateY(4px);
+      box-shadow: 0 2px 0 #0369a1;
+    }
+
+    .maze-info-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      max-width: 520px;
+      margin-bottom: 12px;
+      font-size: 1rem;
+      font-weight: 800;
+      color: #0369a1;
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       2. KODING PENJUMLAHAN STYLES
+    ═══════════════════════════════════════════════════════════ */
+    .coding-ref-box {
+      width: 100%;
+      background: #fef08a;
+      border: 3px solid #eab308;
+      border-radius: 20px;
+      padding: 12px 14px;
+      margin-bottom: 18px;
+      box-shadow: 0 4px 12px rgba(234, 179, 8, 0.2);
+    }
+    .ref-title {
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: #854d0e;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+    .ref-items-grid {
+      display: flex;
+      justify-content: space-around;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .ref-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      background: #ffffff;
+      padding: 6px 12px;
+      border-radius: 14px;
+      border: 2px solid #fde047;
+      min-width: 60px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.06);
+    }
+    .ref-val {
+      font-size: 1.4rem;
+      font-weight: 900;
+      color: #1e293b;
+    }
+
+    /* SVG Flower & Circle Components */
+    .flower-icon {
+      width: 44px;
+      height: 44px;
+      display: inline-block;
+      vertical-align: middle;
+      filter: drop-shadow(0 3px 5px rgba(0,0,0,0.15));
+    }
+    .circle-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      font-weight: 900;
+      color: #1e293b;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    }
+
+    /* Soal Grid */
+    .questions-grid {
+      width: 100%;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+    .q-card {
+      background: #f8fafc;
+      border: 3px solid #e2e8f0;
+      border-radius: 18px;
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      transition: border-color 0.2s;
+    }
+    .q-card.current {
+      border-color: #3b82f6;
+      background: #eff6ff;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+    }
+    .q-card.correct {
+      border-color: #22c55e;
+      background: #f0fdf4;
+    }
+    .q-equation {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 1.6rem;
+      font-weight: 900;
+      color: #334155;
+    }
+    .q-answer-slot {
+      width: 60px;
+      height: 52px;
+      border-radius: 14px;
+      border: 3px solid #cbd5e1;
+      background: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.6rem;
+      font-weight: 900;
+      color: #0f172a;
+      cursor: pointer;
+      box-shadow: inset 0 2px 4px rgba(0,0,0,0.06);
+    }
+    .q-answer-slot.filled {
+      border-color: #3b82f6;
+      color: #1d4ed8;
+      background: #e0f2fe;
+    }
+    .q-answer-slot.correct {
+      border-color: #22c55e;
+      color: #15803d;
+      background: #dcfce7;
+    }
+
+    /* Keypad Modal / Bottom bar */
+    .keypad-wrapper {
+      width: 100%;
+      max-width: 440px;
+      background: #ffffff;
+      border: 3px solid #93c5fd;
+      border-radius: 20px;
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+      margin-top: 10px;
+    }
+    .keypad-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 8px;
+    }
+    .keypad-btn {
+      aspect-ratio: 1 / 1;
+      border-radius: 14px;
+      border: none;
+      background: linear-gradient(180deg, #f8fafc, #e2e8f0);
+      color: #1e293b;
+      font-family: var(--font);
+      font-size: 1.6rem;
+      font-weight: 900;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 0 #94a3b8;
+      transition: all 0.1s;
+    }
+    .keypad-btn:active {
+      transform: translateY(3px);
+      box-shadow: 0 1px 0 #94a3b8;
+    }
+    .keypad-btn.action-btn {
+      background: linear-gradient(180deg, #fca5a5, #f87171);
+      color: #ffffff;
+      box-shadow: 0 4px 0 #dc2626;
+      font-size: 1.1rem;
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       3. TEBAL & TULIS HURUF A-Z STYLES
+    ═══════════════════════════════════════════════════════════ */
+    .az-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+      gap: 12px;
+      width: 100%;
+      margin-top: 10px;
+    }
+    .az-card {
+      background: #ffffff;
+      border: 3px solid #93c5fd;
+      border-radius: 18px;
+      padding: 10px 8px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05), 0 3px 0 #60a5fa;
+      transition: all 0.15s;
+    }
+    .az-card:hover { transform: translateY(-3px); box-shadow: 0 8px 16px rgba(0,0,0,0.1), 0 5px 0 #60a5fa; }
+    .az-card:active { transform: translateY(2px); }
+    .az-card.done {
+      border-color: #86efac;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05), 0 3px 0 #22c55e;
+      background: #f0fdf4;
+    }
+    .az-letter-preview {
+      display: flex;
+      width: 100%;
+      justify-content: space-around;
+      align-items: center;
+      border-bottom: 2px dashed #e2e8f0;
+      padding-bottom: 6px;
+    }
+    .letter-dashed-sample {
+      font-size: 2rem;
+      font-weight: 900;
+      color: #94a3b8;
+      letter-spacing: 2px;
+    }
+    .letter-solid-sample {
+      font-size: 2rem;
+      font-weight: 900;
+      color: #1e3a8a;
+    }
+    .az-sub-tag {
+      font-size: 0.8rem;
+      font-weight: 800;
+      color: #0369a1;
+    }
+
+    /* Interactive Tracing Modal / Screen */
+    .tracing-modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.7);
+      backdrop-filter: blur(6px);
+      z-index: 200;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+    .tracing-modal.open {
+      display: flex;
+      animation: popIn 0.25s ease-out;
+    }
+
+    .tracing-card {
+      background: #ffffff;
+      border-radius: 28px;
+      border: 5px solid #38bdf8;
+      width: 100%;
+      max-width: 680px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.25);
+    }
+    .tracing-header {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .tracing-title {
+      font-size: 1.5rem;
+      font-weight: 900;
+      color: #0369a1;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .canvases-row {
+      display: flex;
+      gap: 16px;
+      width: 100%;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .canvas-box {
+      flex: 1;
+      min-width: 260px;
+      max-width: 300px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+    .canvas-label {
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: #475569;
+    }
+    .tracing-canvas-wrap {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      background: #ffffff;
+      border-radius: 20px;
+      border: 3px solid #93c5fd;
+      position: relative;
+      box-shadow: inset 0 2px 6px rgba(0,0,0,0.05);
+      touch-action: none;
+      overflow: hidden;
+    }
+    .tracing-canvas-wrap canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    /* Tool Controls */
+    .tool-controls {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      gap: 10px;
+      flex-wrap: wrap;
+      background: #f8fafc;
+      padding: 10px 14px;
+      border-radius: 16px;
+      border: 2px solid #e2e8f0;
+    }
+    .color-palette {
+      display: flex;
+      gap: 8px;
+    }
+    .color-pick {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: 3px solid #ffffff;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+      cursor: pointer;
+      transition: transform 0.15s;
+    }
+    .color-pick.active {
+      transform: scale(1.2);
+      border-color: #1e293b;
+    }
+
+    .btn-action-sm {
+      padding: 8px 16px;
+      border-radius: 999px;
+      border: none;
+      font-family: var(--font);
+      font-size: 0.95rem;
+      font-weight: 800;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 3px 0 rgba(0,0,0,0.15);
+      transition: all 0.15s;
+    }
+    .btn-action-sm:active { transform: translateY(2px); }
+    .btn-clear { background: #fca5a5; color: #7f1d1d; }
+    .btn-done { background: #86efac; color: #14532d; }
+
+    /* ── CELEBRATION MODAL ── */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.7);
+      backdrop-filter: blur(6px);
+      z-index: 300;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+    .modal-overlay.open { display: flex; animation: popIn 0.3s ease-out; }
+    .vic-box {
+      background: #ffffff;
+      border-radius: 32px;
+      border: 5px solid #fde047;
+      padding: 28px 24px;
+      max-width: 440px;
+      width: 100%;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.25);
+    }
+    .vic-icon { font-size: 4.5rem; animation: bounce 1s infinite alternate ease-in-out; }
+    @keyframes bounce { from { transform: translateY(0); } to { transform: translateY(-12px); } }
+    .vic-title { font-size: 2rem; font-weight: 900; color: #1e293b; }
+    .vic-desc { font-size: 1.05rem; color: #475569; font-weight: 600; line-height: 1.4; }
+    .stars-row { display: flex; gap: 8px; font-size: 3rem; margin: 4px 0; }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(120px);
+      background: #ffffff;
+      border-radius: 999px;
+      padding: 10px 24px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1.1rem;
+      font-weight: 800;
+      box-shadow: 0 10px 28px rgba(0,0,0,0.2);
+      border: 4px solid #22c55e;
+      color: #15803d;
+      z-index: 400;
+      transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      pointer-events: none;
+    }
+    .toast.show { transform: translateX(-50%) translateY(0); }
+    .toast.wrong { border-color: #f59e0b; color: #b45309; }
+
+    /* Confetti Canvas */
+    #confetti-canvas {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 500;
+    }
+  </style>
+</head>
+<body>
+
+<canvas id="confetti-canvas"></canvas>
+
+<!-- ═══ APP HEADER ═══ -->
+<header>
+  <a href="index.html" class="btn-home" title="Kembali ke Beranda Utama">
+    <span>🏠</span> <span>Kembali ke Beranda</span>
+  </a>
+
+  <div class="header-title-wrap">
+    <h1 class="header-title">Lembar Kerja Ceria</h1>
+    <p class="header-sub">Worksheet Digital Interaktif PAUD / TK</p>
+  </div>
+
+  <div class="header-actions">
+    <button class="ico-btn" id="btn-sound" title="Aktifkan/Matikan Suara">🔊</button>
+  </div>
+</header>
+
+<div class="container">
+
+  <!-- ── WORKSHEET MODE TABS ── -->
+  <div class="mode-tabs">
+    <button class="tab-btn active" data-tab="maze">
+      <span>🧭</span> <span>Mencari Jalan</span>
+    </button>
+    <button class="tab-btn" data-tab="coding">
+      <span>🌸</span> <span>Koding Penjumlahan</span>
+    </button>
+    <button class="tab-btn" data-tab="az">
+      <span>✍️</span> <span>Tebal &amp; Tulis A-Z</span>
+    </button>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       PANEL 1: LABIRIN (MENCARI JALAN)
+  ═══════════════════════════════════════════════════════════ -->
+  <section class="view-panel active" id="panel-maze">
+    <div class="worksheet-card">
+      <div class="worksheet-header-banner">
+        <h2 class="worksheet-big-title" id="maze-title">Tunjukkan Jalannya!</h2>
+        <p class="worksheet-desc" id="maze-desc">
+          Bantu anak itu untuk mendapatkan ikan dengan memberi garis atau berjalan melewati labirin!
+        </p>
+      </div>
+
+      <!-- Level Switcher -->
+      <div class="level-selector">
+        <button class="lvl-pill active" data-maze="1">
+          <span>🎣</span> <span>Level 1: Menangkap Ikan</span>
+        </button>
+        <button class="lvl-pill" data-maze="2">
+          <span>🍲</span> <span>Level 2: Mencari Makanan</span>
+        </button>
+      </div>
+
+      <div class="maze-info-bar">
+        <span id="maze-status">🎯 Sentuh &amp; tarik garis, atau pakai tombol panah!</span>
+        <button class="btn-action-sm btn-clear" id="btn-reset-maze">🔄 Ulangi</button>
+      </div>
+
+      <!-- Maze Canvas Container -->
+      <div class="maze-game-wrapper" id="maze-box">
+        <canvas id="maze-canvas" width="500" height="500"></canvas>
+        <div class="maze-marker" id="player-marker">👦</div>
+        <div class="start-badge" id="start-badge"></div>
+        <div class="goal-badge" id="goal-badge"></div>
+      </div>
+
+      <!-- Virtual D-Pad -->
+      <div class="dpad-controller">
+        <div class="dpad-row">
+          <button class="dpad-btn" id="dpad-up">⬆️</button>
+        </div>
+        <div class="dpad-row">
+          <button class="dpad-btn" id="dpad-left">⬅️</button>
+          <button class="dpad-btn" id="dpad-down">⬇️</button>
+          <button class="dpad-btn" id="dpad-right">➡️</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       PANEL 2: KODING PENJUMLAHAN
+  ═══════════════════════════════════════════════════════════ -->
+  <section class="view-panel" id="panel-coding">
+    <div class="worksheet-card">
+      <div class="worksheet-header-banner">
+        <h2 class="worksheet-big-title" id="coding-title">Koding Penjumlahan</h2>
+        <p class="worksheet-desc" id="coding-desc">
+          Hitung penjumlahan sesuai dengan kode nomor pada gambar berikut!
+        </p>
+      </div>
+
+      <!-- Mode Selector: Bunga vs Lingkaran Warna -->
+      <div class="level-selector">
+        <button class="lvl-pill active" data-coding="flower">
+          <span>🌸</span> <span>Kode Bunga (2,3,4,5,6)</span>
+        </button>
+        <button class="lvl-pill" data-coding="circle">
+          <span>🔴</span> <span>Kode Lingkaran (1,2,3,4,5)</span>
+        </button>
+      </div>
+
+      <!-- Reference Key Box -->
+      <div class="coding-ref-box">
+        <div class="ref-title" id="ref-box-title">💡 KODE ANGKA REFERENSI:</div>
+        <div class="ref-items-grid" id="ref-grid"></div>
+      </div>
+
+      <!-- Questions List -->
+      <div class="questions-grid" id="coding-questions"></div>
+
+      <!-- Keypad -->
+      <div class="keypad-wrapper">
+        <div style="display:flex;justify-content:space-between;align-items:center;font-weight:800;color:#0369a1">
+          <span>Pilih Jawaban:</span>
+          <span id="active-q-label" style="color:#e11d48">Ketuk kotak soal dulu</span>
+        </div>
+        <div class="keypad-grid">
+          <button class="keypad-btn" data-val="1">1</button>
+          <button class="keypad-btn" data-val="2">2</button>
+          <button class="keypad-btn" data-val="3">3</button>
+          <button class="keypad-btn" data-val="4">4</button>
+          <button class="keypad-btn" data-val="5">5</button>
+          <button class="keypad-btn" data-val="6">6</button>
+          <button class="keypad-btn" data-val="7">7</button>
+          <button class="keypad-btn" data-val="8">8</button>
+          <button class="keypad-btn" data-val="9">9</button>
+          <button class="keypad-btn" data-val="10">10</button>
+          <button class="keypad-btn" data-val="11">11</button>
+          <button class="keypad-btn" data-val="12">12</button>
+          <button class="keypad-btn action-btn" id="keypad-del">⌫ Hapus</button>
+          <button class="keypad-btn action-btn" id="keypad-hint" style="background:#fde047;color:#854d0e;box-shadow:0 4px 0 #ca8a04">💡 Kode</button>
+          <button class="keypad-btn action-btn" id="keypad-check" style="background:#86efac;color:#14532d;box-shadow:0 4px 0 #16a34a">Cek ✨</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       PANEL 3: TEBAL & TULIS HURUF A-Z
+  ═══════════════════════════════════════════════════════════ -->
+  <section class="view-panel" id="panel-az">
+    <div class="worksheet-card">
+      <div class="worksheet-header-banner">
+        <h2 class="worksheet-big-title">Petualangan Huruf A-Z</h2>
+        <p class="worksheet-desc">
+          Pilih huruf! Tebali huruf putus-putus lalu tulis ulang di sampingnya dengan benar.
+        </p>
+      </div>
+
+      <div class="az-grid" id="az-grid"></div>
+    </div>
+  </section>
+
+</div>
+
+<!-- ═══ TRACING & WRITING MODAL ═══ -->
+<div class="tracing-modal" id="tracing-modal">
+  <div class="tracing-card">
+    <div class="tracing-header">
+      <div class="tracing-title">
+        <span id="trace-letter-display" style="font-size:2rem;color:#0284c7">A</span>
+        <span id="trace-word-display" style="font-size:1.1rem;color:#475569">Apel 🍎</span>
+      </div>
+      <div style="display:flex;gap:8px">
+        <button class="ico-btn" id="btn-tts-letter" title="Dengarkan Suara Huruf">🔊</button>
+        <button class="ico-btn" id="btn-close-trace" title="Tutup">✕</button>
+      </div>
+    </div>
+
+    <div class="canvases-row">
+      <!-- 1. Tracing Canvas (Tebali) -->
+      <div class="canvas-box">
+        <div class="canvas-label">1. Tebali Garis Putus-putus ✏️</div>
+        <div class="tracing-canvas-wrap">
+          <canvas id="canvas-guide" width="300" height="300"></canvas>
+          <canvas id="canvas-trace" width="300" height="300"></canvas>
+        </div>
+      </div>
+
+      <!-- 2. Free Writing Canvas (Tulis Mandiri) -->
+      <div class="canvas-box">
+        <div class="canvas-label">2. Tulis Mandiri Disampingnya ✍️</div>
+        <div class="tracing-canvas-wrap">
+          <canvas id="canvas-lines" width="300" height="300"></canvas>
+          <canvas id="canvas-write" width="300" height="300"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- Drawing Tools -->
+    <div class="tool-controls">
+      <div class="color-palette">
+        <div class="color-pick active" data-color="#2563eb" style="background:#2563eb" title="Biru"></div>
+        <div class="color-pick" data-color="#dc2626" style="background:#dc2626" title="Merah"></div>
+        <div class="color-pick" data-color="#16a34a" style="background:#16a34a" title="Hijau"></div>
+        <div class="color-pick" data-color="#d97706" style="background:#d97706" title="Oranye"></div>
+        <div class="color-pick" data-color="#9333ea" style="background:#9333ea" title="Ungu"></div>
+      </div>
+
+      <div style="display:flex;gap:8px">
+        <button class="btn-action-sm btn-clear" id="btn-trace-clear">🗑️ Hapus</button>
+        <button class="btn-action-sm btn-done" id="btn-trace-done">✅ Selesai</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ VICTORY CELEBRATION MODAL ═══ -->
+<div class="modal-overlay" id="vic-modal">
+  <div class="vic-box">
+    <div class="vic-icon" id="vic-icon">🎉🏆</div>
+    <h2 class="vic-title" id="vic-title">Luar Biasa!</h2>
+    <p class="vic-desc" id="vic-desc">Kamu berhasil menyelesaikan lembar kerja ini!</p>
+    <div class="stars-row" id="vic-stars">⭐⭐⭐</div>
+    <button class="btn-home" id="btn-vic-continue" style="padding:12px 28px;font-size:1.1rem">Lanjut Main 🚀</button>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast">🌟 <span>Hebat!</span></div>
+
+<script>
+/* ═══════════════════════════════════════════════════════════
+   1. SOUND SYNTHESIZER (Web Audio API - Offline & Instant)
+═══════════════════════════════════════════════════════════ */
+const SFX = {
+  ctx: null, on: true,
+  init() {
+    if (!this.ctx) {
+      const A = window.AudioContext || window.webkitAudioContext;
+      if (A) this.ctx = new A();
+    }
+  },
+  resume() {
+    this.init();
+    if (this.ctx && this.ctx.state === 'suspended') this.ctx.resume();
+  },
+  play(freq, dur, type='sine', vol=0.25, endFreq=null) {
+    this.resume();
+    if (!this.ctx || !this.on) return;
+    try {
+      const o = this.ctx.createOscillator(), g = this.ctx.createGain(), t = this.ctx.currentTime;
+      o.type = type;
+      o.frequency.setValueAtTime(freq, t);
+      if (endFreq) o.frequency.exponentialRampToValueAtTime(endFreq, t + dur * 0.8);
+      g.gain.setValueAtTime(vol, t);
+      g.gain.exponentialRampToValueAtTime(0.001, t + dur);
+      o.connect(g); g.connect(this.ctx.destination);
+      o.start(t); o.stop(t + dur + 0.01);
+    } catch(e){}
+  },
+  step() { this.play(260, 0.06, 'triangle', 0.15, 340); },
+  pop() { this.play(440, 0.1, 'sine', 0.2, 880); },
+  correct() {
+    this.play(523, 0.12, 'sine', 0.3);
+    setTimeout(() => this.play(659, 0.15, 'sine', 0.3), 100);
+    setTimeout(() => this.play(784, 0.25, 'sine', 0.35), 220);
+  },
+  wrong() {
+    this.play(280, 0.15, 'sawtooth', 0.25, 200);
+  },
+  fanfare() {
+    [523, 659, 784, 1046].forEach((f, i) => {
+      setTimeout(() => this.play(f, 0.3, 'triangle', 0.3), i * 130);
+    });
+  },
+  speak(text) {
+    if (!('speechSynthesis' in window)) return;
+    window.speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = 'id-ID';
+    u.rate = 0.9;
+    window.speechSynthesis.speak(u);
+  }
+};
+
+function showToast(msg, isWrong = false) {
+  const t = document.getElementById('toast');
+  t.innerHTML = `${isWrong ? '💡' : '🌟'} <span>${msg}</span>`;
+  t.className = 'toast show' + (isWrong ? ' wrong' : '');
+  setTimeout(() => t.className = 'toast', 2000);
+}
+
+/* ── Confetti Particle Effect ── */
+const Confetti = {
+  canvas: null, ctx: null, parts: [],
+  init() {
+    this.canvas = document.getElementById('confetti-canvas');
+    this.ctx = this.canvas.getContext('2d');
+    this.resize();
+    window.addEventListener('resize', () => this.resize());
+  },
+  resize() {
+    this.canvas.width = window.innerWidth;
+    this.canvas.height = window.innerHeight;
+  },
+  launch(count = 60) {
+    const colors = ['#ef4444', '#f59e0b', '#10b981', '#3b82f6', '#8b5cf6', '#ec4899'];
+    for (let i = 0; i < count; i++) {
+      this.parts.push({
+        x: window.innerWidth / 2 + (Math.random() - 0.5) * 100,
+        y: window.innerHeight / 2,
+        vx: (Math.random() - 0.5) * 14,
+        vy: -Math.random() * 12 - 4,
+        size: Math.random() * 8 + 5,
+        color: colors[Math.floor(Math.random() * colors.length)],
+        rot: Math.random() * 360,
+        vrot: (Math.random() - 0.5) * 10,
+        alpha: 1
+      });
+    }
+    if (!this.running) this.animate();
+  },
+  animate() {
+    this.running = true;
+    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    for (let i = this.parts.length - 1; i >= 0; i--) {
+      const p = this.parts[i];
+      p.x += p.vx;
+      p.y += p.vy;
+      p.vy += 0.4;
+      p.rot += p.vrot;
+      p.alpha -= 0.015;
+      if (p.alpha <= 0) {
+        this.parts.splice(i, 1);
+        continue;
+      }
+      this.ctx.save();
+      this.ctx.globalAlpha = p.alpha;
+      this.ctx.translate(p.x, p.y);
+      this.ctx.rotate((p.rot * Math.PI) / 180);
+      this.ctx.fillStyle = p.color;
+      this.ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size);
+      this.ctx.restore();
+    }
+    if (this.parts.length > 0) {
+      requestAnimationFrame(() => this.animate());
+    } else {
+      this.running = false;
+    }
+  }
+};
+
+/* ═══════════════════════════════════════════════════════════
+   2. MODUL 1: LABIRIN (MENCARI JALAN)
+═══════════════════════════════════════════════════════════ */
+const MazeGame = {
+  level: 1,
+  gridW: 11,
+  gridH: 11,
+  grid: [],
+  playerX: 0,
+  playerY: 0,
+  goalX: 10,
+  goalY: 10,
+  drawnPath: [],
+  isDrawing: false,
+
+  // Level 1: Fisherman -> Fish (Sesuai Worksheet Gambar 1)
+  // Level 2: Hungry Boy -> Food table (Sesuai Worksheet Gambar 2)
+  LEVEL_CONFIGS: {
+    1: {
+      title: "Tunjukkan Jalannya!",
+      desc: "Bantu anak itu untuk mendapatkan ikan dengan memberi garis untuk melewati labirin!",
+      playerIco: "🎣",
+      goalIco: "🐟",
+      startBadge: "🎣 Anak Pemancing",
+      goalBadge: "🐟 Ikan Segar",
+      startPos: { x: 0, y: 0 },
+      goalPos: { x: 10, y: 10 },
+      themeCol: "#3b82f6",
+      wallCol: "#0f172a",
+      bgCol: "#f8fafc",
+      grid: [
+        [0,0,1,1,1,1,1,1,1,1,1],
+        [1,0,0,0,1,0,0,0,0,0,1],
+        [1,1,1,0,1,0,1,1,1,0,1],
+        [1,0,0,0,0,0,1,0,1,0,1],
+        [1,0,1,1,1,1,1,0,1,0,1],
+        [1,0,1,0,0,0,0,0,1,0,1],
+        [1,0,1,0,1,1,1,0,1,0,1],
+        [1,0,0,0,1,0,0,0,0,0,1],
+        [1,1,1,0,1,0,1,1,1,1,1],
+        [1,0,0,0,1,0,0,0,0,0,0],
+        [1,1,1,1,1,1,1,1,1,1,0]
+      ]
+    },
+    2: {
+      title: "Mencari Jalan",
+      desc: "Bantulah anak di bawah ini untuk mencari makanan yang ia inginkan dengan menunjukkan jalan kepadanya!",
+      playerIco: "👦",
+      goalIco: "🍲",
+      startBadge: "👦 Anak Lapar",
+      goalBadge: "🍛 Makanan Lezat",
+      startPos: { x: 7, y: 0 },
+      goalPos: { x: 0, y: 10 },
+      themeCol: "#d97706",
+      wallCol: "#451a03",
+      bgCol: "#fffbeb",
+      grid: [
+        [1,1,1,1,1,1,1,0,1,1,1],
+        [1,0,0,0,0,0,1,0,0,0,1],
+        [1,0,1,1,1,0,1,1,1,0,1],
+        [1,0,1,0,0,0,0,0,1,0,1],
+        [1,0,1,0,1,1,1,0,1,0,1],
+        [1,0,0,0,1,0,1,0,0,0,1],
+        [1,1,1,0,1,0,1,1,1,0,1],
+        [1,0,0,0,0,0,0,0,1,0,1],
+        [1,0,1,1,1,1,1,0,1,0,1],
+        [1,0,0,0,0,0,1,0,0,0,1],
+        [0,0,1,1,1,1,1,1,1,1,1]
+      ]
+    }
+  },
+
+  init() {
+    this.canvas = document.getElementById('maze-canvas');
+    this.ctx = this.canvas.getContext('2d');
+    this.marker = document.getElementById('player-marker');
+    this.startBadge = document.getElementById('start-badge');
+    this.goalBadge = document.getElementById('goal-badge');
+    this.loadLevel(1);
+    this.bindEvents();
+  },
+
+  loadLevel(lvl) {
+    this.level = lvl;
+    const cfg = this.LEVEL_CONFIGS[lvl];
+    this.grid = JSON.parse(JSON.stringify(cfg.grid));
+    this.gridH = this.grid.length;
+    this.gridW = this.grid[0].length;
+    this.playerX = cfg.startPos.x;
+    this.playerY = cfg.startPos.y;
+    this.goalX = cfg.goalPos.x;
+    this.goalY = cfg.goalPos.y;
+    this.drawnPath = [{ x: this.playerX, y: this.playerY }];
+
+    document.getElementById('maze-title').textContent = cfg.title;
+    document.getElementById('maze-desc').textContent = cfg.desc;
+    this.marker.textContent = cfg.playerIco;
+
+    document.querySelectorAll('.lvl-pill[data-maze]').forEach(p => {
+      p.classList.toggle('active', parseInt(p.dataset.maze) === lvl);
+    });
+
+    this.render();
+  },
+
+  render() {
+    const cfg = this.LEVEL_CONFIGS[this.level];
+    const w = this.canvas.width;
+    const h = this.canvas.height;
+    const cellW = w / this.gridW;
+    const cellH = h / this.gridH;
+
+    this.ctx.fillStyle = cfg.bgCol;
+    this.ctx.fillRect(0, 0, w, h);
+
+    // Draw grid paths & walls
+    for (let r = 0; r < this.gridH; r++) {
+      for (let c = 0; c < this.gridW; c++) {
+        if (this.grid[r][c] === 1) {
+          this.ctx.fillStyle = cfg.wallCol;
+          this.ctx.beginPath();
+          this.ctx.roundRect(c * cellW + 2, r * cellH + 2, cellW - 4, cellH - 4, 8);
+          this.ctx.fill();
+        }
+      }
+    }
+
+    // Draw player trail
+    if (this.drawnPath.length > 1) {
+      this.ctx.strokeStyle = '#f59e0b';
+      this.ctx.lineWidth = cellW * 0.4;
+      this.ctx.lineCap = 'round';
+      this.ctx.lineJoin = 'round';
+      this.ctx.beginPath();
+      this.drawnPath.forEach((pt, i) => {
+        const cx = pt.x * cellW + cellW / 2;
+        const cy = pt.y * cellH + cellH / 2;
+        if (i === 0) this.ctx.moveTo(cx, cy);
+        else this.ctx.lineTo(cx, cy);
+      });
+      this.ctx.stroke();
+    }
+
+    // Update Player marker position on CSS layer
+    const box = document.getElementById('maze-box');
+    const scaleX = box.clientWidth / w;
+    const scaleY = box.clientHeight / h;
+    const px = (this.playerX * cellW + cellW / 2) * scaleX;
+    const py = (this.playerY * cellH + cellH / 2) * scaleY;
+    this.marker.style.left = (px - 24) + 'px';
+    this.marker.style.top = (py - 24) + 'px';
+
+    // Start & Goal Badge Placement
+    this.startBadge.innerHTML = `<span style="font-size:2rem">${cfg.playerIco}</span><span class="badge-tag">MULAI</span>`;
+    const startPixelX = (cfg.startPos.x * cellW + cellW / 2) * scaleX;
+    const startPixelY = (cfg.startPos.y * cellH + cellH / 2) * scaleY;
+    this.startBadge.style.left = (startPixelX - 30) + 'px';
+    this.startBadge.style.top = (startPixelY - (cfg.startPos.y === 0 ? 10 : 35)) + 'px';
+
+    this.goalBadge.innerHTML = `<span style="font-size:2.2rem">${cfg.goalIco}</span><span class="badge-tag">TUJUAN</span>`;
+    const goalPixelX = (cfg.goalPos.x * cellW + cellW / 2) * scaleX;
+    const goalPixelY = (cfg.goalPos.y * cellH + cellH / 2) * scaleY;
+    this.goalBadge.style.left = (goalPixelX - 30) + 'px';
+    this.goalBadge.style.top = (goalPixelY - 35) + 'px';
+  },
+
+  move(dx, dy) {
+    const nx = this.playerX + dx;
+    const ny = this.playerY + dy;
+    if (nx >= 0 && nx < this.gridW && ny >= 0 && ny < this.gridH) {
+      if (this.grid[ny][nx] === 0) {
+        this.playerX = nx;
+        this.playerY = ny;
+        this.drawnPath.push({ x: nx, y: ny });
+        SFX.step();
+        this.render();
+        this.checkGoal();
+      } else {
+        SFX.wrong();
+      }
+    }
+  },
+
+  checkGoal() {
+    if (this.playerX === this.goalX && this.playerY === this.goalY) {
+      SFX.fanfare();
+      Confetti.launch(80);
+      const cfg = this.LEVEL_CONFIGS[this.level];
+      showVictoryModal(
+        cfg.goalIco + ' ' + cfg.playerIco,
+        "Berhasil Sampai Tujuan!",
+        `Hebat! Kamu berhasil menelusuri labirin ${cfg.title} dengan tepat!`,
+        () => {
+          MazeGame.loadLevel(MazeGame.level === 1 ? 2 : 1);
+        }
+      );
+    }
+  },
+
+  bindEvents() {
+    // Level pills
+    document.querySelectorAll('.lvl-pill[data-maze]').forEach(p => {
+      p.onclick = () => {
+        SFX.pop();
+        this.loadLevel(parseInt(p.dataset.maze));
+      };
+    });
+
+    // Reset button
+    document.getElementById('btn-reset-maze').onclick = () => {
+      SFX.pop();
+      this.loadLevel(this.level);
+    };
+
+    // D-Pad buttons
+    document.getElementById('dpad-up').onclick = () => this.move(0, -1);
+    document.getElementById('dpad-down').onclick = () => this.move(0, 1);
+    document.getElementById('dpad-left').onclick = () => this.move(-1, 0);
+    document.getElementById('dpad-right').onclick = () => this.move(1, 0);
+
+    // Keyboard controls
+    window.addEventListener('keydown', (e) => {
+      if (document.getElementById('panel-maze').classList.contains('active')) {
+        if (e.key === 'ArrowUp' || e.key === 'w') { e.preventDefault(); this.move(0, -1); }
+        if (e.key === 'ArrowDown' || e.key === 's') { e.preventDefault(); this.move(0, 1); }
+        if (e.key === 'ArrowLeft' || e.key === 'a') { e.preventDefault(); this.move(-1, 0); }
+        if (e.key === 'ArrowRight' || e.key === 'd') { e.preventDefault(); this.move(1, 0); }
+      }
+    });
+
+    // Touch / Mouse Drag Tracing on maze canvas
+    const box = document.getElementById('maze-box');
+    const handlePointer = (e) => {
+      const rect = box.getBoundingClientRect();
+      const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+      const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+      const x = clientX - rect.left;
+      const y = clientY - rect.top;
+      const col = Math.floor((x / rect.width) * this.gridW);
+      const row = Math.floor((y / rect.height) * this.gridH);
+
+      // Adjacent move validation
+      const dx = Math.abs(col - this.playerX);
+      const dy = Math.abs(row - this.playerY);
+      if ((dx === 1 && dy === 0) || (dx === 0 && dy === 1)) {
+        if (this.grid[row][col] === 0) {
+          this.move(col - this.playerX, row - this.playerY);
+        }
+      }
+    };
+
+    box.addEventListener('mousedown', (e) => { this.isDrawing = true; handlePointer(e); });
+    window.addEventListener('mouseup', () => { this.isDrawing = false; });
+    box.addEventListener('mousemove', (e) => { if (this.isDrawing) handlePointer(e); });
+
+    box.addEventListener('touchstart', (e) => { this.isDrawing = true; handlePointer(e); }, { passive: false });
+    window.addEventListener('touchend', () => { this.isDrawing = false; });
+    box.addEventListener('touchmove', (e) => {
+      if (this.isDrawing) { e.preventDefault(); handlePointer(e); }
+    }, { passive: false });
+  }
+};
+
+/* ═══════════════════════════════════════════════════════════
+   3. MODUL 2: KODING PENJUMLAHAN (BUNGA & LINGKARAN WARNA)
+═══════════════════════════════════════════════════════════ */
+const CodingGame = {
+  mode: 'flower', // 'flower' (sesuai Gbr 3) atau 'circle' (sesuai Gbr 4)
+  activeQIdx: 0,
+  answers: {},
+  showHints: false,
+
+  FLOWERS: {
+    2: { name: 'Bunga Biru', col: '#38bdf8', val: 2 },
+    3: { name: 'Bunga Pink', col: '#f472b6', val: 3 },
+    4: { name: 'Bunga Kuning', col: '#eab308', val: 4 },
+    5: { name: 'Bunga Ungu', col: '#a855f7', val: 5 },
+    6: { name: 'Bunga Merah', col: '#ef4444', val: 6 }
+  },
+
+  CIRCLES: {
+    1: { name: 'Biru Muda', col: '#22d3ee', val: 1 },
+    2: { name: 'Oranye', col: '#fb923c', val: 2 },
+    3: { name: 'Hijau Lemon', col: '#bef264', val: 3 },
+    4: { name: 'Merah', col: '#f43f5e', val: 4 },
+    5: { name: 'Pink Lembut', col: '#f9a8d4', val: 5 }
+  },
+
+  // Soal sesuai worksheet Gambar 3 & 4
+  FLOWER_QUESTIONS: [
+    { a: 2, b: 3 },
+    { a: 6, b: 4 },
+    { a: 3, b: 4 },
+    { a: 5, b: 6 },
+    { a: 4, b: 2 },
+    { a: 5, b: 2 },
+    { a: 5, b: 3 },
+    { a: 3, b: 6 },
+    { a: 6, b: 2 },
+    { a: 4, b: 5 }
+  ],
+
+  CIRCLE_QUESTIONS: [
+    { a: 1, b: 2 },
+    { a: 3, b: 5 },
+    { a: 2, b: 4 },
+    { a: 1, b: 5 },
+    { a: 3, b: 4 }
+  ],
+
+  init() {
+    this.bindEvents();
+    this.loadMode('flower');
+  },
+
+  renderFlowerSVG(val) {
+    const f = this.FLOWERS[val] || this.FLOWERS[2];
+    return `
+      <svg class="flower-icon" viewBox="0 0 100 100">
+        <!-- 5 Petals -->
+        <circle cx="50" cy="22" r="18" fill="${f.col}"/>
+        <circle cx="77" cy="42" r="18" fill="${f.col}"/>
+        <circle cx="67" cy="74" r="18" fill="${f.col}"/>
+        <circle cx="33" cy="74" r="18" fill="${f.col}"/>
+        <circle cx="23" cy="42" r="18" fill="${f.col}"/>
+        <!-- Center core -->
+        <circle cx="50" cy="50" r="17" fill="#fef08a" stroke="#f59e0b" stroke-width="4"/>
+      </svg>
+    `;
+  },
+
+  renderCircleBadge(val) {
+    const c = this.CIRCLES[val] || this.CIRCLES[1];
+    return `
+      <div class="circle-icon" style="background:${c.col}">${val}</div>
+    `;
+  },
+
+  loadMode(m) {
+    this.mode = m;
+    this.answers = {};
+    this.activeQIdx = 0;
+    this.showHints = false;
+
+    document.querySelectorAll('.lvl-pill[data-coding]').forEach(p => {
+      p.classList.toggle('active', p.dataset.coding === m);
+    });
+
+    // Header updates
+    if (m === 'flower') {
+      document.getElementById('coding-title').textContent = 'Koding Penjumlahan Bunga';
+      document.getElementById('coding-desc').textContent = 'Hitung penjumlahan sesuai dengan kode nomor pada gambar bunga berikut!';
+    } else {
+      document.getElementById('coding-title').textContent = 'Penjumlahan dengan Kode Lingkaran';
+      document.getElementById('coding-desc').textContent = 'Tulis hasil penjumlahan lingkaran berwarna sesuai dengan kode angka berikut ini!';
+    }
+
+    // Render Reference Bar
+    const refGrid = document.getElementById('ref-grid');
+    refGrid.innerHTML = '';
+    const pool = (m === 'flower') ? this.FLOWERS : this.CIRCLES;
+    Object.keys(pool).forEach(key => {
+      const item = pool[key];
+      const div = document.createElement('div');
+      div.className = 'ref-item';
+      div.innerHTML = (m === 'flower')
+        ? `${this.renderFlowerSVG(item.val)}<span class="ref-val">${item.val}</span>`
+        : `${this.renderCircleBadge(item.val)}<span class="ref-val">${item.val}</span>`;
+      refGrid.appendChild(div);
+    });
+
+    // Render Questions
+    this.renderQuestions();
+  },
+
+  renderQuestions() {
+    const list = (this.mode === 'flower') ? this.FLOWER_QUESTIONS : this.CIRCLE_QUESTIONS;
+    const grid = document.getElementById('coding-questions');
+    grid.innerHTML = '';
+
+    list.forEach((q, idx) => {
+      const card = document.createElement('div');
+      card.className = 'q-card' + (idx === this.activeQIdx ? ' current' : '');
+      card.id = 'q-card-' + idx;
+
+      const itemA = (this.mode === 'flower') ? this.renderFlowerSVG(q.a) : this.renderCircleBadge(q.a);
+      const itemB = (this.mode === 'flower') ? this.renderFlowerSVG(q.b) : this.renderCircleBadge(q.b);
+      const ansVal = this.answers[idx] ?? '';
+      const isCorrect = ansVal === (q.a + q.b);
+
+      const hintTxt = this.showHints ? `<span style="font-size:0.8rem;color:#0284c7">(${q.a} + ${q.b})</span>` : '';
+
+      card.innerHTML = `
+        <div class="q-equation">
+          <span>${itemA}</span>
+          <span>+</span>
+          <span>${itemB}</span>
+          <span>=</span>
+          ${hintTxt}
+        </div>
+        <div class="q-answer-slot ${ansVal ? 'filled' : ''} ${isCorrect ? 'correct' : ''}" id="slot-${idx}">
+          ${ansVal !== '' ? ansVal : '...'}
+        </div>
+      `;
+
+      card.onclick = () => {
+        SFX.pop();
+        this.selectQuestion(idx);
+      };
+      grid.appendChild(card);
+    });
+
+    this.updateActiveLabel();
+  },
+
+  selectQuestion(idx) {
+    this.activeQIdx = idx;
+    document.querySelectorAll('.q-card').forEach((c, i) => {
+      c.classList.toggle('current', i === idx);
+    });
+    this.updateActiveLabel();
+  },
+
+  updateActiveLabel() {
+    const list = (this.mode === 'flower') ? this.FLOWER_QUESTIONS : this.CIRCLE_QUESTIONS;
+    const q = list[this.activeQIdx];
+    document.getElementById('active-q-label').textContent = `Soal ${this.activeQIdx + 1} dari ${list.length}`;
+  },
+
+  inputDigit(val) {
+    SFX.pop();
+    this.answers[this.activeQIdx] = val;
+    this.renderQuestions();
+
+    // Check individual answer
+    const list = (this.mode === 'flower') ? this.FLOWER_QUESTIONS : this.CIRCLE_QUESTIONS;
+    const q = list[this.activeQIdx];
+    if (val === (q.a + q.b)) {
+      SFX.correct();
+      showToast('Benar sekali! 🌟');
+      // auto advance to next unfilled
+      setTimeout(() => {
+        const nextIdx = list.findIndex((_, i) => this.answers[i] === undefined);
+        if (nextIdx !== -1) {
+          this.selectQuestion(nextIdx);
+        } else {
+          this.checkAll();
+        }
+      }, 500);
+    } else {
+      SFX.wrong();
+      showToast('Coba hitung lagi ya!', true);
+    }
+  },
+
+  deleteAnswer() {
+    SFX.pop();
+    delete this.answers[this.activeQIdx];
+    this.renderQuestions();
+  },
+
+  checkAll() {
+    const list = (this.mode === 'flower') ? this.FLOWER_QUESTIONS : this.CIRCLE_QUESTIONS;
+    let correctCount = 0;
+    list.forEach((q, i) => {
+      if (this.answers[i] === (q.a + q.b)) correctCount++;
+    });
+
+    if (correctCount === list.length) {
+      SFX.fanfare();
+      Confetti.launch(80);
+      showVictoryModal(
+        (this.mode === 'flower') ? '🌸✨' : '🔴✨',
+        "Koding Penjumlahan Tuntas!",
+        `Hebat! Semua ${list.length} soal berhasil kamu pecahkan dengan benar 100%!`,
+        () => {
+          CodingGame.loadMode(CodingGame.mode === 'flower' ? 'circle' : 'flower');
+        }
+      );
+    } else {
+      SFX.wrong();
+      showToast(`Ada ${correctCount} dari ${list.length} yang benar. Semangat!`, true);
+    }
+  },
+
+  bindEvents() {
+    document.querySelectorAll('.lvl-pill[data-coding]').forEach(p => {
+      p.onclick = () => {
+        SFX.pop();
+        this.loadMode(p.dataset.coding);
+      };
+    });
+
+    // Keypad numbers
+    document.querySelectorAll('.keypad-btn[data-val]').forEach(b => {
+      b.onclick = () => this.inputDigit(parseInt(b.dataset.val));
+    });
+
+    // Keypad actions
+    document.getElementById('keypad-del').onclick = () => this.deleteAnswer();
+    document.getElementById('keypad-hint').onclick = () => {
+      SFX.pop();
+      this.showHints = !this.showHints;
+      this.renderQuestions();
+      showToast(this.showHints ? 'Bantuan rumus diaktifkan!' : 'Bantuan dinonaktifkan');
+    };
+    document.getElementById('keypad-check').onclick = () => this.checkAll();
+  }
+};
+
+/* ═══════════════════════════════════════════════════════════
+   4. MODUL 3: TEBAL & TULIS HURUF A-Z
+═══════════════════════════════════════════════════════════ */
+const AZGame = {
+  currentLetter: 'A',
+  currentColor: '#2563eb',
+  isDrawingTrace: false,
+  isDrawingWrite: false,
+  completedLetters: {},
+
+  ALPHABET_DATA: {
+    A: { word: 'Apel', ico: '🍎' },
+    B: { word: 'Bola', ico: '⚽' },
+    C: { word: 'Ceri', ico: '🍒' },
+    D: { word: 'Daun', ico: '🍃' },
+    E: { word: 'Es Krim', ico: '🍦' },
+    F: { word: 'Foto', ico: '📷' },
+    G: { word: 'Gajah', ico: '🐘' },
+    H: { word: 'Harimau', ico: '🐯' },
+    I: { word: 'Ikan', ico: '🐟' },
+    J: { word: 'Jeruk', ico: '🍊' },
+    K: { word: 'Kucing', ico: '🐱' },
+    L: { word: 'Lebah', ico: '🐝' },
+    M: { word: 'Matahari', ico: '☀️' },
+    N: { word: 'Nanas', ico: '🍍' },
+    O: { word: 'Ombak', ico: '🌊' },
+    P: { word: 'Pisang', ico: '🍌' },
+    Q: { word: 'Quran', ico: '📖' },
+    R: { word: 'Rumah', ico: '🏠' },
+    S: { word: 'Sepatu', ico: '👟' },
+    T: { word: 'Topi', ico: '🧢' },
+    U: { word: 'Udang', ico: '🦐' },
+    V: { word: 'Vas', ico: '🏺' },
+    W: { word: 'Wortel', ico: '🥕' },
+    X: { word: 'Xilofon', ico: '🎵' },
+    Y: { word: 'Yo-yo', ico: '🪀' },
+    Z: { word: 'Zebra', ico: '🦓' }
+  },
+
+  init() {
+    this.renderGrid();
+    this.initCanvases();
+    this.bindEvents();
+  },
+
+  renderGrid() {
+    const grid = document.getElementById('az-grid');
+    grid.innerHTML = '';
+    Object.keys(this.ALPHABET_DATA).forEach(char => {
+      const data = this.ALPHABET_DATA[char];
+      const isDone = this.completedLetters[char];
+      const card = document.createElement('div');
+      card.className = 'az-card' + (isDone ? ' done' : '');
+      card.innerHTML = `
+        <div class="az-letter-preview">
+          <span class="letter-dashed-sample">${char}</span>
+          <span class="letter-solid-sample">${char}</span>
+        </div>
+        <div class="az-sub-tag">${data.ico} ${data.word}</div>
+        ${isDone ? '<div style="color:#16a34a;font-size:0.8rem;font-weight:800">✅ Selesai ⭐</div>' : ''}
+      `;
+      card.onclick = () => {
+        SFX.pop();
+        this.openTracingModal(char);
+      };
+      grid.appendChild(card);
+    });
+  },
+
+  initCanvases() {
+    this.guideCanvas = document.getElementById('canvas-guide');
+    this.guideCtx = this.guideCanvas.getContext('2d');
+    this.traceCanvas = document.getElementById('canvas-trace');
+    this.traceCtx = this.traceCanvas.getContext('2d');
+
+    this.linesCanvas = document.getElementById('canvas-lines');
+    this.linesCtx = this.linesCanvas.getContext('2d');
+    this.writeCanvas = document.getElementById('canvas-write');
+    this.writeCtx = this.writeCanvas.getContext('2d');
+  },
+
+  drawGuideLetter(letter) {
+    const w = this.guideCanvas.width;
+    const h = this.guideCanvas.height;
+    this.guideCtx.clearRect(0, 0, w, h);
+
+    // Draw background dashed handwriting lines
+    this.guideCtx.strokeStyle = '#e2e8f0';
+    this.guideCtx.lineWidth = 2;
+    this.guideCtx.setLineDash([6, 6]);
+    [h * 0.2, h * 0.5, h * 0.8].forEach(y => {
+      this.guideCtx.beginPath();
+      this.guideCtx.moveTo(20, y);
+      this.guideCtx.lineTo(w - 20, y);
+      this.guideCtx.stroke();
+    });
+
+    // Draw Dashed Outline Letter
+    this.guideCtx.setLineDash([8, 8]);
+    this.guideCtx.font = 'bold 210px Arial, sans-serif';
+    this.guideCtx.textAlign = 'center';
+    this.guideCtx.textBaseline = 'middle';
+    this.guideCtx.strokeStyle = '#94a3b8';
+    this.guideCtx.lineWidth = 6;
+    this.guideCtx.strokeText(letter, w / 2, h / 2 + 10);
+    this.guideCtx.setLineDash([]);
+  },
+
+  drawWritingLines() {
+    const w = this.linesCanvas.width;
+    const h = this.linesCanvas.height;
+    this.linesCtx.clearRect(0, 0, w, h);
+
+    // Handwriting guidelines (like 3-line school notebook)
+    this.linesCtx.strokeStyle = '#cbd5e1';
+    this.linesCtx.lineWidth = 2;
+    this.linesCtx.setLineDash([6, 6]);
+    this.linesCtx.beginPath();
+    this.linesCtx.moveTo(20, h * 0.25);
+    this.linesCtx.lineTo(w - 20, h * 0.25);
+    this.linesCtx.moveTo(20, h * 0.5);
+    this.linesCtx.lineTo(w - 20, h * 0.5);
+    this.linesCtx.stroke();
+
+    // Baseline (solid blue)
+    this.linesCtx.setLineDash([]);
+    this.linesCtx.strokeStyle = '#38bdf8';
+    this.linesCtx.lineWidth = 3;
+    this.linesCtx.beginPath();
+    this.linesCtx.moveTo(20, h * 0.75);
+    this.linesCtx.lineTo(w - 20, h * 0.75);
+    this.linesCtx.stroke();
+  },
+
+  openTracingModal(letter) {
+    this.currentLetter = letter;
+    const data = this.ALPHABET_DATA[letter];
+    document.getElementById('trace-letter-display').textContent = `Huruf ${letter}`;
+    document.getElementById('trace-word-display').textContent = `${data.word} ${data.ico}`;
+
+    this.clearCanvases();
+    this.drawGuideLetter(letter);
+    this.drawWritingLines();
+
+    document.getElementById('tracing-modal').classList.add('open');
+    SFX.speak(`${letter}... ${data.word}!`);
+  },
+
+  clearCanvases() {
+    this.traceCtx.clearRect(0, 0, this.traceCanvas.width, this.traceCanvas.height);
+    this.writeCtx.clearRect(0, 0, this.writeCanvas.width, this.writeCanvas.height);
+  },
+
+  bindEvents() {
+    // TTS Letter button
+    document.getElementById('btn-tts-letter').onclick = () => {
+      SFX.pop();
+      const data = this.ALPHABET_DATA[this.currentLetter];
+      SFX.speak(`Huruf ${this.currentLetter}... ${data.word}!`);
+    };
+
+    // Close Modal
+    document.getElementById('btn-close-trace').onclick = () => {
+      SFX.pop();
+      document.getElementById('tracing-modal').classList.remove('open');
+    };
+
+    // Clear Button
+    document.getElementById('btn-trace-clear').onclick = () => {
+      SFX.pop();
+      this.clearCanvases();
+    };
+
+    // Done Button
+    document.getElementById('btn-trace-done').onclick = () => {
+      SFX.fanfare();
+      Confetti.launch(50);
+      this.completedLetters[this.currentLetter] = true;
+      document.getElementById('tracing-modal').classList.remove('open');
+      this.renderGrid();
+      showToast(`Hebat! Huruf ${this.currentLetter} selesai! ⭐`);
+    };
+
+    // Color Pickers
+    document.querySelectorAll('.color-pick').forEach(cp => {
+      cp.onclick = () => {
+        SFX.pop();
+        document.querySelectorAll('.color-pick').forEach(c => c.classList.remove('active'));
+        cp.classList.add('active');
+        this.currentColor = cp.dataset.color;
+      };
+    });
+
+    // Helper for drawing on a target canvas
+    const setupDrawing = (canvas, ctx, flagKey) => {
+      let drawing = false;
+
+      const getCoords = (e) => {
+        const rect = canvas.getBoundingClientRect();
+        const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+        const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+        const scaleX = canvas.width / rect.width;
+        const scaleY = canvas.height / rect.height;
+        return {
+          x: (clientX - rect.left) * scaleX,
+          y: (clientY - rect.top) * scaleY
+        };
+      };
+
+      const start = (e) => {
+        drawing = true;
+        const pos = getCoords(e);
+        ctx.strokeStyle = this.currentColor;
+        ctx.lineWidth = 14;
+        ctx.lineCap = 'round';
+        ctx.lineJoin = 'round';
+        ctx.beginPath();
+        ctx.moveTo(pos.x, pos.y);
+      };
+
+      const move = (e) => {
+        if (!drawing) return;
+        const pos = getCoords(e);
+        ctx.lineTo(pos.x, pos.y);
+        ctx.stroke();
+      };
+
+      const stop = () => { drawing = false; };
+
+      canvas.addEventListener('mousedown', start);
+      canvas.addEventListener('mousemove', move);
+      window.addEventListener('mouseup', stop);
+
+      canvas.addEventListener('touchstart', (e) => { e.preventDefault(); start(e); }, { passive: false });
+      canvas.addEventListener('touchmove', (e) => { e.preventDefault(); move(e); }, { passive: false });
+      window.addEventListener('touchend', stop);
+    };
+
+    setupDrawing(this.traceCanvas, this.traceCtx, 'isDrawingTrace');
+    setupDrawing(this.writeCanvas, this.writeCtx, 'isDrawingWrite');
+  }
+};
+
+/* ═══════════════════════════════════════════════════════════
+   5. APP CONTROLLER & TABS
+═══════════════════════════════════════════════════════════ */
+function showVictoryModal(icon, title, desc, onContinue) {
+  document.getElementById('vic-icon').textContent = icon;
+  document.getElementById('vic-title').textContent = title;
+  document.getElementById('vic-desc').textContent = desc;
+  const modal = document.getElementById('vic-modal');
+  modal.classList.add('open');
+
+  document.getElementById('btn-vic-continue').onclick = () => {
+    SFX.pop();
+    modal.classList.remove('open');
+    if (onContinue) onContinue();
+  };
+}
+
+const App = {
+  init() {
+    SFX.init();
+    Confetti.init();
+    MazeGame.init();
+    CodingGame.init();
+    AZGame.init();
+    this.bindEvents();
+  },
+
+  switchTab(tabId) {
+    document.querySelectorAll('.tab-btn').forEach(t => {
+      t.classList.toggle('active', t.dataset.tab === tabId);
+    });
+    document.querySelectorAll('.view-panel').forEach(p => {
+      p.classList.toggle('active', p.id === 'panel-' + tabId);
+    });
+
+    if (tabId === 'maze') MazeGame.render();
+  },
+
+  bindEvents() {
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.onclick = () => {
+        SFX.pop();
+        this.switchTab(btn.dataset.tab);
+      };
+    });
+
+    // Sound button toggle
+    document.getElementById('btn-sound').onclick = () => {
+      SFX.on = !SFX.on;
+      SFX.pop();
+      document.getElementById('btn-sound').textContent = SFX.on ? '🔊' : '🔇';
+      showToast(SFX.on ? 'Suara diaktifkan!' : 'Suara dimatikan');
+    };
+  }
+};
+
+window.addEventListener('DOMContentLoaded', () => App.init());
+</script>
+</body>
+</html>
