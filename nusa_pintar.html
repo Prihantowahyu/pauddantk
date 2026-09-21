@@ -1388,7 +1388,8 @@ const Sound = {
 /* ═══════════════════════════════════════════════════════════
    2. DATA & PROGRESS MANAGER (localStorage: nusaPintar_progress)
 ═══════════════════════════════════════════════════════════ */
-const STORAGE_KEY = 'nusaPintar_progress';
+const activeProfId = localStorage.getItem('calistung_active_profile') || 'habibi';
+const STORAGE_KEY = 'nusaPintar_progress_' + activeProfId;
 
 const StorageManager = {
   data: {
@@ -1446,6 +1447,17 @@ const StorageManager = {
     }
     this.data.islands[islandKey].completed = true;
     this.save();
+    try {
+      const pKey = 'calistung_profile_' + (localStorage.getItem('calistung_active_profile') || 'habibi');
+      const pData = JSON.parse(localStorage.getItem(pKey) || '{}');
+      if (pData) {
+        if (!pData.games) pData.games = {};
+        if (!pData.games['ekspedisi_pulau']) pData.games['ekspedisi_pulau'] = { played: true, highLevel: 1, stars: 0, lp: {} };
+        pData.games['ekspedisi_pulau'].played = true;
+        pData.visitedNusa = true;
+        localStorage.setItem(pKey, JSON.stringify(pData));
+      }
+    } catch(e) {}
   },
   addAccessory(acc) {
     if (!this.data.accessories.includes(acc)) {

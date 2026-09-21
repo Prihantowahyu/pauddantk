@@ -616,6 +616,183 @@ body.dark-mode .modal-desc { color: #cbd5e1 !important; }
   .harsha-float { bottom: 70px; right: 10px; }
 }
 
+
+/* ═══════════════════════════════════════════════════════════
+   ADVANCED FEATURES: Shop, Certificate, Screen Time, Hijaiyah
+═══════════════════════════════════════════════════════════ */
+
+/* Coin Shop */
+.shop-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+  gap: 12px;
+  width: 100%;
+  margin: 14px 0;
+  max-height: 380px;
+  overflow-y: auto;
+  padding: 4px;
+}
+.shop-item {
+  background: #fff;
+  border: 3px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 12px 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  position: relative;
+  transition: all .2s;
+}
+.shop-item:hover { transform: translateY(-3px); box-shadow: 0 6px 14px rgba(0,0,0,.08); }
+.shop-item.equipped {
+  border-color: #10b981;
+  background: #ecfdf5;
+  box-shadow: 0 0 0 2px #10b981;
+}
+.shop-ico { font-size: 2.5rem; margin-bottom: 4px; }
+.shop-name { font-size: .8rem; font-weight: 700; color: #1e293b; margin-bottom: 4px; }
+.shop-price { font-size: .85rem; font-weight: 800; color: #d97706; margin-bottom: 8px; }
+.shop-btn {
+  width: 100%;
+  padding: 6px 4px;
+  border-radius: 999px;
+  border: none;
+  font-family: var(--font);
+  font-weight: 700;
+  font-size: .78rem;
+  cursor: pointer;
+  transition: all .15s;
+}
+.shop-btn.buy { background: #f59e0b; color: #fff; box-shadow: 0 2px 0 #b45309; }
+.shop-btn.wear { background: #2563eb; color: #fff; box-shadow: 0 2px 0 #1d4ed8; }
+.shop-btn.wearing { background: #10b981; color: #fff; box-shadow: 0 2px 0 #047857; }
+
+/* Certificate */
+.cert-frame {
+  background: #fffdfa;
+  border: 8px double #d97706;
+  border-radius: 20px;
+  padding: 24px 20px;
+  text-align: center;
+  position: relative;
+  box-shadow: 0 10px 25px rgba(217,119,6,.15);
+  margin: 12px 0;
+  user-select: text;
+}
+.cert-frame::before {
+  content: "★ ★ ★ ★ ★";
+  display: block;
+  font-size: 1.2rem;
+  color: #f59e0b;
+  margin-bottom: 8px;
+  letter-spacing: 4px;
+}
+.cert-title {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: #b45309;
+  letter-spacing: 1px;
+  margin-bottom: 4px;
+}
+.cert-subtitle {
+  font-size: .9rem;
+  color: #78350f;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+.cert-name {
+  font-size: 1.9rem;
+  font-weight: 800;
+  color: #1e3a5f;
+  text-decoration: underline;
+  text-decoration-color: #f59e0b;
+  margin: 10px 0;
+}
+.cert-desc {
+  font-size: .9rem;
+  color: #4b5563;
+  line-height: 1.5;
+  margin: 10px auto;
+  max-width: 420px;
+}
+.cert-seal {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: .65rem;
+  font-weight: 800;
+  margin: 14px auto 6px;
+  box-shadow: 0 4px 10px rgba(217,119,6,.35);
+  border: 3px dashed #fff;
+}
+
+/* Screen Time Rest Screen */
+.rest-box {
+  background: #f0fdf4;
+  border: 4px solid #86efac;
+  border-radius: 20px;
+  padding: 22px;
+  text-align: center;
+}
+.rest-animation {
+  font-size: 4rem;
+  animation: restFloat 2s infinite ease-in-out alternate;
+  margin-bottom: 10px;
+}
+@keyframes restFloat {
+  from { transform: scale(1) translateY(0); }
+  to { transform: scale(1.12) translateY(-10px); }
+}
+
+/* Hijaiyah & Doa Grid */
+.hijaiyah-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(65px, 1fr));
+  gap: 8px;
+  width: 100%;
+  margin: 12px 0;
+  max-height: 360px;
+  overflow-y: auto;
+  padding: 4px;
+}
+.hijaiyah-card {
+  aspect-ratio: 1;
+  background: #fff;
+  border: 3px solid #86efac;
+  border-radius: 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all .15s;
+  box-shadow: 0 3px 0 #4ade80;
+}
+.hijaiyah-card:hover { transform: translateY(-3px); box-shadow: 0 6px 0 #4ade80; }
+.hijaiyah-card:active { transform: translateY(2px); box-shadow: 0 1px 0 #4ade80; }
+.hijaiyah-char { font-size: 1.8rem; font-weight: 800; color: #15803d; line-height: 1; }
+.hijaiyah-latin { font-size: .7rem; font-weight: 700; color: #166534; margin-top: 4px; }
+
+/* Doa Cards */
+.doa-card {
+  background: #fff;
+  border: 3px solid #67e8f9;
+  border-radius: 16px;
+  padding: 14px;
+  margin-bottom: 12px;
+  text-align: left;
+}
+.doa-title { font-size: 1.05rem; font-weight: 700; color: #0e7490; margin-bottom: 6px; }
+.doa-arab { font-size: 1.3rem; font-weight: 700; color: #1e293b; direction: rtl; text-align: right; margin-bottom: 6px; line-height: 1.6; }
+.doa-arti { font-size: .85rem; color: #475569; font-style: italic; }
+
 </style>
 </head>
 <body>
@@ -650,6 +827,9 @@ body.dark-mode .modal-desc { color: #cbd5e1 !important; }
     </div>
 
     <div class="hdr-btns">
+      <button class="ico-btn" id="shop-btn" title="Toko Kostum Harsha (Beli dengan Koin)" aria-label="Toko Kostum">🛍️</button>
+      <button class="ico-btn" id="cert-btn" title="Sertifikat Kelulusan Anak" aria-label="Sertifikat">📜</button>
+      <button class="ico-btn" id="screentime-btn" title="Batas Waktu Layar Anak" aria-label="Waktu Layar">⏳</button>
       <button class="ico-btn" id="badge-btn" title="Lencana & Prestasi (P4)" aria-label="Lencana">🏆</button>
       <button class="ico-btn" id="leader-btn" title="Peringkat Keluarga (P12)" aria-label="Peringkat">🏅</button>
       <button class="ico-btn" id="report-btn" title="Rapor Belajar Anak (P6)" aria-label="Rapor">📊</button>
@@ -974,6 +1154,131 @@ body.dark-mode .modal-desc { color: #cbd5e1 !important; }
 <!-- MODALS -->
 
 <!-- ═══ MODAL PROFIL (P1 & P2) ═══ -->
+
+<!-- ═══ MODAL TOKO KOSTUM (Koin Shop) ═══ -->
+<div class="modal-bg" id="shop-modal">
+  <div class="modal-box" style="max-width:520px">
+    <div class="modal-ico">🛍️✨</div>
+    <h2 class="modal-title">Toko Kostum Harsha</h2>
+    <p class="modal-desc">Gunakan koin emasmu untuk membeli topi dan aksesori keren!</p>
+    <div style="font-weight:700;color:#d97706;font-size:1.1rem">Tabungan Koin: 🪙 <span id="shop-coins-display">0</span></div>
+
+    <div class="shop-grid" id="shop-grid"></div>
+
+    <div class="modal-btns">
+      <button class="btn-big" id="btn-close-shop">Selesai Belanja ✨</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ MODAL SERTIFIKAT KELULUSAN RESMI ═══ -->
+<div class="modal-bg" id="cert-modal">
+  <div class="modal-box" style="max-width:540px">
+    <div class="cert-frame" id="printable-certificate">
+      <div class="cert-title">SERTIFIKAT KELULUSAN</div>
+      <div class="cert-subtitle">PETUALANGAN BERSAMA HARSHA EDU</div>
+      <p style="font-size:.85rem;color:#6b7280">Dengan bangga mempersembahkan penghargaan kepada:</p>
+      <div class="cert-name" id="cert-child-name">Habibi</div>
+      <p class="cert-desc" id="cert-child-desc">
+        Atas kegigihan, keceriaan, dan keberhasilan menyelesaikan modul Calistung, berhitung, dan logika ceria!
+      </p>
+      <div class="cert-seal">
+        <span>⭐ HSA ⭐</span>
+        <span>LULUS</span>
+      </div>
+      <div style="margin-top:8px;font-size:.75rem;color:#9ca3af">
+        Dibuat oleh @prihantowhy · Aplikasi Edukasi 100% Gratis Indonesia
+      </div>
+    </div>
+
+    <div class="modal-btns">
+      <button class="btn-big" id="btn-print-cert" style="background:linear-gradient(135deg,#f59e0b,#d97706)">🖨️ Cetak / Unduh PDF</button>
+      <button class="btn-big btn-sec" id="btn-close-cert">Tutup</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ MODAL PENGATUR WAKTU LAYAR (Screen Time) ═══ -->
+<div class="modal-bg" id="screentime-modal">
+  <div class="modal-box" style="max-width:440px">
+    <div class="modal-ico">⏳👀</div>
+    <h2 class="modal-title">Batas Waktu Belajar</h2>
+    <p class="modal-desc">Atur pengingat agar mata anak beristirahat secara berkala.</p>
+
+    <div style="display:flex;gap:10px;justify-content:center;margin:14px 0;flex-wrap:wrap">
+      <button class="btn-big btn-sec st-opt" data-mins="0">Bebas (Nonaktif)</button>
+      <button class="btn-big btn-sec st-opt" data-mins="15">15 Menit</button>
+      <button class="btn-big btn-sec st-opt" data-mins="25">25 Menit</button>
+      <button class="btn-big btn-sec st-opt" data-mins="35">35 Menit</button>
+    </div>
+    <div id="st-status" style="font-weight:700;color:#0284c7;margin-bottom:10px">Status: Bebas</div>
+
+    <div class="modal-btns">
+      <button class="btn-big" id="btn-close-st">Simpan Pengaturan</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ OVERLAY ISTIRAHAT MATA ═══ -->
+<div class="modal-bg" id="rest-modal">
+  <div class="modal-box" style="max-width:460px">
+    <div class="rest-animation">🧘💧</div>
+    <h2 class="modal-title" style="color:#166534">Waktunya Istirahat!</h2>
+    <p class="modal-desc" style="font-size:1.05rem;line-height:1.5">
+      Hebat sekali belajarmu hari ini! Matamu perlu istirahat sejenak.<br>
+      <strong>Ayo minum air putih, senam mata, dan tersenyum! 😊</strong>
+    </p>
+    <div class="modal-btns">
+      <button class="btn-big" id="btn-dismiss-rest" style="background:#16a34a">Sudah Segar, Lanjut! 🚀</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ MODAL PARENTAL GATE (Kunci Orang Tua) ═══ -->
+<div class="modal-bg" id="gate-modal">
+  <div class="modal-box" style="max-width:380px">
+    <div class="modal-ico">🔒👨‍👩‍👧</div>
+    <h2 class="modal-title">Kunci Orang Tua</h2>
+    <p class="modal-desc">Jawab soal berikut untuk melanjutkan:</p>
+    <div style="font-size:1.6rem;font-weight:800;color:#1e3a5f;margin:10px 0" id="gate-question">3 + 5 = ?</div>
+    <input type="number" id="gate-answer" style="width:120px;height:50px;font-size:1.6rem;text-align:center;border-radius:12px;border:3px solid #cbd5e1;margin-bottom:14px">
+    <div class="modal-btns">
+      <button class="btn-big" id="btn-submit-gate">Buka Kunci</button>
+      <button class="btn-big btn-sec" id="btn-close-gate">Batal</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ MODAL HIJAIYAH CERIA (Modul Bonus) ═══ -->
+<div class="modal-bg" id="hijaiyah-modal">
+  <div class="modal-box" style="max-width:540px">
+    <div class="modal-ico">📖🧕</div>
+    <h2 class="modal-title">Mengenal Huruf Hijaiyah</h2>
+    <p class="modal-desc">Ketuk huruf hijaiyah untuk mendengar pelafalan indahnya!</p>
+
+    <div class="hijaiyah-grid" id="hijaiyah-grid"></div>
+
+    <div class="modal-btns">
+      <button class="btn-big" id="btn-close-hijaiyah">Tutup</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ MODAL DOA HARIAN ANAK (Modul Bonus) ═══ -->
+<div class="modal-bg" id="doa-modal">
+  <div class="modal-box" style="max-width:540px">
+    <div class="modal-ico">🤲✨</div>
+    <h2 class="modal-title">Doa Sehari-hari Anak Ceria</h2>
+    <p class="modal-desc">Doa-doa penting untuk diamalkan setiap hari</p>
+
+    <div style="max-height:360px;overflow-y:auto;width:100%;padding:4px" id="doa-container"></div>
+
+    <div class="modal-btns">
+      <button class="btn-big" id="btn-close-doa">Alhamdulillah ✨</button>
+    </div>
+  </div>
+</div>
+
 <div class="modal-bg" id="profile-modal">
   <div class="modal-box" style="max-width:540px">
     <div class="modal-ico">👦👧👶</div>
@@ -2527,6 +2832,270 @@ const G13={
 
 
 
+
+/* ═══════════════════════════════════════════════════════════
+   7. SHOP (TOKO KOSTUM KOIN), CERTIFICATE, SCREEN TIME, & HIJAIYAH
+═══════════════════════════════════════════════════════════ */
+
+// 1. TOKO KOSTUM (P Koin Gamifikasi)
+const Shop = {
+  ITEMS: [
+    { id: 'hat_grad', name: 'Topi Sarjana', ico: '🎓', price: 20 },
+    { id: 'hat_crown', name: 'Mahkota Raja/Ratu', ico: '👑', price: 35 },
+    { id: 'hat_astro', name: 'Helm Astronot', ico: '🚀', price: 50 },
+    { id: 'glasses_cool', name: 'Kacamata Hitam', ico: '🕶️', price: 15 },
+    { id: 'ribbon_pink', name: 'Pita Cantik', ico: '🎀', price: 10 },
+    { id: 'hat_cowboy', name: 'Topi Petualang', ico: '🤠', price: 25 },
+    { id: 'hat_wizard', name: 'Topi Penyihir', ico: '🧙', price: 30 },
+    { id: 'flower_deco', name: 'Bunga Indah', ico: '🌸', price: 10 }
+  ],
+
+  open() {
+    this.render();
+    document.getElementById('shop-modal').classList.add('open');
+  },
+
+  render() {
+    const c = document.getElementById('shop-grid');
+    c.innerHTML = '';
+    const prof = Prog.data;
+    if (!prof.wardrobe) prof.wardrobe = [];
+    document.getElementById('shop-coins-display').textContent = prof.totalCoins;
+
+    this.ITEMS.forEach(it => {
+      const isOwned = prof.wardrobe.includes(it.id);
+      const isEquipped = prof.equippedHat === it.id;
+
+      const div = document.createElement('div');
+      div.className = 'shop-item ' + (isEquipped ? 'equipped' : '');
+      div.innerHTML = `
+        <div class="shop-ico">${it.ico}</div>
+        <div class="shop-name">${it.name}</div>
+        <div class="shop-price">${isOwned ? 'Sudah Punya' : '🪙 ' + it.price}</div>
+        <button class="shop-btn ${isEquipped ? 'wearing' : isOwned ? 'wear' : 'buy'}">
+          ${isEquipped ? '✓ Dipakai' : isOwned ? 'Pakai' : 'Beli 🪙'}
+        </button>
+      `;
+
+      const btn = div.querySelector('button');
+      btn.onclick = () => {
+        SFX.pop();
+        if (isEquipped) {
+          prof.equippedHat = null;
+          Prog.save();
+          this.render();
+          Shop.updateMascotLook();
+          showToast('👕', 'Kostum dilepas');
+        } else if (isOwned) {
+          prof.equippedHat = it.id;
+          Prog.save();
+          this.render();
+          Shop.updateMascotLook();
+          showToast(it.ico, it.name + ' dipakai!');
+        } else {
+          if (prof.totalCoins >= it.price) {
+            prof.totalCoins -= it.price;
+            prof.wardrobe.push(it.id);
+            prof.equippedHat = it.id;
+            Prog.save();
+            SFX.badge();
+            Confetti.launch();
+            UI.updateHeader();
+            this.render();
+            Shop.updateMascotLook();
+            showToast('🎉', 'Berhasil membeli ' + it.name + '!');
+          } else {
+            SFX.retry();
+            showToast('🪙', 'Koinmu belum cukup! Ayo main lagi untuk koin!');
+          }
+        }
+      };
+      c.appendChild(div);
+    });
+  },
+
+  updateMascotLook() {
+    const prof = Prog.data;
+    const it = this.ITEMS.find(x => x.id === prof?.equippedHat);
+    const floatBtn = document.getElementById('harsha-float-btn');
+    if (floatBtn) {
+      floatBtn.textContent = it ? it.ico : '🦁';
+    }
+  }
+};
+
+// 2. SERTIFIKAT KELULUSAN RESMI
+const Certificate = {
+  open() {
+    const p = Prog.getActiveProfile();
+    document.getElementById('cert-child-name').textContent = p.name;
+    document.getElementById('cert-child-desc').textContent =
+      'Atas dedikasi, keceriaan, dan keberhasilan mengumpulkan ' + Prog.data.totalStars +
+      ' ⭐ Bintang Emas serta menuntaskan modul Calistung bersama Harsha Edu!';
+    document.getElementById('cert-modal').classList.add('open');
+  },
+  print() {
+    window.print();
+  }
+};
+
+// 3. PENGATUR WAKTU LAYAR (Screen Time Limiter)
+const ScreenTime = {
+  limitMinutes: 0,
+  elapsedSeconds: 0,
+  timerId: null,
+
+  init() {
+    const saved = localStorage.getItem('harsha_screen_limit');
+    this.limitMinutes = saved ? parseInt(saved, 10) : 0;
+    this.updateStatus();
+
+    if (this.limitMinutes > 0) {
+      this.start();
+    }
+  },
+
+  start() {
+    if (this.timerId) clearInterval(this.timerId);
+    this.timerId = setInterval(() => {
+      this.elapsedSeconds++;
+      if (this.limitMinutes > 0 && this.elapsedSeconds >= this.limitMinutes * 60) {
+        this.elapsedSeconds = 0;
+        document.getElementById('rest-modal').classList.add('open');
+        SFX.fanfare();
+      }
+    }, 1000);
+  },
+
+  setLimit(mins) {
+    this.limitMinutes = mins;
+    localStorage.setItem('harsha_screen_limit', mins);
+    this.elapsedSeconds = 0;
+    this.updateStatus();
+    if (mins > 0) this.start();
+    else if (this.timerId) clearInterval(this.timerId);
+    showToast('⏳', mins === 0 ? 'Batas waktu dinonaktifkan' : 'Batas belajar diatur ' + mins + ' menit');
+  },
+
+  updateStatus() {
+    const st = document.getElementById('st-status');
+    if (st) {
+      st.textContent = this.limitMinutes === 0
+        ? 'Status: Bebas (Tanpa Batas)'
+        : 'Status: Istirahat setiap ' + this.limitMinutes + ' Menit';
+    }
+  }
+};
+
+// 4. KUNCI ORANG TUA (Parental Gate)
+const ParentGate = {
+  correctAnswer: 0,
+  onSuccess: null,
+
+  ask(callback) {
+    const a = Math.floor(Math.random() * 6) + 3;
+    const b = Math.floor(Math.random() * 5) + 2;
+    this.correctAnswer = a + b;
+    this.onSuccess = callback;
+
+    document.getElementById('gate-question').textContent = `Berapa ${a} + ${b} = ?`;
+    document.getElementById('gate-answer').value = '';
+    document.getElementById('gate-modal').classList.add('open');
+    setTimeout(() => document.getElementById('gate-answer').focus(), 200);
+  },
+
+  verify() {
+    const val = parseInt(document.getElementById('gate-answer').value, 10);
+    if (val === this.correctAnswer) {
+      document.getElementById('gate-modal').classList.remove('open');
+      SFX.correct();
+      if (this.onSuccess) this.onSuccess();
+    } else {
+      SFX.retry();
+      showToast('🔒', 'Jawaban salah, coba lagi!');
+    }
+  }
+};
+
+// 5. MODUL BONUS: HIJAIYAH CERIA & DOA HARIAN
+const Hijaiyah = {
+  DATA: [
+    { ar: 'ا', id: 'Alif' }, { ar: 'ب', id: 'Ba' }, { ar: 'ت', id: 'Ta' }, { ar: 'ث', id: 'Tsa' },
+    { ar: 'ج', id: 'Jim' }, { ar: 'ح', id: 'Ha' }, { ar: 'خ', id: 'Kha' }, { ar: 'د', id: 'Dal' },
+    { ar: 'ذ', id: 'Dzal' }, { ar: 'ر', id: 'Ra' }, { ar: 'ز', id: 'Zai' }, { ar: 'س', id: 'Sin' },
+    { ar: 'ش', id: 'Syin' }, { ar: 'ص', id: 'Shad' }, { ar: 'ض', id: 'Dhad' }, { ar: 'ط', id: 'Tha' },
+    { ar: 'ظ', id: 'Zha' }, { ar: 'ع', id: 'Ain' }, { ar: 'غ', id: 'Ghain' }, { ar: 'ف', id: 'Fa' },
+    { ar: 'ق', id: 'Qaf' }, { ar: 'ك', id: 'Kaf' }, { ar: 'ل', id: 'Lam' }, { ar: 'م', id: 'Mim' },
+    { ar: 'ن', id: 'Nun' }, { ar: 'هـ', id: 'Ha' }, { ar: 'و', id: 'Wau' }, { ar: 'ي', id: 'Ya' }
+  ],
+  open() {
+    const c = document.getElementById('hijaiyah-grid');
+    c.innerHTML = '';
+    this.DATA.forEach(item => {
+      const card = document.createElement('div');
+      card.className = 'hijaiyah-card';
+      card.innerHTML = `<div class="hijaiyah-char">${item.ar}</div><div class="hijaiyah-latin">${item.id}</div>`;
+      card.onclick = () => {
+        SFX.pop();
+        SFX.speak(item.id);
+        showToast(item.ar, 'Huruf: ' + item.id);
+      };
+      c.appendChild(card);
+    });
+    document.getElementById('hijaiyah-modal').classList.add('open');
+  }
+};
+
+const DoaHarian = {
+  LIST: [
+    {
+      title: 'Doa Sebelum Makan',
+      arab: 'اَللَّهُمَّ بَارِكْ لَنَا فِيْمَا رَزَقْتَنَا وَقِنَا عَذَابَ النَّارِ',
+      arti: 'Ya Allah, berkahilah rezeki yang Engkau berikan kepada kami, dan peliharalah kami dari siksa api neraka.'
+    },
+    {
+      title: 'Doa Sesudah Makan',
+      arab: 'اَلْحَمْدُ ِللهِ الَّذِيْ اَطْعَمَنَا وَسَقَانَا وَجَعَلَنَا مُسْلِمِيْنَ',
+      arti: 'Segala puji bagi Allah yang telah memberi makan dan minum kepada kami dan menjadikan kami orang-orang muslim.'
+    },
+    {
+      title: 'Doa Sebelum Tidur',
+      arab: 'بِسْمِكَ اللّهُمَّ اَحْيَا وَبِسْمِكَ اَمُوْتُ',
+      arti: 'Dengan nama-Mu ya Allah aku hidup, dan dengan nama-Mu aku mati.'
+    },
+    {
+      title: 'Doa Bangun Tidur',
+      arab: 'اَلْحَمْدُ ِللهِ الَّذِيْ اَحْيَانَا بَعْدَ مَا اَمَاتَنَا وَاِلَيْهِ النُّشُوْرُ',
+      arti: 'Segala puji bagi Allah yang menghidupkan kami setelah mematikan kami dan kepada-Nya kami kembali.'
+    },
+    {
+      title: 'Doa untuk Kedua Orang Tua',
+      arab: 'رَبِّ اغْفِرْ لِيْ وَلِوَالِدَيَّ وَارْحَمْهُمَا كَمَا رَبَّيَانِيْ صَغِيْرًا',
+      arti: 'Wahai Tuhanku, ampunilah aku dan kedua orang tuaku, sayangilah mereka sebagaimana mereka menyayangiku di waktu kecil.'
+    },
+    {
+      title: 'Doa Menuntut Ilmu (Belajar)',
+      arab: 'رَبِّ زِدْنِيْ عِلْمًا وَارْزُقْنِيْ فَهْمًا',
+      arti: 'Ya Allah, tambahkanlah ilmuku dan berilah aku karunia untuk memahaminya.'
+    }
+  ],
+  open() {
+    const c = document.getElementById('doa-container');
+    c.innerHTML = '';
+    this.LIST.forEach(d => {
+      const card = document.createElement('div');
+      card.className = 'doa-card';
+      card.innerHTML = `
+        <div class="doa-title">🤲 ${d.title}</div>
+        <div class="doa-arab">${d.arab}</div>
+        <div class="doa-arti">${d.arti}</div>
+      `;
+      c.appendChild(card);
+    });
+    document.getElementById('doa-modal').classList.add('open');
+  }
+};
+
 /* ═══════════════════════════════════════════════════════════
    8. UI CONTROLLER & MODAL LOGIC
 ═══════════════════════════════════════════════════════════ */
@@ -2635,6 +3204,49 @@ const UI = {
       window.location.href = 'worksheet_game.html';
     };
     g.appendChild(wCard);
+
+    
+    // 3. Ubin Huruf Hijaiyah Ceria
+    const hjiCard = document.createElement('div');
+    hjiCard.className = 'gcard playable';
+    hjiCard.style.border = '4px solid #10b981';
+    hjiCard.style.boxShadow = '0 8px 22px rgba(16,185,129,.18)';
+    hjiCard.style.background = 'linear-gradient(180deg,#ffffff 0%,#f0fdf4 100%)';
+    hjiCard.innerHTML = `
+      <span class="gbadge" style="background:#059669;color:#fff">ISLAMI CERIA 📖</span>
+      <div class="gico" style="background:#d1fae5;display:flex;align-items:center;justify-content:center;font-size:46px">
+        🧕
+      </div>
+      <h3 class="gtitle" style="color:#065f46">Huruf Hijaiyah</h3>
+      <p class="gdesc">Mengenal 28 huruf hijaiyah Alif sampai Ya dengan suara merdu!</p>
+      <div class="gfooter">
+        <div class="gstars" style="color:#065f46;font-weight:800">✨ 28 Huruf</div>
+        <button class="btn-play" style="background:linear-gradient(135deg,#10b981,#059669)">Buka 📖</button>
+      </div>
+    `;
+    hjiCard.onclick = () => { SFX.pop(); Hijaiyah.open(); };
+    g.appendChild(hjiCard);
+
+    // 4. Ubin Doa Sehari-Hari
+    const doaCard = document.createElement('div');
+    doaCard.className = 'gcard playable';
+    doaCard.style.border = '4px solid #06b6d4';
+    doaCard.style.boxShadow = '0 8px 22px rgba(6,182,212,.18)';
+    doaCard.style.background = 'linear-gradient(180deg,#ffffff 0%,#ecfeff 100%)';
+    doaCard.innerHTML = `
+      <span class="gbadge" style="background:#0891b2;color:#fff">DOA HARIAN 🤲</span>
+      <div class="gico" style="background:#cffafe;display:flex;align-items:center;justify-content:center;font-size:46px">
+        🤲
+      </div>
+      <h3 class="gtitle" style="color:#155e75">Doa Anak Pintar</h3>
+      <p class="gdesc">Doa makan, tidur, kedua orang tua, dan menuntut ilmu!</p>
+      <div class="gfooter">
+        <div class="gstars" style="color:#155e75;font-weight:800">✨ 6 Doa Utama</div>
+        <button class="btn-play" style="background:linear-gradient(135deg,#06b6d4,#0891b2)">Buka 🤲</button>
+      </div>
+    `;
+    doaCard.onclick = () => { SFX.pop(); DoaHarian.open(); };
+    g.appendChild(doaCard);
 
     CATALOG.forEach(game => {
       const gd = Prog.data.games[game.id] || { played: false, stars: 0, highLevel: 0 };
@@ -2804,6 +3416,49 @@ const UI = {
   },
 
   bindEvents() {
+    
+    // Shop
+    const shBtn = document.getElementById('shop-btn');
+    if (shBtn) shBtn.onclick = () => { SFX.pop(); Shop.open(); };
+    const cshBtn = document.getElementById('btn-close-shop');
+    if (cshBtn) cshBtn.onclick = () => document.getElementById('shop-modal').classList.remove('open');
+
+    // Certificate
+    const certBtn = document.getElementById('cert-btn');
+    if (certBtn) certBtn.onclick = () => { SFX.pop(); Certificate.open(); };
+    const pCertBtn = document.getElementById('btn-print-cert');
+    if (pCertBtn) pCertBtn.onclick = () => Certificate.print();
+    const cCertBtn = document.getElementById('btn-close-cert');
+    if (cCertBtn) cCertBtn.onclick = () => document.getElementById('cert-modal').classList.remove('open');
+
+    // Screen Time
+    ScreenTime.init();
+    Shop.updateMascotLook();
+    const stBtn = document.getElementById('screentime-btn');
+    if (stBtn) stBtn.onclick = () => {
+      SFX.pop();
+      ParentGate.ask(() => document.getElementById('screentime-modal').classList.add('open'));
+    };
+    document.querySelectorAll('.st-opt').forEach(b => {
+      b.onclick = () => ScreenTime.setLimit(parseInt(b.getAttribute('data-mins'), 10));
+    });
+    const cStBtn = document.getElementById('btn-close-st');
+    if (cStBtn) cStBtn.onclick = () => document.getElementById('screentime-modal').classList.remove('open');
+    const dRestBtn = document.getElementById('btn-dismiss-rest');
+    if (dRestBtn) dRestBtn.onclick = () => document.getElementById('rest-modal').classList.remove('open');
+
+    // Parental Gate
+    const subGate = document.getElementById('btn-submit-gate');
+    if (subGate) subGate.onclick = () => ParentGate.verify();
+    const clGate = document.getElementById('btn-close-gate');
+    if (clGate) clGate.onclick = () => document.getElementById('gate-modal').classList.remove('open');
+
+    // Hijaiyah & Doa close buttons
+    const cHij = document.getElementById('btn-close-hijaiyah');
+    if (cHij) cHij.onclick = () => document.getElementById('hijaiyah-modal').classList.remove('open');
+    const cDoa = document.getElementById('btn-close-doa');
+    if (cDoa) cDoa.onclick = () => document.getElementById('doa-modal').classList.remove('open');
+
     // Back buttons
     document.querySelectorAll('.back-btn').forEach(btn => {
       btn.onclick = () => { SFX.pop(); this.goHub(); };
@@ -2888,12 +3543,12 @@ const UI = {
     const rstBtn = document.getElementById('rst-btn');
     if (rstBtn) rstBtn.onclick = () => {
       SFX.pop();
-      if (confirm('Reset bintang dan progres untuk ' + Prog.getActiveProfile().name + '?')) {
+      ParentGate.ask(() => { if (confirm('Reset bintang dan progres untuk ' + Prog.getActiveProfile().name + '?')) {
         Prog.reset();
         this.updateHeader();
         this.buildGrid();
         showToast('🔄', 'Progres direset!');
-      }
+      } });
     };
 
     // Backup & Restore

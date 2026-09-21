@@ -3,7 +3,7 @@
    Offline-first: App Shell Cache + Network Fallback
    â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 
-const CACHE_NAME  = 'harsha-edu-v10';
+const CACHE_NAME  = 'harsha-edu-v11';
 const FONT_CACHE  = 'harsha-fonts-v1';
 const OFFLINE_URL = './offline.html';
 
