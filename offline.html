@@ -1,0 +1,88 @@
+﻿<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#312e81">
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="icons/icon-152x152.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192x192.png">
+  <title>Offline â€” Harsha Edu</title>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Fredoka','Comic Sans MS',cursive;background:linear-gradient(160deg,#1e1b4b 0%,#312e81 40%,#4c1d95 100%);min-height:100vh;display:flex;align-items:center;justify-content:center;overflow:hidden;color:#fff}
+    .stars{position:fixed;inset:0;pointer-events:none;z-index:0}
+    .star{position:absolute;border-radius:50%;background:#fff;animation:twinkle 3s ease-in-out infinite}
+    @keyframes twinkle{0%,100%{opacity:.2;transform:scale(1)}50%{opacity:1;transform:scale(1.4)}}
+    .card{position:relative;z-index:10;background:rgba(255,255,255,.08);backdrop-filter:blur(20px);border:2px solid rgba(255,255,255,.15);border-radius:32px;padding:36px;max-width:420px;width:90%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.4);animation:floatIn .6s cubic-bezier(.34,1.56,.64,1) both}
+    @keyframes floatIn{from{opacity:0;transform:translateY(40px) scale(.9)}to{opacity:1;transform:translateY(0) scale(1)}}
+    .emoji-wrap{width:100px;height:100px;background:rgba(255,255,255,.1);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:52px;margin:0 auto 18px;animation:bounce 2s ease-in-out infinite;border:3px solid rgba(255,255,255,.2)}
+    @keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+    h1{font-size:2rem;font-weight:700;color:#fbbf24;text-shadow:0 2px 12px rgba(251,191,36,.5);margin-bottom:10px}
+    .subtitle{font-size:1rem;color:rgba(255,255,255,.75);line-height:1.5;margin-bottom:24px}
+    .status-box{background:rgba(0,0,0,.25);border-radius:16px;padding:14px 16px;margin-bottom:22px;display:flex;align-items:center;gap:12px;text-align:left}
+    .status-icon{font-size:1.6rem;flex-shrink:0}
+    .status-text{font-size:.9rem;color:rgba(255,255,255,.85);line-height:1.45}
+    .status-text strong{color:#86efac;display:block;margin-bottom:2px}
+    .btn-group{display:flex;flex-direction:column;gap:10px}
+    .btn{display:block;width:100%;padding:14px 20px;border:none;border-radius:999px;font-family:'Fredoka',cursive;font-size:1rem;font-weight:700;cursor:pointer;transition:transform .15s;text-decoration:none;text-align:center}
+    .btn:active{transform:scale(.96)}
+    .btn-primary{background:linear-gradient(135deg,#fbbf24,#f59e0b);color:#1e1b4b;box-shadow:0 6px 0 #92400e,0 10px 20px rgba(245,158,11,.35)}
+    .btn-secondary{background:rgba(255,255,255,.12);color:#fff;border:2px solid rgba(255,255,255,.25)}
+    #retry-status{font-size:.85rem;color:rgba(255,255,255,.5);margin-top:10px;min-height:22px}
+    .chips-wrap{margin-top:24px;padding-top:18px;border-top:1px solid rgba(255,255,255,.1)}
+    .chips-title{font-size:.82rem;color:rgba(255,255,255,.45);margin-bottom:10px;text-transform:uppercase;letter-spacing:.05em}
+    .chips{display:flex;flex-wrap:wrap;gap:7px;justify-content:center}
+    .chip{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);border-radius:999px;padding:5px 13px;font-size:.8rem;color:rgba(255,255,255,.8)}
+    .spin{animation:spin 1s linear infinite;display:inline-block}
+    @keyframes spin{to{transform:rotate(360deg)}}
+  </style>
+</head>
+<body>
+<div class="stars" id="stars-bg"></div>
+
+<div class="card">
+  <div class="emoji-wrap">ðŸ“¡</div>
+  <h1>Tanpa Internet</h1>
+  <p class="subtitle">Kamu sedang <strong>offline</strong>. Jangan khawatir â€” game yang sudah dibuka sebelumnya <em>tetap bisa dimainkan!</em></p>
+
+  <div class="status-box">
+    <span class="status-icon">ðŸ’¾</span>
+    <div class="status-text">
+      <strong>âœ… Game Tersimpan di Perangkat</strong>
+      Semua file game sudah tersimpan saat kamu pertama kali membukanya secara online.
+    </div>
+  </div>
+
+  <div class="btn-group">
+    <button class="btn btn-primary" id="btn-retry" onclick="retryConnection()">ðŸ”„ Coba Koneksi Lagi</button>
+    <a href="./index.html" class="btn btn-secondary">ðŸ  Buka Beranda Game</a>
+  </div>
+  <p id="retry-status"></p>
+
+  <div class="chips-wrap">
+    <div class="chips-title">ðŸŽ® Tersedia Offline</div>
+    <div class="chips">
+      <div class="chip">ðŸï¸ Petualangan Harsha</div>
+      <div class="chip">ðŸŒŸ Nusa Pintar</div>
+      <div class="chip">ðŸ“ Lembar Kerja Ceria</div>
+      <div class="chip">ðŸŽ¯ 13 Mini Game</div>
+      <div class="chip">ðŸ–Šï¸ 10 Worksheet</div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const sg=document.getElementById('stars-bg');
+  for(let i=0;i<80;i++){const s=document.createElement('div');s.className='star';const sz=Math.random()*3+1;s.style.cssText=`width:${sz}px;height:${sz}px;top:${Math.random()*100}%;left:${Math.random()*100}%;animation-delay:${Math.random()*4}s;animation-duration:${2+Math.random()*3}s`;sg.appendChild(s);}
+  function retryConnection(){
+    const btn=document.getElementById('btn-retry'),st=document.getElementById('retry-status');
+    btn.innerHTML='<span class="spin">â³</span> Memeriksa...';btn.disabled=true;st.textContent='';
+    fetch('./?t='+Date.now(),{method:'HEAD',cache:'no-store'})
+      .then(()=>{st.textContent='âœ… Terhubung! Mengalihkan...';setTimeout(()=>location.replace('./index.html'),800);})
+      .catch(()=>{btn.innerHTML='ðŸ”„ Coba Lagi';btn.disabled=false;st.textContent='âŒ Masih offline. Cek WiFi atau data seluler.';});
+  }
+  if('serviceWorker' in navigator) navigator.serviceWorker.register('./sw.js').catch(()=>{});
+</script>
+</body>
+</html>

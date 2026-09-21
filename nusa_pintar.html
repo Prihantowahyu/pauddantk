@@ -2366,6 +2366,15 @@ document.getElementById('pwa-dismiss-btn').addEventListener('click', () => {
   sessionStorage.setItem('pwa-dismissed', '1');
 });
 window.addEventListener('appinstalled', () => { _banner.style.display = 'none'; });
+
+/* Service Worker — offline support */
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js')
+      .then(r => console.log('[PWA] SW registered:', r.scope))
+      .catch(e => console.warn('[PWA] SW failed:', e));
+  });
+}
 </script>
 </body>
 </html>
