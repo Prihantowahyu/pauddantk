@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "io.github.prihantowahyu.pauddantk",
+      "sha256_cert_fingerprints": [
+        "14:6D:E9:44:C5:9F:65:D9:D6:75:E6:36:B2:99:99:71:A7:26:4F:08:44:6C:54:15:15:F5:64:1F:B9:47:E9:94"
+      ]
+    }
+  }
+]

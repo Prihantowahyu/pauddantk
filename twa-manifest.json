@@ -1,0 +1,35 @@
+{
+  "packageId": "io.github.prihantowahyu.pauddantk",
+  "host": "prihantowahyu.github.io",
+  "name": "Petualangan bersama Harsha",
+  "launcherName": "Harsha Edu",
+  "display": "standalone",
+  "themeColor": "#ff6b6b",
+  "navigationColor": "#000000",
+  "backgroundColor": "#b9e2fe",
+  "enableNotifications": true,
+  "startUrl": "/pauddantk/",
+  "iconUrl": "https://prihantowahyu.github.io/pauddantk/icons/icon-512x512.png",
+  "maskableIconUrl": "https://prihantowahyu.github.io/pauddantk/icons/icon-512x512.png",
+  "appVersionName": "1.0.0",
+  "appVersionCode": 1,
+  "shortcuts": [],
+  "generatorApp": "bubblewrap-cli",
+  "webManifestUrl": "https://prihantowahyu.github.io/pauddantk/manifest.json",
+  "fallbackType": "customtabs",
+  "features": {
+    "locationDelegation": {
+      "enabled": false
+    },
+    "playBilling": {
+      "enabled": false
+    }
+  },
+  "alphaDependencies": {
+    "enabled": false
+  },
+  "enableSiteSettingsShortcut": true,
+  "isChromeOSOnly": false,
+  "isMetaQuest": false,
+  "fullScopeUrl": "https://prihantowahyu.github.io/pauddantk/"
+}
