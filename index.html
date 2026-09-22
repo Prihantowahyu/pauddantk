@@ -1391,6 +1391,333 @@ body.dark-mode .notif-time-select {
   border-color: #0284c7;
 }
 
+/* ── G19: TAMAN MEMORI ── */
+.mem-grid {
+  display: grid;
+  gap: 12px;
+  max-width: 520px;
+  margin: 14px auto;
+  perspective: 1000px;
+}
+.mem-grid.cols-3 { grid-template-columns: repeat(3, 1fr); }
+.mem-grid.cols-4 { grid-template-columns: repeat(4, 1fr); }
+.mem-card {
+  aspect-ratio: 1;
+  background: transparent;
+  perspective: 1000px;
+  cursor: pointer;
+  border: none;
+  padding: 0;
+  border-radius: 16px;
+  touch-action: manipulation;
+}
+.mem-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-style: preserve-3d;
+  border-radius: 16px;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.12);
+}
+.mem-card.flipped .mem-inner,
+.mem-card.matched .mem-inner {
+  transform: rotateY(180deg);
+}
+.mem-front, .mem-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 16px;
+  user-select: none;
+}
+.mem-front {
+  background: linear-gradient(135deg, #d946ef, #a21caf);
+  color: #fff;
+  border: 3px solid #f0abfc;
+  font-size: 2.2rem;
+  font-weight: 800;
+}
+.mem-back {
+  background: #fff;
+  border: 3px solid #e879f9;
+  transform: rotateY(180deg);
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: #86198f;
+  padding: 4px;
+}
+.mem-card.matched .mem-back {
+  background: #fdf4ff;
+  border-color: #22c55e;
+  box-shadow: 0 0 12px rgba(34, 197, 94, 0.4);
+}
+
+/* ── G20: PILAH SAMPAH ── */
+.trash-stage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 12px auto;
+}
+.trash-item-card {
+  background: #fff;
+  border: 4px solid #86efac;
+  border-radius: 20px;
+  padding: 16px 28px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  animation: bounceIn 0.4s ease;
+  min-width: 220px;
+}
+.trash-bins-row {
+  display: flex;
+  gap: 14px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 18px;
+}
+.trash-bin-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 130px;
+  min-height: 140px;
+  border-radius: 20px;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 6px 0 rgba(0,0,0,0.15), 0 10px 20px rgba(0,0,0,0.1);
+  transition: transform 0.15s, filter 0.2s;
+  padding: 10px 8px;
+  font-family: var(--font);
+  color: #fff;
+  touch-action: manipulation;
+}
+.trash-bin-btn:active {
+  transform: translateY(4px);
+  box-shadow: 0 2px 0 rgba(0,0,0,0.15);
+}
+.trash-bin-btn.bin-org { background: linear-gradient(180deg, #22c55e, #15803d); }
+.trash-bin-btn.bin-plas { background: linear-gradient(180deg, #eab308, #a16207); }
+.trash-bin-btn.bin-papr { background: linear-gradient(180deg, #3b82f6, #1d4ed8); }
+
+/* ── G21: DETEKTIF EMOSI ── */
+.emotion-scenario-card {
+  background: #fff;
+  border: 4px solid #fecdd3;
+  border-radius: 22px;
+  padding: 18px 20px;
+  max-width: 480px;
+  margin: 0 auto 16px;
+  box-shadow: 0 8px 22px rgba(225, 29, 72, 0.1);
+  text-align: center;
+}
+.emotion-story-txt {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #881337;
+  line-height: 1.5;
+  margin-top: 10px;
+}
+.emotion-opts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 12px;
+  max-width: 480px;
+  margin: 0 auto;
+}
+.emotion-opt-btn {
+  background: #fff;
+  border: 3px solid #fecdd3;
+  border-radius: 18px;
+  padding: 12px 10px;
+  cursor: pointer;
+  box-shadow: 0 4px 0 #fda4af;
+  font-family: var(--font);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  transition: transform 0.15s, background 0.2s;
+  touch-action: manipulation;
+}
+.emotion-opt-btn:active { transform: translateY(3px); box-shadow: 0 1px 0 #fda4af; }
+.emotion-opt-btn.right { background: #dcfce7 !important; border-color: #22c55e !important; box-shadow: 0 4px 0 #16a34a !important; }
+.emotion-opt-btn.wrong { background: #fee2e2 !important; border-color: #ef4444 !important; animation: shake 0.4s; }
+
+/* ── G22: XILOFON NADA ── */
+.xylo-board {
+  max-width: 500px;
+  margin: 0 auto;
+  background: #fff;
+  border: 5px solid #c4b5fd;
+  border-radius: 24px;
+  padding: 20px 14px;
+  box-shadow: 0 10px 25px rgba(124, 58, 237, 0.15);
+}
+.xylo-keys {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 8px;
+  height: 220px;
+  padding: 10px 0;
+}
+.xylo-key {
+  flex: 1;
+  border-radius: 14px 14px 10px 10px;
+  border: 3px solid rgba(255,255,255,0.7);
+  box-shadow: 0 6px 0 rgba(0,0,0,0.18), inset 0 2px 4px rgba(255,255,255,0.6);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 4px;
+  color: #fff;
+  font-weight: 800;
+  font-family: var(--font);
+  transition: transform 0.1s, filter 0.15s;
+  touch-action: manipulation;
+}
+.xylo-key:active, .xylo-key.active {
+  transform: translateY(6px);
+  box-shadow: 0 1px 0 rgba(0,0,0,0.18);
+  filter: brightness(1.25);
+}
+.xylo-k1 { height: 210px; background: linear-gradient(180deg, #ef4444, #b91c1c); }
+.xylo-k2 { height: 195px; background: linear-gradient(180deg, #f97316, #c2410c); }
+.xylo-k3 { height: 180px; background: linear-gradient(180deg, #eab308, #a16207); }
+.xylo-k4 { height: 165px; background: linear-gradient(180deg, #22c55e, #15803d); }
+.xylo-k5 { height: 150px; background: linear-gradient(180deg, #06b6d4, #0e7490); }
+.xylo-k6 { height: 135px; background: linear-gradient(180deg, #3b82f6, #1d4ed8); }
+.xylo-k7 { height: 120px; background: linear-gradient(180deg, #a855f7, #7e22ce); }
+
+/* ── G23: TIMBANGAN AJAIB ── */
+.scale-board {
+  max-width: 480px;
+  margin: 0 auto;
+}
+.scale-visual-wrap {
+  width: 100%;
+  height: 200px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 12px;
+}
+.scale-base {
+  position: absolute;
+  bottom: 10px;
+  width: 50px;
+  height: 80px;
+  background: #64748b;
+  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+  border-radius: 4px;
+}
+.scale-beam-bar {
+  width: 290px;
+  height: 12px;
+  background: #334155;
+  border-radius: 6px;
+  position: absolute;
+  top: 96px;
+  transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transform-origin: center center;
+}
+.scale-beam-bar.tilt-left { transform: rotate(-14deg); }
+.scale-beam-bar.tilt-right { transform: rotate(14deg); }
+.scale-beam-bar.tilt-even { transform: rotate(0deg); }
+.scale-pan {
+  position: absolute;
+  top: 10px;
+  width: 90px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.scale-pan-left { left: 0; }
+.scale-pan-right { right: 0; }
+.scale-pan-chain {
+  width: 2px;
+  height: 35px;
+  background: #94a3b8;
+}
+.scale-plate {
+  width: 90px;
+  height: 20px;
+  background: #cbd5e1;
+  border-radius: 0 0 45px 45px;
+  border: 2px solid #94a3b8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+.scale-obj-display {
+  font-size: 2.2rem;
+  margin-bottom: 2px;
+  animation: bounceIn 0.3s ease;
+}
+
+/* ── G24: BERSIH GIGI & TUBUH SEHAT ── */
+.teeth-mouth-box {
+  background: #fee2e2;
+  border: 5px solid #fca5a5;
+  border-radius: 36px;
+  padding: 20px;
+  max-width: 440px;
+  margin: 0 auto 16px;
+  position: relative;
+  box-shadow: 0 8px 24px rgba(239, 68, 68, 0.12);
+}
+.teeth-row {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin: 6px 0;
+}
+.tooth {
+  width: 46px;
+  height: 52px;
+  background: #fff;
+  border: 3px solid #e2e8f0;
+  border-radius: 12px 12px 18px 18px;
+  box-shadow: 0 4px 0 #cbd5e1;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.germ-target {
+  font-size: 1.6rem;
+  cursor: pointer;
+  transition: transform 0.2s, opacity 0.3s;
+  animation: pulse 1.2s infinite;
+  user-select: none;
+}
+.germ-target.cleaned {
+  opacity: 0;
+  pointer-events: none;
+  transform: scale(0.1);
+}
+.sparkle-badge {
+  color: #eab308;
+  font-size: 1.4rem;
+  animation: bounceIn 0.4s ease;
+}
+
 </style>
 </head>
 <body>
@@ -1842,6 +2169,165 @@ body.dark-mode .notif-time-select {
   </div>
 </section>
 
+<!-- ═══ G19: TAMAN MEMORI PINTAR ═══ -->
+<section class="view" id="g19">
+  <div class="game-wrap">
+    <div class="gtop" style="border-color:#c026d3;background:#fdf4ff">
+      <button class="back-btn" style="background:#a21caf;box-shadow:0 5px 0 #701a75" data-back="g19" title="Kembali ke Beranda"><span>🏠</span> <span>Beranda</span></button>
+      <div class="lvl-info"><div class="lvl-title" style="color:#701a75" id="g19-title">Level 1: Pasangan Huruf</div><div class="lvl-prog" id="g19-prog">Buka Kartu Cocok</div></div>
+      <div class="star-pill">⭐ <span id="g19-stars">0</span></div>
+    </div>
+    <div class="board" style="border:5px solid #e879f9;box-shadow:0 12px 24px rgba(0,0,0,.1),0 8px 0 #a21caf">
+      <div class="q-box" id="g19-qtext" style="font-size:1.3rem;max-width:520px;margin-bottom:12px">Buka dan cari 2 kartu yang berpasangan! 🃏</div>
+      <div class="mem-grid cols-3" id="g19-grid"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ G20: PAHLAWAN CILIK PILAH SAMPAH ═══ -->
+<section class="view" id="g20">
+  <div class="game-wrap">
+    <div class="gtop" style="border-color:#16a34a;background:#f0fdf4">
+      <button class="back-btn" style="background:#15803d;box-shadow:0 5px 0 #14532d" data-back="g20" title="Kembali ke Beranda"><span>🏠</span> <span>Beranda</span></button>
+      <div class="lvl-info"><div class="lvl-title" style="color:#14532d" id="g20-title">Level 1</div><div class="lvl-prog" id="g20-prog">Sampah 1 dari 5</div></div>
+      <div class="star-pill">⭐ <span id="g20-stars">0</span></div>
+    </div>
+    <div class="board" style="border:5px solid #4ade80;box-shadow:0 12px 24px rgba(0,0,0,.1),0 8px 0 #15803d">
+      <div class="q-box" id="g20-qtext" style="font-size:1.25rem;max-width:500px">Masukkan sampah ini ke tempat yang tepat:</div>
+      <div class="trash-stage">
+        <div class="trash-item-card" id="g20-item-card">
+          <div id="g20-item-ico" style="font-size:4.5rem;margin-bottom:4px">🍌</div>
+          <div id="g20-item-name" style="font-size:1.35rem;font-weight:800;color:#1e293b">Kulit Pisang</div>
+        </div>
+        <div class="trash-bins-row">
+          <button class="trash-bin-btn bin-org" id="g20-bin-org">
+            <span style="font-size:3rem">🟢🗑️</span>
+            <strong style="font-size:1.05rem;margin-top:4px">ORGANIK</strong>
+            <span style="font-size:0.75rem;opacity:0.9">Sisa Makanan &amp; Daun</span>
+          </button>
+          <button class="trash-bin-btn bin-plas" id="g20-bin-plas">
+            <span style="font-size:3rem">🟡🗑️</span>
+            <strong style="font-size:1.05rem;margin-top:4px">PLASTIK</strong>
+            <span style="font-size:0.75rem;opacity:0.9">Botol, Kresek, Kaleng</span>
+          </button>
+          <button class="trash-bin-btn bin-papr" id="g20-bin-papr">
+            <span style="font-size:3rem">🔵🗑️</span>
+            <strong style="font-size:1.05rem;margin-top:4px">KERTAS</strong>
+            <span style="font-size:0.75rem;opacity:0.9">Kardus, Buku, Koran</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ G21: DETEKTIF EMOSI CERIA ═══ -->
+<section class="view" id="g21">
+  <div class="game-wrap">
+    <div class="gtop" style="border-color:#e11d48;background:#fff1f2">
+      <button class="back-btn" style="background:#be123c;box-shadow:0 5px 0 #881337" data-back="g21" title="Kembali ke Beranda"><span>🏠</span> <span>Beranda</span></button>
+      <div class="lvl-info"><div class="lvl-title" style="color:#881337" id="g21-title">Level 1</div><div class="lvl-prog" id="g21-prog">Cerita 1 dari 4</div></div>
+      <div class="star-pill">⭐ <span id="g21-stars">0</span></div>
+    </div>
+    <div class="board" style="border:5px solid #fb7185;box-shadow:0 12px 24px rgba(0,0,0,.1),0 8px 0 #be123c">
+      <div class="emotion-scenario-card">
+        <div id="g21-story-ico" style="font-size:4.8rem;margin-bottom:6px">🎁</div>
+        <div class="emotion-story-txt" id="g21-story-txt">Harsha mendapat kado sepeda baru di hari ulang tahunnya!</div>
+        <button id="g21-speak-btn" style="margin-top:12px;background:#fecdd3;color:#881337;border:2px solid #fda4af;border-radius:999px;padding:6px 18px;font-family:var(--font);font-weight:700;font-size:0.92rem;cursor:pointer;display:inline-flex;align-items:center;gap:6px">🔊 Dengarkan Cerita</button>
+      </div>
+      <div class="q-box" style="font-size:1.25rem;max-width:480px;margin-bottom:12px">Bagaimana perasaannya? 🤔</div>
+      <div class="emotion-opts-grid" id="g21-choices"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ G22: XILOFON PELANGI & NADA ═══ -->
+<section class="view" id="g22">
+  <div class="game-wrap">
+    <div class="gtop" style="border-color:#7c3aed;background:#f5f3ff">
+      <button class="back-btn" style="background:#6d28d9;box-shadow:0 5px 0 #4c1d95" data-back="g22" title="Kembali ke Beranda"><span>🏠</span> <span>Beranda</span></button>
+      <div class="lvl-info"><div class="lvl-title" style="color:#4c1d95" id="g22-title">Level 1: Dua Ketukan</div><div class="lvl-prog" id="g22-prog">Pola 1 dari 4</div></div>
+      <div class="star-pill">⭐ <span id="g22-stars">0</span></div>
+    </div>
+    <div class="board" style="border:5px solid #a78bfa;box-shadow:0 12px 24px rgba(0,0,0,.1),0 8px 0 #6d28d9">
+      <div class="q-box" id="g22-status" style="font-size:1.25rem;max-width:480px;margin-bottom:12px">Dengarkan nada Harsha, lalu tirukan ketukannya! 🎶</div>
+      <div style="display:flex;gap:10px;justify-content:center;margin-bottom:12px;flex-wrap:wrap">
+        <button id="g22-demo-btn" style="background:linear-gradient(135deg,#8b5cf6,#6d28d9);color:#fff;border:none;border-radius:999px;padding:9px 20px;font-family:var(--font);font-weight:700;font-size:0.95rem;cursor:pointer;box-shadow:0 4px 0 #4c1d95;display:inline-flex;align-items:center;gap:6px"><span>▶️</span> <span>Bunyikan Nada Harsha</span></button>
+        <button id="g22-free-btn" style="background:#ede9fe;color:#5b21b6;border:2px solid #c4b5fd;border-radius:999px;padding:9px 18px;font-family:var(--font);font-weight:700;font-size:0.95rem;cursor:pointer"><span>🎹</span> <span>Main Bebas</span></button>
+      </div>
+      <div class="xylo-board">
+        <div class="xylo-keys" id="g22-keys">
+          <button class="xylo-key xylo-k1" data-note="1"><span>🔴</span><span>DO</span><span>1</span></button>
+          <button class="xylo-key xylo-k2" data-note="2"><span>🟠</span><span>RE</span><span>2</span></button>
+          <button class="xylo-key xylo-k3" data-note="3"><span>🟡</span><span>MI</span><span>3</span></button>
+          <button class="xylo-key xylo-k4" data-note="4"><span>🟢</span><span>FA</span><span>4</span></button>
+          <button class="xylo-key xylo-k5" data-note="5"><span>🔵</span><span>SOL</span><span>5</span></button>
+          <button class="xylo-key xylo-k6" data-note="6"><span>🟣</span><span>LA</span><span>6</span></button>
+          <button class="xylo-key xylo-k7" data-note="7"><span>🌸</span><span>SI</span><span>7</span></button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ G23: TIMBANGAN AJAIB ═══ -->
+<section class="view" id="g23">
+  <div class="game-wrap">
+    <div class="gtop" style="border-color:#0891b2;background:#ecfeff">
+      <button class="back-btn" style="background:#0e7490;box-shadow:0 5px 0 #155e75" data-back="g23" title="Kembali ke Beranda"><span>🏠</span> <span>Beranda</span></button>
+      <div class="lvl-info"><div class="lvl-title" style="color:#155e75" id="g23-title">Level 1</div><div class="lvl-prog" id="g23-prog">Soal 1 dari 4</div></div>
+      <div class="star-pill">⭐ <span id="g23-stars">0</span></div>
+    </div>
+    <div class="board" style="border:5px solid #22d3ee;box-shadow:0 12px 24px rgba(0,0,0,.1),0 8px 0 #0e7490">
+      <div class="scale-board">
+        <div class="scale-visual-wrap">
+          <div class="scale-base"></div>
+          <div class="scale-beam-bar" id="g23-beam">
+            <div class="scale-pan scale-pan-left">
+              <div class="scale-obj-display" id="g23-left-obj">🐘</div>
+              <div class="scale-pan-chain"></div>
+              <div class="scale-plate"></div>
+            </div>
+            <div class="scale-pan scale-pan-right">
+              <div class="scale-obj-display" id="g23-right-obj">🐱</div>
+              <div class="scale-pan-chain"></div>
+              <div class="scale-plate"></div>
+            </div>
+          </div>
+        </div>
+        <div class="q-box" id="g23-qtext" style="font-size:1.35rem">Benda manakah yang LEBIH BERAT? ⚖️</div>
+        <div class="choices" id="g23-choices"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ G24: BERSIH GIGI & TUBUH SEHAT ═══ -->
+<section class="view" id="g24">
+  <div class="game-wrap">
+    <div class="gtop" style="border-color:#0284c7;background:#f0f9ff">
+      <button class="back-btn" style="background:#0369a1;box-shadow:0 5px 0 #075985" data-back="g24" title="Kembali ke Beranda"><span>🏠</span> <span>Beranda</span></button>
+      <div class="lvl-info"><div class="lvl-title" style="color:#075985" id="g24-title">Level 1: Sikat Kuman Gigi</div><div class="lvl-prog" id="g24-prog">Tantangan 1 dari 5</div></div>
+      <div class="star-pill">⭐ <span id="g24-stars">0</span></div>
+    </div>
+    <div class="board" style="border:5px solid #38bdf8;box-shadow:0 12px 24px rgba(0,0,0,.1),0 8px 0 #0369a1">
+      <div id="g24-brush-mode" style="display:block">
+        <div class="q-box" id="g24-brush-hint" style="font-size:1.3rem">Ayo ketuk/usap semua kuman di gigi agar bersih berkilau! 🪥✨</div>
+        <div class="teeth-mouth-box">
+          <div class="teeth-row" id="g24-teeth-top"></div>
+          <div class="teeth-row" id="g24-teeth-bottom"></div>
+        </div>
+        <div id="g24-brush-stat" style="font-weight:700;color:#0369a1;font-size:1.05rem">Sisa kuman: <span id="g24-germ-count">4</span> 👾</div>
+      </div>
+      <div id="g24-quiz-mode" style="display:none">
+        <div class="q-emoji" id="g24-quiz-emoji" style="font-size:4.5rem">🧴</div>
+        <div class="q-box" id="g24-quiz-qtext" style="font-size:1.35rem">Alat apa ini?</div>
+        <div class="choices" id="g24-quiz-choices"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- MODALS -->
 
 <!-- ═══ MODAL PROFIL (P1 & P2) ═══ -->
@@ -2222,7 +2708,8 @@ const Prog = {
   IDS: ['ekspedisi_pulau','dapur_kata','lomba_lari','detektif_huruf','bangun_rumah',
         'kebun_ajaib','ketuk_suku','toko_mini','peternakan','puzzle_kata',
         'misi_roket','salon_kata','ular_tangga','suku_kata','cocok_bentuk',
-        'warna_ceria','jam_waktu','suara_hewan'],
+        'warna_ceria','jam_waktu','suara_hewan','taman_memori','pilah_sampah',
+        'detektif_emosi','xilofon_nada','timbangan_ajaib','gosok_gigi'],
 
   default(id = 'habibi') {
     const g = {};
@@ -2433,6 +2920,23 @@ const SFX = {
   pop() { this._osc('sine', 880, .12, .28, 520); },
   click() { this._osc('triangle', 600, .05, .15, 400); },
   tick() { this._osc('sine', 1000, .03, .1); },
+  note(freq, dur = 0.45) {
+    this.resume();
+    if (!this.ctx || !this.on) return;
+    try {
+      const t = this.ctx.currentTime;
+      const o = this.ctx.createOscillator();
+      const g = this.ctx.createGain();
+      o.type = 'triangle';
+      o.frequency.setValueAtTime(freq, t);
+      g.gain.setValueAtTime(0.35, t);
+      g.gain.exponentialRampToValueAtTime(0.001, t + dur);
+      o.connect(g);
+      g.connect(this.ctx.destination);
+      o.start(t);
+      o.stop(t + dur + 0.02);
+    } catch(e) {}
+  },
   correct() {
     [523.25, 659.25, 783.99, 1046.5].forEach((f, i) => {
       this.resume();
@@ -2727,7 +3231,13 @@ const CATALOG = [
   {id:'cocok_bentuk',n:15,title:'Petualangan Bentuk Ajaib',category:'Geometri Cilik',sublabel:'Mengenal Bentuk & Benda',desc:'Kenali lingkaran, segitiga, kotak & benda',ico:'🔺',bg:'#ecfdf5',col:'#059669',screen:'g15',launch:()=>G15.start(0)},
   {id:'warna_ceria',n:16,title:'Warna Ceria Pelangi',category:'Seni & Warna',sublabel:'Kenali Warna Ceria',desc:'Kenali dan cocokkan semua warna pelangi indah',ico:'🌈',bg:'#fffbeb',col:'#d97706',screen:'g16',launch:()=>G16.start(0)},
   {id:'jam_waktu',n:17,title:'Belajar Jam & Waktu',category:'Matematika Waktu',sublabel:'Baca Jarum Jam',desc:'Belajar membaca jam analog dengan cara seru',ico:'⏰',bg:'#eef2ff',col:'#4338ca',screen:'g17',launch:()=>G17.start(0)},
-  {id:'suara_hewan',n:18,title:'Tebak Suara Hewan',category:'Sains & Fauna',sublabel:'Dengarkan & Tebak',desc:'Dengarkan suara hewan dan tebak siapa mereka',ico:'🐾',bg:'#fff7ed',col:'#ea580c',screen:'g18',launch:()=>G18.start(0)}
+  {id:'suara_hewan',n:18,title:'Tebak Suara Hewan',category:'Sains & Fauna',sublabel:'Dengarkan & Tebak',desc:'Dengarkan suara hewan dan tebak siapa mereka',ico:'🐾',bg:'#fff7ed',col:'#ea580c',screen:'g18',launch:()=>G18.start(0)},
+  {id:'taman_memori',n:19,title:'Taman Memori Pintar',category:'Memori & Fokus',sublabel:'Pasangan Kartu Ajaib',desc:'Buka kartu dan cari pasangan yang cocok',ico:'🃏',bg:'#fdf4ff',col:'#c026d3',screen:'g19',launch:()=>G19.start(0)},
+  {id:'pilah_sampah',n:20,title:'Pahlawan Cilik Pilah Sampah',category:'Sains & Lingkungan',sublabel:'Sahabat Bumi Ceria',desc:'Pilah sampah organik, plastik, dan kertas',ico:'♻️',bg:'#f0fdf4',col:'#16a34a',screen:'g20',launch:()=>G20.start(0)},
+  {id:'detektif_emosi',n:21,title:'Detektif Emosi Ceria',category:'Sosial & Emosi',sublabel:'Tebak Perasaan Sahabat',desc:'Kenali beragam ekspresi wajah dan perasaan',ico:'🎭',bg:'#fff1f2',col:'#e11d48',screen:'g21',launch:()=>G21.start(0)},
+  {id:'xilofon_nada',n:22,title:'Xilofon Pelangi & Melodi',category:'Seni Musik & Nada',sublabel:'Tuts Musik Ceria',desc:'Mainkan xilofon dan ikuti irama nada indah',ico:'🎹',bg:'#f5f3ff',col:'#7c3aed',screen:'g22',launch:()=>G22.start(0)},
+  {id:'timbangan_ajaib',n:23,title:'Timbangan Ajaib',category:'Logika & Ukuran',sublabel:'Berat & Perbandingan',desc:'Bandingkan berat benda di timbangan ajaib',ico:'⚖️',bg:'#ecfeff',col:'#0891b2',screen:'g23',launch:()=>G23.start(0)},
+  {id:'gosok_gigi',n:24,title:'Bersih Gigi & Tubuh Sehat',category:'Kemandirian & Sehat',sublabel:'Gigi Bersih & Mandiri',desc:'Bersihkan kuman gigi & kenali alat kebersihan',ico:'🦷',bg:'#f0f9ff',col:'#0284c7',screen:'g24',launch:()=>G24.start(0)}
 ];
 
 /* ═══════════════════════════════════════════════════════════
@@ -3371,6 +3881,187 @@ const G15_DATA = [
     { q: 'Tenda kemah pramuka ⛺ berbentuk apa?', shape: 'triangle', color: '#059669', ans: 'Segitiga 🔺', opts: ['Segitiga 🔺', 'Oval 🥚', 'Hati ❤️'] },
     { q: 'Pintu kamar 🚪 berbentuk apa?', shape: 'rect', color: '#7c3aed', ans: 'Persegi Panjang ▭', opts: ['Persegi Panjang ▭', 'Lingkaran ⭕', 'Segitiga 🔺'] },
     { q: 'Layang-layang di udara 🪁 berbentuk apa?', shape: 'diamond', color: '#0284c7', ans: 'Belah Ketupat 🔷', opts: ['Belah Ketupat 🔷', 'Lingkaran ⭕', 'Oval 🥚'] }
+  ]}
+];
+
+// G19 TAMAN MEMORI
+const G19_DATA = [
+  { level: 1, title: 'Level 1: Pasangan Huruf Besar & Kecil', cols: 3, cards: [
+    { id: 1, val: 'A', pair: 'A' }, { id: 2, val: 'a', pair: 'A' },
+    { id: 3, val: 'B', pair: 'B' }, { id: 4, val: 'b', pair: 'B' },
+    { id: 5, val: 'C', pair: 'C' }, { id: 6, val: 'c', pair: 'C' }
+  ]},
+  { level: 2, title: 'Level 2: Angka & Jumlah Objek', cols: 3, cards: [
+    { id: 1, val: '1', pair: '1' }, { id: 2, val: '🍎', pair: '1' },
+    { id: 3, val: '2', pair: '2' }, { id: 4, val: '⭐⭐', pair: '2' },
+    { id: 5, val: '3', pair: '3' }, { id: 6, val: '🌸🌸🌸', pair: '3' }
+  ]},
+  { level: 3, title: 'Level 3: Hewan & Makanannya', cols: 4, cards: [
+    { id: 1, val: '🐱 Kucing', pair: 'cat' }, { id: 2, val: '🐟 Ikan', pair: 'cat' },
+    { id: 3, val: '🐰 Kelinci', pair: 'rab' }, { id: 4, val: '🥕 Wortel', pair: 'rab' },
+    { id: 5, val: '🐵 Monyet', pair: 'mon' }, { id: 6, val: '🍌 Pisang', pair: 'mon' },
+    { id: 7, val: '🐮 Sapi', pair: 'cow' }, { id: 8, val: '🌿 Rumput', pair: 'cow' }
+  ]},
+  { level: 4, title: 'Level 4: Warna & Benda Alami', cols: 4, cards: [
+    { id: 1, val: '🔴 Merah', pair: 'red' }, { id: 2, val: '🍎 Apel', pair: 'red' },
+    { id: 3, val: '🟡 Kuning', pair: 'yel' }, { id: 4, val: '🍌 Pisang', pair: 'yel' },
+    { id: 5, val: '🟢 Hijau', pair: 'grn' }, { id: 6, val: '🍃 Daun', pair: 'grn' },
+    { id: 7, val: '🔵 Biru', pair: 'blu' }, { id: 8, val: '🌊 Laut', pair: 'blu' }
+  ]},
+  { level: 5, title: 'Level 5: Lawan Kata Pintar', cols: 4, cards: [
+    { id: 1, val: '🐘 Besar', pair: 'sz' }, { id: 2, val: '🐜 Kecil', pair: 'sz' },
+    { id: 3, val: '☀️ Siang', pair: 'tm' }, { id: 4, val: '🌙 Malam', pair: 'tm' },
+    { id: 5, val: '😄 Senang', pair: 'md' }, { id: 6, val: '😢 Sedih', pair: 'md' },
+    { id: 7, val: '☕ Panas', pair: 'tp' }, { id: 8, val: '🍦 Dingin', pair: 'tp' }
+  ]}
+];
+
+// G20 PILAH SAMPAH
+const G20_DATA = [
+  { level: 1, title: 'Level 1: Sampah Makanan & Plastik', items: [
+    { ico: '🍌', name: 'Kulit Pisang', cat: 'org', tip: 'Kulit pisang adalah sampah organik!' },
+    { ico: '🥤', name: 'Botol Plastik Bekas', cat: 'plas', tip: 'Botol plastik masuk tempat sampah kuning anorganik!' },
+    { ico: '🍎', name: 'Sisa Apel Busuk', cat: 'org', tip: 'Sisa buah adalah sampah organik yang bisa diurai!' },
+    { ico: '🛍️', name: 'Kantong Kresek', cat: 'plas', tip: 'Kantong kresek adalah plastik daur ulang!' },
+    { ico: '🦴', name: 'Tulang Ikan', cat: 'org', tip: 'Sisa makanan ikan termasuk organik!' }
+  ]},
+  { level: 2, title: 'Level 2: Mengenal Sampah Kertas', items: [
+    { ico: '📦', name: 'Kardus Susu', cat: 'papr', tip: 'Kardus kertas masuk ke tempat sampah biru!' },
+    { ico: '🥤', name: 'Gelas Plastik', cat: 'plas', tip: 'Gelas plastik masuk tempat sampah plastik kuning!' },
+    { ico: '📰', name: 'Koran Bekas', cat: 'papr', tip: 'Koran bekas adalah kertas daur ulang!' },
+    { ico: '🍞', name: 'Sisa Roti Kering', cat: 'org', tip: 'Roti adalah makanan organik!' },
+    { ico: '📒', name: 'Buku Tulis Bekas', cat: 'papr', tip: 'Kertas buku masuk tempat biru!' }
+  ]},
+  { level: 3, title: 'Level 3: Sampah Rumah & Sekolah', items: [
+    { ico: '🥫', name: 'Kaleng Minuman', cat: 'plas', tip: 'Kaleng logam/anorganik dipilah ke kuning!' },
+    { ico: '🍂', name: 'Daun Kering Gugur', cat: 'org', tip: 'Daun kering sangat baik dijadikan pupuk kompos!' },
+    { ico: '✉️', name: 'Amplop Kertas', cat: 'papr', tip: 'Amplop surat adalah kertas!' },
+    { ico: '🧃', name: 'Kotak Minuman Jus', cat: 'papr', tip: 'Karton kemasan minuman masuk kertas!' },
+    { ico: '🥢', name: 'Sedotan Plastik', cat: 'plas', tip: 'Sedotan plastik harus dibuang ke sampah plastik!' }
+  ]},
+  { level: 4, title: 'Level 4: Ahli Kebersihan Lingkungan', items: [
+    { ico: '🍉', name: 'Kulit Semangka', cat: 'org', tip: 'Kulit semangka mudah membusuk jadi tanah!' },
+    { ico: '🥡', name: 'Kotak Makanan Mika', cat: 'plas', tip: 'Plastik mika bening masuk plastik!' },
+    { ico: '📄', name: 'Kertas Gambar Coretan', cat: 'papr', tip: 'Kertas gambar bekas masuk tempat biru!' },
+    { ico: '🥚', name: 'Cangkang Telur', cat: 'org', tip: 'Cangkang telur organik kaya nutrisi tanah!' },
+    { ico: '🧴', name: 'Botol Sampo Kosong', cat: 'plas', tip: 'Botol wadah sabun/sampo adalah plastik!' }
+  ]},
+  { level: 5, title: 'Level 5: Pahlawan Bumi Sejati', items: [
+    { ico: '🍕', name: 'Kotak Kardus Pizza', cat: 'papr', tip: 'Kardus pizza masuk ke wadah kertas!' },
+    { ico: '🥬', name: 'Sisa Sayur Bayam', cat: 'org', tip: 'Sayuran sisa masak termasuk organik!' },
+    { ico: '🧸', name: 'Pecahan Mainan Plastik', cat: 'plas', tip: 'Mainan plastik rusak masuk wadah anorganik!' },
+    { ico: '🌽', name: 'Bonggol Jagung Manis', cat: 'org', tip: 'Bonggol jagung adalah organik alam!' },
+    { ico: '🏷️', name: 'Kertas Brosur Warna', cat: 'papr', tip: 'Kertas brosur masuk kelompok kertas!' }
+  ]}
+];
+
+// G21 DETEKTIF EMOSI
+const G21_DATA = [
+  { level: 1, title: 'Level 1: Senang & Sedih', items: [
+    { ico: '🎁', story: 'Harsha mendapat hadiah sepeda baru di hari ulang tahunnya!', sound: 'Harsha mendapat kado sepeda baru!', ans: 'Senang 😄', opts: ['Senang 😄', 'Sedih 😢', 'Takut 😨', 'Marah 😠'] },
+    { ico: '🍦', story: 'Es krim stroberi Shafiyyah jatuh ke tanah sebelum dicicipi...', sound: 'Es krim Shafiyyah jatuh ke tanah...', ans: 'Sedih 😢', opts: ['Senang 😄', 'Sedih 😢', 'Kaget 😲', 'Marah 😠'] },
+    { ico: '🎈', story: 'Balon warna merah Arsha terbang tinggi terbawa angin.', sound: 'Balon merah Arsha terbang terbawa angin...', ans: 'Sedih 😢', opts: ['Sedih 😢', 'Senang 😄', 'Takut 😨', 'Kaget 😲'] },
+    { ico: '🏖️', story: 'Keluarga Harsha pergi piknik dan bermain pasir di tepi pantai!', sound: 'Keluarga pergi piknik ke pantai ceria!', ans: 'Senang 😄', opts: ['Senang 😄', 'Marah 😠', 'Sedih 😢', 'Takut 😨'] }
+  ]},
+  { level: 2, title: 'Level 2: Kaget & Takut', items: [
+    { ico: '🐱', story: 'Tiba-tiba seekor anak kucing melompat lucu keluar dari kardus!', sound: 'Ada anak kucing melompat keluar dari kardus!', ans: 'Kaget 😲', opts: ['Kaget 😲', 'Senang 😄', 'Sedih 😢', 'Marah 😠'] },
+    { ico: '⚡', story: 'Malam hari tiba-tiba terdengar suara petir yang sangat menggelegar!', sound: 'Suara petir menggelegar di malam hari!', ans: 'Takut 😨', opts: ['Takut 😨', 'Senang 😄', 'Marah 😠', 'Kaget 😲'] },
+    { ico: '🕯️', story: 'Lampu kamar mendadak padam dan suasana menjadi gelap gulita.', sound: 'Lampu kamar padam dan suasana jadi gelap gulita...', ans: 'Takut 😨', opts: ['Takut 😨', 'Senang 😄', 'Kaget 😲', 'Sedih 😢'] },
+    { ico: '🎉', story: 'Teman-teman meniup terompet dan menyalakan pesta kejutan!', sound: 'Pesta kejutan dimulai dengan meriah!', ans: 'Kaget 😲', opts: ['Kaget 😲', 'Sedih 😢', 'Takut 😨', 'Marah 😠'] }
+  ]},
+  { level: 3, title: 'Level 3: Marah & Bangga', items: [
+    { ico: '🎨', story: 'Gambar lukisan yang sudah rapi dicoret-coret tanpa sengaja oleh teman.', sound: 'Gambar lukisan yang rapi dicoret orang lain...', ans: 'Marah 😠', opts: ['Marah 😠', 'Senang 😄', 'Takut 😨', 'Kaget 😲'] },
+    { ico: '🏆', story: 'Kakak Habibi berhasil menjadi juara pertama lomba membaca puisi di sekolah!', sound: 'Kakak Habibi berhasil juara lomba di sekolah!', ans: 'Senang 😄', opts: ['Senang 😄', 'Sedih 😢', 'Takut 😨', 'Marah 😠'] },
+    { ico: '🧩', story: 'Balok menara yang baru saja disusun roboh karena ditabrak teman yang berlari.', sound: 'Menara balok yang rapi roboh ditabrak...', ans: 'Marah 😠', opts: ['Marah 😠', 'Senang 😄', 'Takut 😨', 'Sedih 😢'] },
+    { ico: '🌟', story: 'Arsha berhasil menghafal huruf alfabet dari A sampai Z dengan lancar!', sound: 'Arsha lancar menghafal huruf A sampai Z!', ans: 'Senang 😄', opts: ['Senang 😄', 'Sedih 😢', 'Marah 😠', 'Takut 😨'] }
+  ]},
+  { level: 4, title: 'Level 4: Berbagi & Menolong', items: [
+    { ico: '🥪', story: 'Habibi membagi setengah bekal rotinya kepada teman yang tidak bawa bekal.', sound: 'Habibi berbagi bekal kepada teman...', ans: 'Senang 😄', opts: ['Senang 😄', 'Sedih 😢', 'Marah 😠', 'Takut 😨'] },
+    { ico: '🤕', story: 'Adik terpeleset di teras dan lututnya sakit menangis.', sound: 'Adik terpeleset dan lututnya sakit...', ans: 'Sedih 😢', opts: ['Sedih 😢', 'Senang 😄', 'Marah 😠', 'Kaget 😲'] },
+    { ico: '🐕', story: 'Ada anjing galak yang menggonggong sangat kencang di depan pagar rumah.', sound: 'Ada suara gonggongan kencang di depan rumah...', ans: 'Takut 😨', opts: ['Takut 😨', 'Senang 😄', 'Sedih 😢', 'Kaget 😲'] },
+    { ico: '🌈', story: 'Setelah hujan reda, muncul pelangi yang sangat indah membentang di langit!', sound: 'Ada pelangi yang sangat indah di langit!', ans: 'Senang 😄', opts: ['Senang 😄', 'Marah 😠', 'Sedih 😢', 'Takut 😨'] }
+  ]},
+  { level: 5, title: 'Level 5: Menjadi Sahabat Empatik', items: [
+    { ico: '🏥', story: 'Ibu sedang sakit flu dan harus beristirahat berbaring di kasur.', sound: 'Ibu sedang sakit flu dan beristirahat...', ans: 'Sedih 😢', opts: ['Sedih 😢', 'Senang 😄', 'Marah 😠', 'Kaget 😲'] },
+    { ico: '🧸', story: 'Shafiyyah meminjamkan boneka kelincinya kepada teman yang menangis.', sound: 'Shafiyyah menghibur teman yang menangis...', ans: 'Senang 😄', opts: ['Senang 😄', 'Sedih 😢', 'Takut 😨', 'Marah 😠'] },
+    { ico: '📦', story: 'Membuka kado besar dan ternyata isinya robot impian yang bisa jalan!', sound: 'Membuka kado dan melihat robot impian!', ans: 'Senang 😄', opts: ['Senang 😄', 'Takut 😨', 'Sedih 😢', 'Marah 😠'] },
+    { ico: '🐝', story: 'Tiba-tiba ada lebah terbang mendekati telinga dengan dengungan bzz-bzz!', sound: 'Ada lebah terbang mendekat dengan suara bzz!', ans: 'Takut 😨', opts: ['Takut 😨', 'Senang 😄', 'Sedih 😢', 'Marah 😠'] }
+  ]}
+];
+
+// G22 XILOFON PELANGI
+const XYLO_FREQS = { 1: 261.63, 2: 293.66, 3: 329.63, 4: 349.23, 5: 392.00, 6: 440.00, 7: 493.88 };
+const XYLO_NAMES = { 1: 'DO', 2: 'RE', 3: 'MI', 4: 'FA', 5: 'SOL', 6: 'LA', 7: 'SI' };
+const G22_DATA = [
+  { level: 1, title: 'Level 1: Dua Ketukan Ceria', seqs: [
+    [1, 2], [1, 3], [2, 3], [1, 5]
+  ]},
+  { level: 2, title: 'Level 2: Tiga Nada Berirama', seqs: [
+    [1, 3, 5], [1, 2, 3], [3, 2, 1], [5, 3, 1]
+  ]},
+  { level: 3, title: 'Level 3: Empat Nada Tangga', seqs: [
+    [1, 2, 3, 4], [4, 3, 2, 1], [1, 3, 5, 6], [3, 3, 5, 5]
+  ]},
+  { level: 4, title: 'Level 4: Melodi Lagu Anak', seqs: [
+    [5, 3, 3, 4], [4, 2, 2, 3], [1, 2, 3, 1], [5, 5, 6, 5]
+  ]},
+  { level: 5, title: 'Level 5: Musisi Cilik Hebat', seqs: [
+    [1, 3, 5, 3, 1], [1, 2, 3, 4, 5], [5, 4, 3, 2, 1], [3, 5, 6, 5, 3]
+  ]}
+];
+
+// G23 TIMBANGAN AJAIB
+const G23_DATA = [
+  { level: 1, title: 'Level 1: Hewan Besar & Kecil', items: [
+    { leftIco: '🐘 Gajah', rightIco: '🐱 Kucing', tilt: 'left', q: 'Benda manakah yang LEBIH BERAT? ⚖️', ans: 'Gajah 🐘', opts: ['Gajah 🐘', 'Kucing 🐱', 'Sama Berat ⚖️'] },
+    { leftIco: '🐭 Tikus', rightIco: '🐻 Beruang', tilt: 'right', q: 'Benda manakah yang LEBIH BERAT? ⚖️', ans: 'Beruang 🐻', opts: ['Beruang 🐻', 'Tikus 🐭', 'Sama Berat ⚖️'] },
+    { leftIco: '🐜 Semut', rightIco: '🐶 Anjing', tilt: 'right', q: 'Benda manakah yang LEBIH RINGAN? ⚖️', ans: 'Semut 🐜', opts: ['Semut 🐜', 'Anjing 🐶', 'Sama Berat ⚖️'] },
+    { leftIco: '🦛 Kuda Nil', rightIco: '🐦 Burung', tilt: 'left', q: 'Benda manakah yang LEBIH RINGAN? ⚖️', ans: 'Burung 🐦', opts: ['Burung 🐦', 'Kuda Nil 🦛', 'Sama Berat ⚖️'] }
+  ]},
+  { level: 2, title: 'Level 2: Buah-buahan Manis', items: [
+    { leftIco: '🍉 Semangka', rightIco: '🍓 Strawberry', tilt: 'left', q: 'Buah manakah yang LEBIH BERAT? 🍉', ans: 'Semangka 🍉', opts: ['Semangka 🍉', 'Strawberry 🍓', 'Sama Berat ⚖️'] },
+    { leftIco: '🍒 Ceri', rightIco: '🍍 Nanas', tilt: 'right', q: 'Buah manakah yang LEBIH BERAT? 🍍', ans: 'Nanas 🍍', opts: ['Nanas 🍍', 'Ceri 🍒', 'Sama Berat ⚖️'] },
+    { leftIco: '🍇 Anggur', rightIco: '🎃 Labu Kuning', tilt: 'right', q: 'Buah manakah yang LEBIH RINGAN? 🍇', ans: 'Anggur 🍇', opts: ['Anggur 🍇', 'Labu Kuning 🎃', 'Sama Berat ⚖️'] },
+    { leftIco: '🍈 Melon', rightIco: '🫐 Blueberry', tilt: 'left', q: 'Buah manakah yang LEBIH RINGAN? 🫐', ans: 'Blueberry 🫐', opts: ['Blueberry 🫐', 'Melon 🍈', 'Sama Berat ⚖️'] }
+  ]},
+  { level: 3, title: 'Level 3: Timbangan Seimbang', items: [
+    { leftIco: '🍎🍎 2 Apel', rightIco: '🍎🍎 2 Apel', tilt: 'even', q: 'Apakah kedua sisi ini SEIMBANG? ⚖️', ans: 'Sama Berat (Seimbang) ⚖️', opts: ['Sama Berat (Seimbang) ⚖️', 'Kiri Lebih Berat', 'Kanan Lebih Berat'] },
+    { leftIco: '⭐ 1 Bintang', rightIco: '⭐⭐⭐ 3 Bintang', tilt: 'right', q: 'Manakah yang LEBIH BANYAK & BERAT?', ans: 'Kanan (3 Bintang) ⭐', opts: ['Kanan (3 Bintang) ⭐', 'Kiri (1 Bintang) ⭐', 'Sama Berat ⚖️'] },
+    { leftIco: '📚📚 2 Buku', rightIco: '📚📚 2 Buku', tilt: 'even', q: 'Bagaimana posisi timbangan ini?', ans: 'Seimbang (Sama Berat) ⚖️', opts: ['Seimbang (Sama Berat) ⚖️', 'Miring ke Kiri', 'Miring ke Kanan'] },
+    { leftIco: '🪙🪙🪙 3 Koin', rightIco: '🪙 1 Koin', tilt: 'left', q: 'Sisi manakah yang LEBIH BERAT?', ans: 'Kiri (3 Koin) 🪙', opts: ['Kiri (3 Koin) 🪙', 'Kanan (1 Koin) 🪙', 'Sama Berat ⚖️'] }
+  ]},
+  { level: 4, title: 'Level 4: Benda Sekitar Kita', items: [
+    { leftIco: '🚗 Mobil', rightIco: '🚲 Sepeda', tilt: 'left', q: 'Kendaraan manakah yang LEBIH BERAT?', ans: 'Mobil 🚗', opts: ['Mobil 🚗', 'Sepeda 🚲', 'Sama Berat ⚖️'] },
+    { leftIco: '🪶 Bulu Ayam', rightIco: '🪨 Batu Kali', tilt: 'right', q: 'Benda manakah yang SANGAT RINGAN?', ans: 'Bulu Ayam 🪶', opts: ['Bulu Ayam 🪶', 'Batu Kali 🪨', 'Sama Berat ⚖️'] },
+    { leftIco: '🧱 Bata Merah', rightIco: '🎈 Balon Gas', tilt: 'left', q: 'Benda manakah yang LEBIH RINGAN?', ans: 'Balon Gas 🎈', opts: ['Balon Gas 🎈', 'Bata Merah 🧱', 'Sama Berat ⚖️'] },
+    { leftIco: '🏐 1 Bola', rightIco: '🏐 1 Bola', tilt: 'even', q: 'Apakah 1 Bola sama berat dengan 1 Bola?', ans: 'Ya, Sama Berat ⚖️', opts: ['Ya, Sama Berat ⚖️', 'Tidak Sama', 'Kiri Lebih Berat'] }
+  ]},
+  { level: 5, title: 'Level 5: Logika Perbandingan Master', items: [
+    { leftIco: '📦 Kardus Isi Buku', rightIco: '📦 Kardus Kosong', tilt: 'left', q: 'Manakah kardus yang LEBIH BERAT?', ans: 'Kardus Isi Buku 📦', opts: ['Kardus Isi Buku 📦', 'Kardus Kosong 📦', 'Sama Berat ⚖️'] },
+    { leftIco: '💧 1 Tetes Air', rightIco: '🪣 1 Ember Air', tilt: 'right', q: 'Manakah wadah air yang LEBIH BERAT?', ans: '1 Ember Air 🪣', opts: ['1 Ember Air 🪣', '1 Tetes Air 💧', 'Sama Berat ⚖️'] },
+    { leftIco: '👑 Mahkota Emas', rightIco: '🧢 Topi Kain', tilt: 'left', q: 'Benda manakah yang LEBIH BERAT?', ans: 'Mahkota Emas 👑', opts: ['Mahkota Emas 👑', 'Topi Kain 🧢', 'Sama Berat ⚖️'] },
+    { leftIco: '⛵ Perahu Kertas', rightIco: '🚢 Kapal Feri', tilt: 'right', q: 'Kapal manakah yang LEBIH RINGAN?', ans: 'Perahu Kertas ⛵', opts: ['Perahu Kertas ⛵', 'Kapal Feri 🚢', 'Sama Berat ⚖️'] }
+  ]}
+];
+
+// G24 BERSIH GIGI & TUBUH SEHAT
+const G24_DATA = [
+  { level: 1, title: 'Level 1: Sikat Kuman Gigi Depan', mode: 'brush', germCount: 4 },
+  { level: 2, title: 'Level 2: Sikat Bersih Semua Kuman', mode: 'brush', germCount: 6 },
+  { level: 3, title: 'Level 3: Perlengkapan Mandi Sehat', mode: 'quiz', items: [
+    { emoji: '🧴', q: 'Cairan wangi apa yang dipakai saat keramas mencuci rambut?', ans: 'Sampo Rambut 🧴', opts: ['Sampo Rambut 🧴', 'Pasta Gigi 🪥', 'Minyak Goreng 🍳'] },
+    { emoji: '🧼', q: 'Apa yang kita gunakan untuk mencuci tangan agar kuman mati?', ans: 'Sabun Mandi / Sabun Cuci 🧼', opts: ['Sabun Mandi / Sabun Cuci 🧼', 'Handuk Basah 🧖', 'Tisu Kering 🧻'] },
+    { emoji: '🧖', q: 'Kain apa yang kita pakai untuk mengeringkan badan setelah mandi?', ans: 'Handuk Bersih 🧖', opts: ['Handuk Bersih 🧖', 'Selimut Tidur 🛌', 'Baju Kotor 👕'] }
+  ]},
+  { level: 4, title: 'Level 4: Jadwal Gosok Gigi Ceria', mode: 'quiz', items: [
+    { emoji: '🌙', q: 'Kapan waktu penting menggosok gigi agar gigi tidak berlubang?', ans: 'Malam Sebelum Tidur & Pagi Hari 🪥', opts: ['Malam Sebelum Tidur & Pagi Hari 🪥', 'Hanya Hari Minggu', 'Saat Mau Bermain Sepeda'] },
+    { emoji: '🍭', q: 'Setelah makan permen manis atau cokelat, sebaiknya kita...', ans: 'Kumur Air Bersih / Gosok Gigi 💧', opts: ['Kumur Air Bersih / Gosok Gigi 💧', 'Langsung Tidur Saja', 'Makan Es Krim Lagi'] },
+    { emoji: '🪥', q: 'Apa yang ditaruh di atas sikat gigi sebelum kita menggosok gigi?', ans: 'Pasta Gigi (Odol) 🪥', opts: ['Pasta Gigi (Odol) 🪥', 'Garam Dapur 🧂', 'Sabun Cuci Piring 🍽️'] }
+  ]},
+  { level: 5, title: 'Level 5: Kebiasaan Sehat Setiap Hari', mode: 'quiz', items: [
+    { emoji: '✂️', q: 'Kuku jari yang panjang dan kotor hitam sebaiknya kita...', ans: 'Gunting Rapi Bersama Ayah/Ibu ✂️', opts: ['Gunting Rapi Bersama Ayah/Ibu ✂️', 'Gigit dengan Gigi', 'Dibiarkan Saja'] },
+    { emoji: '💧', q: 'Berapa gelas air putih bersih yang baik kita minum setiap hari?', ans: '6 sampai 8 Gelas Air Sehat 💧', opts: ['6 sampai 8 Gelas Air Sehat 💧', '1 Sendok Saja', 'Tidak Perlu Minum'] },
+    { emoji: '😴', q: 'Anak hebat yang ingin tumbuh pintar dan tinggi harus tidur...', ans: 'Tepat Waktu (Tidak Begadang) 🌙', opts: ['Tepat Waktu (Tidak Begadang) 🌙', 'Tidur Jam 1 Pagi', 'Tidak Tidur Semalaman'] }
   ]}
 ];
 
@@ -4284,6 +4975,494 @@ const G18 = {
   }
 };
 
+/* ── G19: TAMAN MEMORI PINTAR ── */
+const G19 = {
+  lvl: 0, mistakes: 0, flippedCards: [], matchedPairs: 0, totalPairs: 0, locked: false,
+  start(l) {
+    this.lvl = l; this.mistakes = 0; this.flippedCards = []; this.matchedPairs = 0; this.locked = false;
+    this.loadGame();
+  },
+  loadGame() {
+    const ld = G19_DATA[this.lvl];
+    this.totalPairs = ld.cards.length / 2;
+    this.matchedPairs = 0;
+    this.flippedCards = [];
+    this.locked = false;
+
+    document.getElementById('g19-title').textContent = ld.title;
+    document.getElementById('g19-prog').textContent = `Cari ${this.totalPairs} Pasangan`;
+    document.getElementById('g19-stars').textContent = Prog.gameStars('taman_memori', this.lvl + 1);
+
+    const grid = document.getElementById('g19-grid');
+    grid.className = `mem-grid cols-${ld.cols || 3}`;
+    grid.innerHTML = '';
+
+    const shuffledCards = scramble([...ld.cards]);
+    shuffledCards.forEach(c => {
+      const cardEl = document.createElement('button');
+      cardEl.className = 'mem-card';
+      cardEl.dataset.pair = c.pair;
+      cardEl.innerHTML = `
+        <div class="mem-inner">
+          <div class="mem-front">🌟</div>
+          <div class="mem-back">${c.val}</div>
+        </div>
+      `;
+      cardEl.onclick = () => this.flip(cardEl);
+      grid.appendChild(cardEl);
+    });
+
+    SFX.pop();
+    SFX.speak('Buka kartu dan cari pasangan yang cocok!');
+  },
+  flip(cardEl) {
+    if (this.locked || cardEl.classList.contains('flipped') || cardEl.classList.contains('matched')) return;
+    SFX.click();
+    cardEl.classList.add('flipped');
+    this.flippedCards.push(cardEl);
+
+    if (this.flippedCards.length === 2) {
+      this.locked = true;
+      const [c1, c2] = this.flippedCards;
+      if (c1.dataset.pair === c2.dataset.pair) {
+        setTimeout(() => {
+          c1.classList.add('matched');
+          c2.classList.add('matched');
+          this.matchedPairs++;
+          SFX.correct();
+          showToast('🎉', 'Cocok! Hebat!');
+          this.flippedCards = [];
+          this.locked = false;
+          if (this.matchedPairs === this.totalPairs) {
+            setTimeout(() => this.finish(), 600);
+          }
+        }, 400);
+      } else {
+        this.mistakes++;
+        setTimeout(() => {
+          c1.classList.remove('flipped');
+          c2.classList.remove('flipped');
+          SFX.retry();
+          showToast('💡', 'Belum cocok, ingat posisinya ya!', true);
+          this.flippedCards = [];
+          this.locked = false;
+        }, 900);
+      }
+    }
+  },
+  finish() {
+    const s = calcStars(this.mistakes), c = s * 5;
+    Prog.record('taman_memori', this.lvl + 1, s, c);
+    UI.updateHeader();
+    showVictory(this.lvl + 1, s, c, G19_DATA.length, (n) => G19.start(Math.min(n, G19_DATA.length - 1)));
+  }
+};
+
+/* ── G20: PAHLAWAN CILIK PILAH SAMPAH ── */
+const G20 = {
+  lvl: 0, qi: 0, mistakes: 0, locked: false,
+  start(l) {
+    this.lvl = l; this.qi = 0; this.mistakes = 0; this.locked = false;
+    this.bindBins();
+    this.loadQ();
+  },
+  bindBins() {
+    ['org', 'plas', 'papr'].forEach(cat => {
+      const btn = document.getElementById(`g20-bin-${cat}`);
+      if (btn) btn.onclick = () => this.checkBin(cat, btn);
+    });
+  },
+  loadQ() {
+    this.locked = false;
+    const ld = G20_DATA[this.lvl];
+    const item = ld.items[this.qi];
+
+    document.getElementById('g20-title').textContent = ld.title;
+    document.getElementById('g20-prog').textContent = `Sampah ${this.qi + 1} dari ${ld.items.length}`;
+    document.getElementById('g20-stars').textContent = Prog.gameStars('pilah_sampah', this.lvl + 1);
+
+    document.getElementById('g20-item-ico').textContent = item.ico;
+    document.getElementById('g20-item-name').textContent = item.name;
+
+    const card = document.getElementById('g20-item-card');
+    card.style.transition = 'none';
+    card.style.transform = 'scale(1)';
+    card.style.opacity = '1';
+
+    SFX.speak(item.name);
+  },
+  checkBin(chosenCat, binBtn) {
+    if (this.locked) return;
+    const ld = G20_DATA[this.lvl];
+    const item = ld.items[this.qi];
+
+    if (chosenCat === item.cat) {
+      this.locked = true;
+      SFX.correct();
+      const card = document.getElementById('g20-item-card');
+      card.style.transition = 'transform 0.4s, opacity 0.4s';
+      card.style.transform = 'scale(0.3) translateY(80px)';
+      card.style.opacity = '0';
+      showToast('♻️', item.tip);
+      setTimeout(() => this.next(), 950);
+    } else {
+      this.mistakes++;
+      SFX.retry();
+      binBtn.style.animation = 'shake 0.4s';
+      setTimeout(() => binBtn.style.animation = '', 450);
+      showToast('💡', 'Bukan ke tempat ini, perhatikan jenis bahannya ya!', true);
+    }
+  },
+  next() {
+    this.qi++;
+    const ld = G20_DATA[this.lvl];
+    if (this.qi < ld.items.length) {
+      this.loadQ();
+    } else {
+      const s = calcStars(this.mistakes), c = s * 5;
+      Prog.record('pilah_sampah', this.lvl + 1, s, c);
+      UI.updateHeader();
+      showVictory(this.lvl + 1, s, c, G20_DATA.length, (n) => G20.start(Math.min(n, G20_DATA.length - 1)));
+    }
+  }
+};
+
+/* ── G21: DETEKTIF EMOSI CERIA ── */
+const G21 = {
+  lvl: 0, qi: 0, mistakes: 0,
+  start(l) {
+    this.lvl = l; this.qi = 0; this.mistakes = 0;
+    this.loadQ();
+  },
+  loadQ() {
+    const ld = G21_DATA[this.lvl];
+    const item = ld.items[this.qi];
+
+    document.getElementById('g21-title').textContent = ld.title;
+    document.getElementById('g21-prog').textContent = `Cerita ${this.qi + 1} dari ${ld.items.length}`;
+    document.getElementById('g21-stars').textContent = Prog.gameStars('detektif_emosi', this.lvl + 1);
+
+    document.getElementById('g21-story-ico').textContent = item.ico;
+    document.getElementById('g21-story-txt').textContent = item.story;
+
+    document.getElementById('g21-speak-btn').onclick = () => {
+      SFX.pop();
+      SFX.speak(item.sound || item.story);
+    };
+
+    SFX.speak(item.sound || item.story);
+
+    const c = document.getElementById('g21-choices');
+    c.innerHTML = '';
+    const prof = Prog.getActiveProfile();
+    let opts = [...item.opts];
+    if (prof.age <= 4) {
+      const wrong = opts.filter(o => o !== item.ans);
+      opts = scramble([item.ans, wrong[0] || 'Sedih 😢']);
+    }
+
+    opts.forEach(opt => {
+      const btn = document.createElement('button');
+      btn.className = 'emotion-opt-btn';
+      const emojiMatch = opt.match(/[\u{1F300}-\u{1FAFF}]/u) || ['😊'];
+      const label = opt.replace(emojiMatch[0], '').trim();
+      btn.innerHTML = `<span style="font-size:2.2rem">${emojiMatch[0]}</span><strong style="font-size:1.05rem;color:#1e293b">${label}</strong>`;
+      btn.onclick = () => {
+        SFX.pop();
+        if (opt === item.ans) {
+          btn.classList.add('right');
+          SFX.correct();
+          showToast('💖', 'Tepat sekali! Kamu mengerti perasaannya!');
+          setTimeout(() => this.next(), 950);
+        } else {
+          this.mistakes++;
+          btn.classList.add('wrong');
+          setTimeout(() => btn.classList.remove('wrong'), 550);
+          SFX.retry();
+          showToast('💡', 'Coba renungkan lagi situasinya ya!', true);
+        }
+      };
+      c.appendChild(btn);
+    });
+  },
+  next() {
+    this.qi++;
+    const ld = G21_DATA[this.lvl];
+    if (this.qi < ld.items.length) {
+      this.loadQ();
+    } else {
+      const s = calcStars(this.mistakes), c = s * 5;
+      Prog.record('detektif_emosi', this.lvl + 1, s, c);
+      UI.updateHeader();
+      showVictory(this.lvl + 1, s, c, G21_DATA.length, (n) => G21.start(Math.min(n, G21_DATA.length - 1)));
+    }
+  }
+};
+
+/* ── G22: XILOFON PELANGI & NADA ── */
+const G22 = {
+  lvl: 0, qi: 0, mistakes: 0, playerSeq: [], targetSeq: [], isPlayingDemo: false,
+  start(l) {
+    this.lvl = l; this.qi = 0; this.mistakes = 0; this.playerSeq = []; this.isPlayingDemo = false;
+    this.bindKeys();
+    this.loadQ();
+  },
+  bindKeys() {
+    document.querySelectorAll('.xylo-key').forEach(k => {
+      k.onclick = () => {
+        const noteNum = parseInt(k.dataset.note, 10);
+        this.playNote(noteNum, true);
+      };
+    });
+    const dBtn = document.getElementById('g22-demo-btn');
+    if (dBtn) dBtn.onclick = () => this.playTargetSequence();
+    const fBtn = document.getElementById('g22-free-btn');
+    if (fBtn) fBtn.onclick = () => {
+      SFX.pop();
+      document.getElementById('g22-status').textContent = 'Mode Main Bebas: Ketuk bilah xilofon sesukamu! 🎵';
+      showToast('🎹', 'Mode bebas aktif!');
+    };
+  },
+  playNote(num, fromUser = false) {
+    const freq = XYLO_FREQS[num] || 261.63;
+    SFX.note(freq, 0.4);
+    const keyEl = document.querySelector(`.xylo-key[data-note="${num}"]`);
+    if (keyEl) {
+      keyEl.classList.add('active');
+      setTimeout(() => keyEl.classList.remove('active'), 250);
+    }
+    if (fromUser && !this.isPlayingDemo) {
+      this.handleUserInput(num);
+    }
+  },
+  loadQ() {
+    this.playerSeq = [];
+    const ld = G22_DATA[this.lvl];
+    this.targetSeq = ld.seqs[this.qi];
+
+    document.getElementById('g22-title').textContent = ld.title;
+    document.getElementById('g22-prog').textContent = `Pola ${this.qi + 1} dari ${ld.seqs.length}`;
+    document.getElementById('g22-stars').textContent = Prog.gameStars('xilofon_nada', this.lvl + 1);
+
+    document.getElementById('g22-status').textContent = 'Dengarkan nada Harsha, lalu tirukan ketukannya! 🎶';
+    setTimeout(() => this.playTargetSequence(), 500);
+  },
+  playTargetSequence() {
+    if (this.isPlayingDemo) return;
+    this.isPlayingDemo = true;
+    this.playerSeq = [];
+    document.getElementById('g22-status').textContent = 'Harsha sedang bernyanyi... 🎶 Dengarkan ya!';
+    let delay = 300;
+    this.targetSeq.forEach((note, idx) => {
+      setTimeout(() => {
+        this.playNote(note, false);
+        if (idx === this.targetSeq.length - 1) {
+          setTimeout(() => {
+            this.isPlayingDemo = false;
+            document.getElementById('g22-status').textContent = `Sekarang giliranmu! Ketuk ${this.targetSeq.length} nada! ✨`;
+          }, 400);
+        }
+      }, delay);
+      delay += 550;
+    });
+  },
+  handleUserInput(noteNum) {
+    this.playerSeq.push(noteNum);
+    const currIdx = this.playerSeq.length - 1;
+    if (noteNum !== this.targetSeq[currIdx]) {
+      this.mistakes++;
+      SFX.retry();
+      showToast('💡', 'Kurang tepat, ayo dengarkan nadanya lagi ya!', true);
+      this.playerSeq = [];
+      setTimeout(() => this.playTargetSequence(), 800);
+      return;
+    }
+    if (this.playerSeq.length === this.targetSeq.length) {
+      SFX.correct();
+      showToast('🌟', 'Hebat! Melodimu merdu sekali!');
+      setTimeout(() => this.next(), 900);
+    }
+  },
+  next() {
+    this.qi++;
+    const ld = G22_DATA[this.lvl];
+    if (this.qi < ld.seqs.length) {
+      this.loadQ();
+    } else {
+      const s = calcStars(this.mistakes), c = s * 5;
+      Prog.record('xilofon_nada', this.lvl + 1, s, c);
+      UI.updateHeader();
+      showVictory(this.lvl + 1, s, c, G22_DATA.length, (n) => G22.start(Math.min(n, G22_DATA.length - 1)));
+    }
+  }
+};
+
+/* ── G23: TIMBANGAN AJAIB ── */
+const G23 = {
+  lvl: 0, qi: 0, mistakes: 0,
+  start(l) {
+    this.lvl = l; this.qi = 0; this.mistakes = 0;
+    this.loadQ();
+  },
+  loadQ() {
+    const ld = G23_DATA[this.lvl];
+    const item = ld.items[this.qi];
+
+    document.getElementById('g23-title').textContent = ld.title;
+    document.getElementById('g23-prog').textContent = `Soal ${this.qi + 1} dari ${ld.items.length}`;
+    document.getElementById('g23-stars').textContent = Prog.gameStars('timbangan_ajaib', this.lvl + 1);
+
+    document.getElementById('g23-left-obj').textContent = item.leftIco;
+    document.getElementById('g23-right-obj').textContent = item.rightIco;
+    document.getElementById('g23-qtext').textContent = item.q;
+
+    const beam = document.getElementById('g23-beam');
+    beam.className = 'scale-beam-bar';
+    if (item.tilt === 'left') beam.classList.add('tilt-left');
+    else if (item.tilt === 'right') beam.classList.add('tilt-right');
+    else beam.classList.add('tilt-even');
+
+    SFX.speak(item.q.replace(/⚖️/g, ''));
+    renderChoices('g23-choices', scramble(item.opts), item.ans,
+      (btn) => {
+        btn.classList.add('right');
+        SFX.correct();
+        showToast('⚖️', 'Pintar! Pengamatanmu tepat!');
+        setTimeout(() => this.next(), 900);
+      },
+      (btn) => {
+        btn.classList.add('wrong');
+        setTimeout(() => btn.classList.remove('wrong'), 550);
+        this.mistakes++;
+        showToast('💡', 'Perhatikan kemiringan papan timbangannya ya!', true);
+      }
+    );
+  },
+  next() {
+    this.qi++;
+    const ld = G23_DATA[this.lvl];
+    if (this.qi < ld.items.length) {
+      this.loadQ();
+    } else {
+      const s = calcStars(this.mistakes), c = s * 5;
+      Prog.record('timbangan_ajaib', this.lvl + 1, s, c);
+      UI.updateHeader();
+      showVictory(this.lvl + 1, s, c, G23_DATA.length, (n) => G23.start(Math.min(n, G23_DATA.length - 1)));
+    }
+  }
+};
+
+/* ── G24: BERSIH GIGI & TUBUH SEHAT ── */
+const G24 = {
+  lvl: 0, qi: 0, mistakes: 0, remainingGerms: 0,
+  start(l) {
+    this.lvl = l; this.qi = 0; this.mistakes = 0;
+    this.loadLevel();
+  },
+  loadLevel() {
+    const ld = G24_DATA[this.lvl];
+    document.getElementById('g24-title').textContent = ld.title;
+    document.getElementById('g24-stars').textContent = Prog.gameStars('gosok_gigi', this.lvl + 1);
+
+    if (ld.mode === 'brush') {
+      document.getElementById('g24-brush-mode').style.display = 'block';
+      document.getElementById('g24-quiz-mode').style.display = 'none';
+      document.getElementById('g24-prog').textContent = `Bersihkan Kuman Gigi`;
+      this.initTeeth(ld.germCount);
+    } else {
+      document.getElementById('g24-brush-mode').style.display = 'none';
+      document.getElementById('g24-quiz-mode').style.display = 'block';
+      this.loadQuiz();
+    }
+  },
+  initTeeth(count) {
+    this.remainingGerms = count;
+    document.getElementById('g24-germ-count').textContent = this.remainingGerms;
+    const topRow = document.getElementById('g24-teeth-top');
+    const btmRow = document.getElementById('g24-teeth-bottom');
+    topRow.innerHTML = ''; btmRow.innerHTML = '';
+
+    const totalTeeth = 8;
+    const germIndices = scramble([0, 1, 2, 3, 4, 5, 6, 7]).slice(0, count);
+
+    for (let i = 0; i < totalTeeth; i++) {
+      const tooth = document.createElement('div');
+      tooth.className = 'tooth';
+      if (germIndices.includes(i)) {
+        const germ = document.createElement('span');
+        germ.className = 'germ-target';
+        germ.textContent = rand(['👾', '🦠', '🪱']);
+        germ.onclick = (e) => {
+          e.stopPropagation();
+          this.cleanGerm(germ, tooth);
+        };
+        tooth.appendChild(germ);
+      }
+      if (i < 4) topRow.appendChild(tooth);
+      else btmRow.appendChild(tooth);
+    }
+
+    SFX.speak('Ayo bersihkan semua kuman di gigi!');
+  },
+  cleanGerm(germEl, toothEl) {
+    if (germEl.classList.contains('cleaned')) return;
+    germEl.classList.add('cleaned');
+    SFX.pop();
+    const sparkle = document.createElement('span');
+    sparkle.className = 'sparkle-badge';
+    sparkle.textContent = '✨';
+    toothEl.appendChild(sparkle);
+
+    this.remainingGerms--;
+    document.getElementById('g24-germ-count').textContent = this.remainingGerms;
+
+    if (this.remainingGerms === 0) {
+      SFX.correct();
+      showToast('🪥', 'Hore! Gigi sudah bersih berkilau!');
+      setTimeout(() => this.finish(), 800);
+    }
+  },
+  loadQuiz() {
+    const ld = G24_DATA[this.lvl];
+    const item = ld.items[this.qi];
+
+    document.getElementById('g24-prog').textContent = `Soal ${this.qi + 1} dari ${ld.items.length}`;
+    document.getElementById('g24-quiz-emoji').textContent = item.emoji;
+    document.getElementById('g24-quiz-qtext').textContent = item.q;
+
+    SFX.speak(item.q);
+    renderChoices('g24-quiz-choices', scramble(item.opts), item.ans,
+      (btn) => {
+        btn.classList.add('right');
+        SFX.correct();
+        showToast('🧼', 'Benar! Kamu anak yang rajin dan bersih!');
+        setTimeout(() => this.nextQuiz(), 900);
+      },
+      (btn) => {
+        btn.classList.add('wrong');
+        setTimeout(() => btn.classList.remove('wrong'), 550);
+        this.mistakes++;
+        showToast('💡', 'Pikirkan kebiasaan sehat sehari-hari ya!', true);
+      }
+    );
+  },
+  nextQuiz() {
+    this.qi++;
+    const ld = G24_DATA[this.lvl];
+    if (this.qi < ld.items.length) {
+      this.loadQuiz();
+    } else {
+      this.finish();
+    }
+  },
+  finish() {
+    const s = calcStars(this.mistakes), c = s * 5;
+    Prog.record('gosok_gigi', this.lvl + 1, s, c);
+    UI.updateHeader();
+    showVictory(this.lvl + 1, s, c, G24_DATA.length, (n) => G24.start(Math.min(n, G24_DATA.length - 1)));
+  }
+};
+
 /* ═══════════════════════════════════════════════════════════
    7. SHOP (TOKO KOSTUM KOIN), CERTIFICATE, SCREEN TIME, & HIJAIYAH
 ═══════════════════════════════════════════════════════════ */
@@ -5003,7 +6182,7 @@ const UI = {
       </div>
 
       <div style="margin-top:14px">
-        <h4 style="font-size:.95rem;color:#0369a1;margin-bottom:6px;font-weight:700">⭐ Koleksi Bintang Semua Game (18 Modul):</h4>
+        <h4 style="font-size:.95rem;color:#0369a1;margin-bottom:6px;font-weight:700">⭐ Koleksi Bintang Semua Game (${totalGames} Modul):</h4>
         <div class="rapor-grid-games">${gamesGridHtml}</div>
       </div>
 
@@ -5033,7 +6212,7 @@ const UI = {
     const data = Prog.data;
     const canvas = document.createElement('canvas');
     canvas.width = 800;
-    canvas.height = 1260;
+    canvas.height = 1480;
     const ctx = canvas.getContext('2d');
 
     // Background Gradient
@@ -5085,7 +6264,7 @@ const UI = {
     const stats = [
       { label: 'Total Bintang', val: `⭐ ${data.totalStars}`, bg: '#fef3c7', col: '#b45309' },
       { label: 'Koin Emas', val: `🪙 ${data.totalCoins}`, bg: '#fef9c3', col: '#a16207' },
-      { label: 'Game Selesai', val: `🎮 ${Object.values(data.games).filter(g=>g.played).length}/18`, bg: '#dcfce7', col: '#15803d' },
+      { label: 'Game Selesai', val: `🎮 ${Object.values(data.games).filter(g=>g.played).length}/${CATALOG.length}`, bg: '#dcfce7', col: '#15803d' },
     ];
     stats.forEach((st, idx) => {
       const sx = 50 + idx * 240;
@@ -5106,9 +6285,9 @@ const UI = {
     ctx.fillStyle = '#0369a1';
     ctx.font = 'bold 22px "Fredoka", sans-serif';
     ctx.textAlign = 'left';
-    ctx.fillText('📊 Rincian Bintang & Level Tiap Game (18 Modul):', 50, 385);
+    ctx.fillText(`📊 Rincian Bintang & Level Tiap Game (${CATALOG.length} Modul):`, 50, 385);
 
-    // 18 Games Grid (6 rows x 3 cols)
+    // 24 Games Grid (8 rows x 3 cols)
     const cols = 3;
     const itemW = 220;
     const itemH = 100;
@@ -5156,10 +6335,10 @@ const UI = {
     ctx.fillStyle = '#1e293b';
     ctx.font = 'bold 15px "Fredoka", sans-serif';
     ctx.textAlign = 'center';
-    ctx.fillText('🎓 Belajar Calistung Ceria 100% Edukatif & Ramah Anak Indonesia', canvas.width / 2, 1145);
+    ctx.fillText('🎓 Belajar Calistung Ceria 100% Edukatif & Ramah Anak Indonesia', canvas.width / 2, 1375);
     ctx.font = '500 13px "Fredoka", sans-serif';
     ctx.fillStyle = '#64748b';
-    ctx.fillText('Petualangan bersama Harsha • Habibi, Shafiyyah, & Arsha • Dibuat oleh @prihantowhy', canvas.width / 2, 1175);
+    ctx.fillText('Petualangan bersama Harsha • Habibi, Shafiyyah, & Arsha • Dibuat oleh @prihantowhy', canvas.width / 2, 1405);
 
     // Download canvas as PNG
     canvas.toBlob((blob) => {
@@ -5280,7 +6459,7 @@ const UI = {
     const waBtn = document.getElementById('btn-share-wa');
     if (waBtn) waBtn.onclick = () => {
       const p = Prog.getActiveProfile();
-      const txt = `🌟 *RAPOR PRESTASI HARSHA EDU* 🌟%0A👤 Nama: *${p.name}* (${p.level})%0A⭐ Total Bintang: *${Prog.data.totalStars}*%0A🪙 Total Koin: *${Prog.data.totalCoins}*%0A🎮 Modul: *${Object.values(Prog.data.games).filter(g=>g.played).length}/15 Game Selesai*%0A%0A_Aplikasi Belajar Calistung 100% Gratis untuk Anak Indonesia oleh @prihantowhy!_`;
+      const txt = `🌟 *RAPOR PRESTASI HARSHA EDU* 🌟%0A👤 Nama: *${p.name}* (${p.level})%0A⭐ Total Bintang: *${Prog.data.totalStars}*%0A🪙 Total Koin: *${Prog.data.totalCoins}*%0A🎮 Modul: *${Object.values(Prog.data.games).filter(g=>g.played).length}/${CATALOG.length} Game Selesai*%0A%0A_Aplikasi Belajar Calistung 100% Gratis untuk Anak Indonesia oleh @prihantowhy!_`;
       window.open('https://api.whatsapp.com/send?text=' + txt, '_blank');
     };
 

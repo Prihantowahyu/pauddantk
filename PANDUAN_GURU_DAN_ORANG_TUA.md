@@ -37,7 +37,7 @@ Aplikasi menyediakan **3 profil bawaan** yang disesuaikan dengan tahapan tumbuh 
 
 Aplikasi memiliki **3 pilar aktivitas utama**:
 
-### A. 18 Mini-Game Calistung & Eksplorasi (Halaman Utama)
+### A. 24 Mini-Game Calistung & Eksplorasi (Halaman Utama)
 1. **🏝️ Ekspedisi Pulau Pintar:** Eksplorasi 5 pulau kuis abjad dan angka bertingkat.
 2. **🍳 Dapur Kata & Angka:** Menyusun huruf menjadi nama resep makanan bergizi.
 3. **🏃 Lomba Lari Angka:** Kecepatan refleks memilih angka yang diminta sambil berlari.
@@ -56,6 +56,12 @@ Aplikasi memiliki **3 pilar aktivitas utama**:
 16. **🌈 Warna Ceria Pelangi:** Mengenal dan mencocokkan spektrum warna cerah dari warna dasar hingga sekunder.
 17. **⏰ Belajar Jam & Waktu:** Membaca jarum jam analog (jam tepat, setengah, dan seperempat) secara visual dan seru.
 18. **🐾 Tebak Suara Hewan:** Melatih kepekaan audio anak dengan mendengarkan tiruan suara hewan dan menebak hewannya.
+19. **🃏 Taman Memori Pintar:** Membuka kartu berpasangan (huruf, angka, hewan-makanan, lawan kata) untuk melatih konsentrasi & daya ingat visual.
+20. **♻️ Pahlawan Cilik Pilah Sampah:** Memilah sampah organik, plastik, dan kertas ke tempat sampah yang sesuai (eko-literasi).
+21. **🎭 Detektif Emosi Ceria:** Mengenal ekspresi perasaan (senang, sedih, marah, takut, kaget) dari cerita bergambar Harsha (Social-Emotional Learning).
+22. **🎹 Xilofon Pelangi & Melodi:** Eksplorasi tuts musik Do-Re-Mi bernada jernih dan tantangan memori ritme ketukan nada.
+23. **⚖️ Timbangan Ajaib:** Belajar konsep komparasi berat (lebih berat, lebih ringan, seimbang) pada timbangan jungkat-jungkit animasi.
+24. **🦷 Bersih Gigi & Tubuh Sehat:** Aksi interaktif menggosok kuman di gigi hingga bersih berkilau dan kuis kebiasaan hidup bersih mandiri.
 
 ### B. 🏝️ Petualangan Harsha (Nusa Pintar)
 * Dapat diakses lewat ubin biru **"Petualangan Harsha"** di beranda.
