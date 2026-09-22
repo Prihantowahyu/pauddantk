@@ -322,7 +322,7 @@ body.dark-mode {
   color: #e2e8f0;
 }
 body.dark-mode header {
-  background: rgba(15, 23, 42, 0.92) !important;
+  background: rgba(15, 23, 42, 0.95) !important;
   border-bottom: 3px solid #334155 !important;
 }
 body.dark-mode .brand-title { color: #f43f5e !important; text-shadow: 0 0 12px rgba(244,63,94,.4) !important; }
@@ -334,12 +334,23 @@ body.dark-mode .pill, body.dark-mode .profile-btn, body.dark-mode .ico-btn {
   box-shadow: 0 3px 0 #334155 !important;
 }
 body.dark-mode .gcard {
-  background: rgba(30, 41, 59, 0.92) !important;
+  background: rgba(30, 41, 59, 0.95) !important;
   border-color: #334155 !important;
   color: #f8fafc !important;
 }
+body.dark-mode .gcard-featured {
+  background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%) !important;
+  border-color: #475569 !important;
+}
 body.dark-mode .gtitle { color: #f8fafc !important; }
 body.dark-mode .gdesc { color: #94a3b8 !important; }
+body.dark-mode .gcat-tag {
+  background: #334155 !important;
+  color: #38bdf8 !important;
+}
+body.dark-mode .gico-sublabel {
+  color: #94a3b8 !important;
+}
 body.dark-mode .mascot-bar {
   background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%) !important;
   border-color: #334155 !important;
@@ -353,6 +364,118 @@ body.dark-mode .modal-box {
 }
 body.dark-mode .modal-title { color: #f8fafc !important; }
 body.dark-mode .modal-desc { color: #cbd5e1 !important; }
+
+/* Dark Mode Game Play Elements */
+body.dark-mode .board {
+  background: #1e293b !important;
+  border-color: #475569 !important;
+  color: #f8fafc !important;
+}
+body.dark-mode .gtop {
+  background: #1e293b !important;
+  border-color: #475569 !important;
+  color: #f8fafc !important;
+}
+body.dark-mode .lvl-title { color: #38bdf8 !important; }
+body.dark-mode .lvl-prog { color: #94a3b8 !important; }
+body.dark-mode .star-pill {
+  background: #0f172a !important;
+  border-color: #475569 !important;
+  color: #fbbf24 !important;
+}
+body.dark-mode .q-box,
+body.dark-mode .puzzle-q-card,
+body.dark-mode .shop-list,
+body.dark-mode .farm-q,
+body.dark-mode .shop-q,
+body.dark-mode .salon-qbox,
+body.dark-mode .suku-part {
+  background: #0f172a !important;
+  border-color: #334155 !important;
+  color: #f8fafc !important;
+}
+body.dark-mode .q-label,
+body.dark-mode .dapur-label,
+body.dark-mode .suku-q,
+body.dark-mode .suku-word {
+  color: #cbd5e1 !important;
+}
+body.dark-mode .q-hint {
+  background: #1e293b !important;
+  border-color: #0284c7 !important;
+  color: #38bdf8 !important;
+}
+body.dark-mode .slot {
+  background: #0f172a !important;
+  border-color: #475569 !important;
+  color: #f8fafc !important;
+}
+body.dark-mode .slot.empty {
+  background: #1e293b !important;
+  border-color: #475569 !important;
+  color: #64748b !important;
+}
+body.dark-mode .shop-item {
+  color: #e2e8f0 !important;
+  border-color: #334155 !important;
+}
+body.dark-mode .shop-total {
+  color: #94a3b8 !important;
+  border-color: #475569 !important;
+}
+body.dark-mode .puzzle-piece.locked-p {
+  background: #0f172a !important;
+  border-color: #334155 !important;
+  color: #64748b !important;
+}
+body.dark-mode .map-bg {
+  border-color: #1e3a5f !important;
+}
+body.dark-mode .map-title {
+  background: rgba(15, 23, 42, 0.92) !important;
+  color: #38bdf8 !important;
+}
+body.dark-mode .cell {
+  border-color: #334155 !important;
+  color: #f8fafc !important;
+}
+body.dark-mode .toast {
+  background: #0f172a !important;
+  border-color: #10b981 !important;
+  color: #4ade80 !important;
+}
+body.dark-mode .toast.retry {
+  border-color: #f59e0b !important;
+  color: #fbbf24 !important;
+}
+body.dark-mode .report-sheet {
+  background: #0f172a !important;
+  border-color: #334155 !important;
+  color: #f8fafc !important;
+}
+body.dark-mode .report-row {
+  border-color: #334155 !important;
+  color: #e2e8f0 !important;
+}
+body.dark-mode .p-card {
+  background: #1e293b !important;
+  border-color: #334155 !important;
+  color: #f8fafc !important;
+}
+body.dark-mode .podium-box {
+  background: #1e293b !important;
+  border-color: #334155 !important;
+  color: #f8fafc !important;
+}
+body.dark-mode #guide-modal div[style*="background:#f8fafc"],
+body.dark-mode #guide-modal div[style*="background:#f0fdf4"] {
+  background: #1e293b !important;
+  border-color: #334155 !important;
+  color: #e2e8f0 !important;
+}
+body.dark-mode #guide-modal ul {
+  color: #cbd5e1 !important;
+}
 
 /* Profile Button in Header */
 .profile-btn {
@@ -850,6 +973,424 @@ body.dark-mode .modal-desc { color: #cbd5e1 !important; }
   }
 }
 
+/* ── HUB CARD ENHANCED LABELS & BADGES ── */
+.gcard {
+  position: relative;
+  overflow: hidden;
+}
+.gcard .gico {
+  flex-direction: column;
+  justify-content: center;
+  gap: 3px;
+  min-height: 94px;
+}
+.gico-main {
+  font-size: 42px;
+  line-height: 1;
+}
+.gico-sublabel {
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.3px;
+  color: #64748b;
+  text-transform: uppercase;
+  background: rgba(255, 255, 255, 0.75);
+  padding: 2px 8px;
+  border-radius: 999px;
+  white-space: nowrap;
+  max-width: 90%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.gcat-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.72rem;
+  font-weight: 800;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: #e0f2fe;
+  color: #0284c7;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+.gnum-circle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 800;
+  margin-right: 4px;
+  vertical-align: middle;
+  box-shadow: 0 2px 4px rgba(217, 119, 6, 0.3);
+}
+
+/* ── LANDSCAPE MOBILE OPTIMIZATION ── */
+@media (orientation: landscape) and (max-height: 560px) {
+  header {
+    padding: 6px 12px !important;
+    min-height: 46px !important;
+  }
+  .brand {
+    gap: 8px !important;
+  }
+  .brand img {
+    width: 34px !important;
+    height: 34px !important;
+  }
+  .brand-title {
+    font-size: 1.05rem !important;
+  }
+  .brand-sub {
+    display: none !important;
+  }
+  .hdr-controls {
+    flex-direction: row !important;
+    gap: 4px !important;
+  }
+  .hdr-btns {
+    border-top: none !important;
+    padding-top: 0 !important;
+    gap: 4px !important;
+  }
+  .ico-btn {
+    width: 36px !important;
+    height: 36px !important;
+    font-size: 1.05rem !important;
+  }
+  .profile-btn {
+    padding: 2px 10px 2px 6px !important;
+    font-size: 0.85rem !important;
+  }
+  .profile-btn .p-avatar {
+    width: 26px !important;
+    height: 26px !important;
+    font-size: 1.1rem !important;
+  }
+  .stats .pill {
+    padding: 3px 8px !important;
+    font-size: 0.85rem !important;
+  }
+  #hub {
+    padding: 10px 14px 40px !important;
+  }
+  .mascot-bar {
+    padding: 8px 14px !important;
+    margin-bottom: 12px !important;
+    gap: 10px !important;
+  }
+  .ciko-box {
+    width: 48px !important;
+    height: 48px !important;
+    min-width: 48px !important;
+  }
+  .mascot-txt h2 {
+    font-size: 1rem !important;
+  }
+  .mascot-txt p {
+    font-size: 0.82rem !important;
+  }
+  .grid {
+    grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)) !important;
+    gap: 12px !important;
+  }
+  .gcard {
+    min-height: 220px !important;
+    padding: 12px 10px !important;
+  }
+  .gico {
+    width: 72px !important;
+    height: 72px !important;
+    min-height: 72px !important;
+    margin: 4px 0 8px !important;
+  }
+  .gico-main {
+    font-size: 36px !important;
+  }
+  .game-wrap {
+    padding: 8px 14px 20px !important;
+    max-width: 96vw !important;
+  }
+  .gtop {
+    padding: 6px 12px !important;
+    margin-bottom: 10px !important;
+  }
+  .board {
+    min-height: auto !important;
+    padding: 14px !important;
+  }
+  .q-emoji {
+    font-size: 60px !important;
+    margin-bottom: 6px !important;
+  }
+  .q-box {
+    font-size: 1.35rem !important;
+    padding: 8px 18px !important;
+    margin-bottom: 10px !important;
+  }
+  .btn-ch {
+    min-width: 54px !important;
+    min-height: 54px !important;
+    font-size: 1.6rem !important;
+  }
+  .modal-box {
+    max-height: 90vh !important;
+    overflow-y: auto !important;
+    padding: 16px !important;
+  }
+}
+
+/* ── STYLES G14: SUSUN SUKU KATA ── */
+.suku-target-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin: 12px 0 20px;
+  flex-wrap: wrap;
+}
+.suku-slot-box {
+  min-width: 80px;
+  height: 80px;
+  background: #f8fafc;
+  border: 3px dashed #94a3b8;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.9rem;
+  font-weight: 800;
+  color: #0f172a;
+  box-shadow: inset 0 3px 6px rgba(0,0,0,0.06);
+  transition: all .2s;
+}
+.suku-slot-box.filled {
+  background: #dcfce7;
+  border: 3px solid #22c55e;
+  color: #15803d;
+  animation: pop .35s ease;
+  box-shadow: 0 4px 10px rgba(34,197,94,.25);
+}
+.suku-bubble-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  max-width: 500px;
+  margin-bottom: 16px;
+}
+.btn-suku-bubble {
+  min-width: 78px;
+  min-height: 70px;
+  border-radius: 20px;
+  border: none;
+  background: linear-gradient(135deg, #ec4899, #db2777);
+  color: #fff;
+  font-family: var(--font);
+  font-size: 1.8rem;
+  font-weight: 800;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6px 0 #be185d, 0 4px 12px rgba(219,39,119,.25);
+  transition: all .15s cubic-bezier(.175,.885,.32,1.275);
+  padding: 0 16px;
+}
+.btn-suku-bubble:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 9px 0 #be185d, 0 6px 16px rgba(219,39,119,.3);
+}
+.btn-suku-bubble:active {
+  transform: translateY(3px);
+  box-shadow: 0 2px 0 #be185d;
+}
+.btn-suku-bubble.used {
+  opacity: 0.35;
+  pointer-events: none;
+  transform: none;
+  box-shadow: none;
+}
+.suku-result-banner {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #15803d;
+  background: #dcfce7;
+  border: 2px solid #86efac;
+  border-radius: 12px;
+  padding: 6px 18px;
+  margin-top: 8px;
+  display: none;
+}
+
+/* ── STYLES G15: PETUALANGAN BENTUK AJAIB ── */
+.shape-visual-wrap {
+  width: 140px;
+  height: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 10px 0 16px;
+  background: #f0fdf4;
+  border: 4px solid #86efac;
+  border-radius: 24px;
+  box-shadow: 0 8px 20px rgba(16,185,129,.15);
+  animation: floatWord 3s ease-in-out infinite alternate;
+}
+.shape-visual-svg {
+  width: 100px;
+  height: 100px;
+  filter: drop-shadow(0 4px 8px rgba(0,0,0,.15));
+}
+.shape-choice-grid {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  justify-content: center;
+  max-width: 540px;
+}
+.btn-shape {
+  min-width: 120px;
+  min-height: 64px;
+  padding: 10px 18px;
+  border-radius: 18px;
+  border: none;
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: #fff;
+  font-family: var(--font);
+  font-size: 1.25rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 6px 0 #047857;
+  transition: all .15s cubic-bezier(.175,.885,.32,1.275);
+}
+.btn-shape:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 9px 0 #047857;
+}
+.btn-shape:active {
+  transform: translateY(3px);
+  box-shadow: 0 2px 0 #047857;
+}
+.btn-shape.wrong {
+  animation: shake .5s ease;
+  background: linear-gradient(135deg, #f87171, #ef4444);
+  box-shadow: 0 6px 0 #b91c1c;
+}
+.btn-shape.right {
+  background: linear-gradient(135deg, #34d399, #10b981);
+  box-shadow: 0 6px 0 #047857;
+  animation: pop .4s ease;
+}
+
+/* ── STYLES RAPOR BELAJAR VISUAL ── */
+.rapor-grid-games {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 8px;
+  margin: 14px 0;
+  max-height: 280px;
+  overflow-y: auto;
+  padding: 6px;
+  border: 2px solid #e2e8f0;
+  border-radius: 14px;
+  background: #f8fafc;
+}
+body.dark-mode .rapor-grid-games {
+  background: #0f172a !important;
+  border-color: #334155 !important;
+}
+.rapor-mini-card {
+  background: #fff;
+  border: 2px solid #cbd5e1;
+  border-radius: 12px;
+  padding: 8px 6px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 2px 5px rgba(0,0,0,.04);
+}
+body.dark-mode .rapor-mini-card {
+  background: #1e293b !important;
+  border-color: #475569 !important;
+  color: #f8fafc !important;
+}
+.rapor-mini-ico {
+  font-size: 1.6rem;
+  margin-bottom: 2px;
+}
+.rapor-mini-name {
+  font-size: 0.72rem;
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 4px;
+  color: #1e293b;
+}
+body.dark-mode .rapor-mini-name {
+  color: #f1f5f9 !important;
+}
+.rapor-mini-stars {
+  font-size: 0.8rem;
+  color: #f59e0b;
+  font-weight: 800;
+}
+.rapor-mini-lvl {
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: #0284c7;
+  background: #e0f2fe;
+  padding: 1px 6px;
+  border-radius: 999px;
+  margin-top: 3px;
+}
+body.dark-mode .rapor-mini-lvl {
+  background: #0369a1 !important;
+  color: #e0f2fe !important;
+}
+
+/* ── STYLES NOTIFIKASI PENGINGAT ── */
+.notif-box {
+  background: #f0f9ff;
+  border: 2px solid #bae6fd;
+  border-radius: 16px;
+  padding: 16px;
+  margin: 12px 0;
+  text-align: left;
+}
+body.dark-mode .notif-box {
+  background: #0c4a6e !important;
+  border-color: #0284c7 !important;
+  color: #f0f9ff !important;
+}
+.notif-time-select {
+  padding: 8px 14px;
+  border-radius: 10px;
+  border: 2px solid #7dd3fc;
+  font-family: var(--font);
+  font-size: 1rem;
+  font-weight: 700;
+  color: #0369a1;
+  background: #fff;
+  cursor: pointer;
+}
+body.dark-mode .notif-time-select {
+  background: #1e293b;
+  color: #38bdf8;
+  border-color: #0284c7;
+}
+
 </style>
 </head>
 <body>
@@ -894,6 +1435,7 @@ body.dark-mode .modal-desc { color: #cbd5e1 !important; }
       <button class="ico-btn" id="screentime-btn" title="Batas Waktu Layar" aria-label="Waktu Layar">⏳</button>
       <button class="ico-btn" id="badge-btn" title="Lencana & Prestasi" aria-label="Lencana">🏆</button>
       <button class="ico-btn" id="leader-btn" title="Peringkat Keluarga" aria-label="Peringkat">🏅</button>
+      <button class="ico-btn" id="notif-btn" title="Pengingat Belajar Harian" aria-label="Pengingat Belajar" style="background:#eff6ff;border:2px solid #93c5fd">🔔</button>
       <button class="ico-btn" id="report-btn" title="Rapor Belajar" aria-label="Rapor">📊</button>
       <button class="ico-btn" id="challenge-btn" title="Mode Tantangan Waktu" aria-label="Mode Tantangan">⚡</button>
       <button class="ico-btn" id="bgm-btn" title="Musik Latar" aria-label="Musik Latar">🎵</button>
@@ -1212,6 +1754,43 @@ body.dark-mode .modal-desc { color: #cbd5e1 !important; }
   </div>
 </section>
 
+<!-- ═══ G14: SUSUN SUKU KATA CERIA ═══ -->
+<section class="view" id="g14">
+  <div class="game-wrap">
+    <div class="gtop" style="border-color:#ec4899;background:#fdf2f8">
+      <button class="back-btn" style="background:#db2777;box-shadow:0 5px 0 #9d174d" data-back="g14" title="Kembali ke Beranda"><span>🏠</span> <span>Beranda</span></button>
+      <div class="lvl-info"><div class="lvl-title" style="color:#be185d" id="g14-title">Level 1</div><div class="lvl-prog" id="g14-prog">Kata 1 dari 5</div></div>
+      <div class="star-pill">⭐ <span id="g14-stars">0</span></div>
+    </div>
+    <div class="board" style="border:5px solid #f472b6;box-shadow:0 12px 24px rgba(0,0,0,.1),0 8px 0 #be185d">
+      <div class="q-emoji" id="g14-emoji">👕</div>
+      <div class="q-label" id="g14-label">Susun suku kata untuk kata: <strong>BAJU</strong></div>
+      <div class="suku-target-row" id="g14-slots"></div>
+      <div class="suku-bubble-row" id="g14-bubbles"></div>
+      <div class="suku-result-banner" id="g14-banner">✨ Hebat! BA - JU = BAJU!</div>
+      <button class="btn-sec" id="g14-reset-btn" style="border-radius:999px;padding:8px 20px;font-size:.95rem;font-weight:700;display:inline-flex;align-items:center;gap:6px;margin-top:6px;cursor:pointer"><span>🔁</span> <span>Ulangi Pilihan</span></button>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ G15: PETUALANGAN BENTUK AJAIB ═══ -->
+<section class="view" id="g15">
+  <div class="game-wrap">
+    <div class="gtop" style="border-color:#10b981;background:#ecfdf5">
+      <button class="back-btn" style="background:#059669;box-shadow:0 5px 0 #065f46" data-back="g15" title="Kembali ke Beranda"><span>🏠</span> <span>Beranda</span></button>
+      <div class="lvl-info"><div class="lvl-title" style="color:#047857" id="g15-title">Level 1: Bentuk Dasar</div><div class="lvl-prog" id="g15-prog">Soal 1 dari 5</div></div>
+      <div class="star-pill">⭐ <span id="g15-stars">0</span></div>
+    </div>
+    <div class="board" style="border:5px solid #34d399;box-shadow:0 12px 24px rgba(0,0,0,.1),0 8px 0 #047857">
+      <div class="shape-visual-wrap" id="g15-visual-wrap">
+        <div id="g15-svg-container" class="shape-visual-svg"></div>
+      </div>
+      <div class="q-box" id="g15-qtext" style="max-width:480px;font-size:1.35rem">Manakah yang berbentuk Segitiga?</div>
+      <div class="shape-choice-grid" id="g15-choices"></div>
+    </div>
+  </div>
+</section>
+
 <!-- MODALS -->
 
 <!-- ═══ MODAL PROFIL (P1 & P2) ═══ -->
@@ -1398,17 +1977,56 @@ body.dark-mode .modal-desc { color: #cbd5e1 !important; }
 
 <!-- ═══ MODAL RAPOR BELAJAR ANAK (P6) ═══ -->
 <div class="modal-bg" id="report-modal">
-  <div class="modal-box" style="max-width:520px">
+  <div class="modal-box" style="max-width:560px;max-height:92vh;overflow-y:auto">
     <div class="modal-ico">📊📜</div>
-    <h2 class="modal-title">Rapor Belajar Anak Ceria</h2>
-    <p class="modal-desc">Ringkasan kemajuan belajar untuk Orang Tua & Guru</p>
+    <h2 class="modal-title">Rapor Prestasi Harsha</h2>
+    <p class="modal-desc">Ringkasan kemajuan belajar calistung untuk Ayah, Ibu &amp; Guru</p>
 
     <div class="report-sheet" id="report-sheet-content"></div>
 
+    <div class="modal-btns" style="gap:8px;margin-top:14px">
+      <button class="btn-big" id="btn-save-report-img" style="background:linear-gradient(135deg,#f59e0b,#d97706);box-shadow:0 4px 0 #b45309;font-size:.9rem;padding:0 16px">📸 Simpan Gambar Rapor</button>
+      <button class="btn-big" id="btn-share-wa" style="background:linear-gradient(135deg,#16a34a,#15803d);box-shadow:0 4px 0 #14532d;font-size:.9rem;padding:0 16px">📲 Kirim WA</button>
+      <button class="btn-big" id="btn-print-report" style="background:linear-gradient(135deg,#0284c7,#0369a1);box-shadow:0 4px 0 #075985;font-size:.9rem;padding:0 16px">🖨️ Cetak</button>
+      <button class="btn-big btn-sec" id="btn-close-report" style="font-size:.9rem;padding:0 16px">Tutup</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ MODAL PENGINGAT BELAJAR HARIAN ═══ -->
+<div class="modal-bg" id="notif-modal">
+  <div class="modal-box" style="max-width:480px">
+    <div class="modal-ico">🔔🌟</div>
+    <h2 class="modal-title" style="color:#0284c7">Pengingat Belajar Harian</h2>
+    <p class="modal-desc">Bantu si kecil konsisten belajar dengan sapaan ramah setiap hari!</p>
+
+    <div class="notif-box">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;gap:8px">
+        <div>
+          <strong style="color:#0369a1;font-size:1rem">Status Pengingat:</strong>
+          <div id="notif-status-text" style="font-size:0.85rem;color:#64748b;font-weight:600">Belum diaktifkan</div>
+        </div>
+        <button id="btn-toggle-notif" class="btn-play" style="background:#0284c7;font-size:0.85rem;padding:0 14px;height:38px">Aktifkan 🔔</button>
+      </div>
+
+      <div style="display:flex;align-items:center;justify-content:space-between;border-top:1px dashed #bae6fd;padding-top:10px">
+        <span style="font-size:0.9rem;font-weight:700;color:#0369a1">⏰ Jam Belajar:</span>
+        <select id="notif-time-select" class="notif-time-select">
+          <option value="09:00">09:00 (Pagi Ceria ☀️)</option>
+          <option value="14:00">14:00 (Siang Pintar 🌤️)</option>
+          <option value="16:00" selected>16:00 (Sore Santai 🌇)</option>
+          <option value="19:00">19:00 (Malam Hangat 🌙)</option>
+        </select>
+      </div>
+    </div>
+
+    <div style="background:#f0fdf4;border:2px solid #86efac;border-radius:12px;padding:10px;font-size:0.82rem;color:#166534;margin-bottom:14px">
+      💡 Notifikasi akan berbunyi di browser/HP saat waktunya tiba untuk menyapa anak bermain bersama Harsha!
+    </div>
+
     <div class="modal-btns">
-      <button class="btn-big" id="btn-print-report" style="background:linear-gradient(135deg,#0284c7,#0369a1);box-shadow:0 4px 0 #075985">🖨️ Cetak Rapor</button>
-      <button class="btn-big" id="btn-share-wa" style="background:linear-gradient(135deg,#16a34a,#15803d);box-shadow:0 4px 0 #14532d">📲 Kirim WA</button>
-      <button class="btn-big btn-sec" id="btn-close-report">Tutup</button>
+      <button class="btn-big" id="btn-test-notif" style="background:linear-gradient(135deg,#10b981,#059669);box-shadow:0 4px 0 #047857;font-size:0.92rem">🧪 Uji Coba Notifikasi Sekarang</button>
+      <button class="btn-big btn-sec" id="btn-close-notif">Tutup</button>
     </div>
   </div>
 </div>
@@ -1552,7 +2170,7 @@ const Prog = {
   data: null,
   IDS: ['ekspedisi_pulau','dapur_kata','lomba_lari','detektif_huruf','bangun_rumah',
         'kebun_ajaib','ketuk_suku','toko_mini','peternakan','puzzle_kata',
-        'misi_roket','salon_kata','ular_tangga'],
+        'misi_roket','salon_kata','ular_tangga','suku_kata','cocok_bentuk'],
 
   default(id = 'habibi') {
     const g = {};
@@ -2040,19 +2658,21 @@ const Confetti = {
    4. GAMES CATALOG (all 13, all playable)
 ═══════════════════════════════════════════════════════════ */
 const CATALOG = [
-  {id:'ekspedisi_pulau',n:1,title:'Ekspedisi Pulau Pintar',desc:'Eksplorasi 5 pulau huruf & angka',ico:'🏝️',bg:'#e3fafc',col:'#15aabf',screen:'g1',launch:()=>G1.start()},
-  {id:'dapur_kata',n:2,title:'Dapur Kata & Angka',desc:'Susun huruf jadi resep lezat',ico:'🍳',bg:'#fff4e6',col:'#fd7e14',screen:'g2',launch:()=>G2.start(0)},
-  {id:'lomba_lari',n:3,title:'Lomba Lari Angka',desc:'Ketuk angka benar sambil berlari',ico:'🏃',bg:'#f3f0ff',col:'#7950f2',screen:'g3',launch:()=>G3.start(0)},
-  {id:'detektif_huruf',n:4,title:'Detektif Huruf Hilang',desc:'Lengkapi huruf yang hilang',ico:'🔍',bg:'#fff9db',col:'#f59f00',screen:'g4',launch:()=>G4.start(0)},
-  {id:'bangun_rumah',n:5,title:'Bangun Rumah Kata',desc:'Susun balok huruf jadi kata',ico:'🏠',bg:'#ebfbee',col:'#40c057',screen:'g5',launch:()=>G5.start(0)},
-  {id:'kebun_ajaib',n:6,title:'Kebun Ajaib',desc:'Eja kata & panen buah berhitung',ico:'🍎',bg:'#fff0f6',col:'#e64980',screen:'g6',launch:()=>G6.start(0)},
-  {id:'ketuk_suku',n:7,title:'Ketuk Suku Kata',desc:'Hitung suku kata dengan tepat',ico:'🥁',bg:'#f1f3f5',col:'#495057',screen:'g7',launch:()=>G7.start(0)},
-  {id:'toko_mini',n:8,title:'Toko Mini Pintar',desc:'Simulasi kasir & belanja hitung',ico:'🛒',bg:'#e7f5ff',col:'#228be6',screen:'g8',launch:()=>G8.start(0)},
-  {id:'peternakan',n:9,title:'Peternakan Abjad',desc:'Cocokkan hewan dengan hurufnya',ico:'🐮',bg:'#f8f9fa',col:'#82c91e',screen:'g9',launch:()=>G9.start(0)},
-  {id:'puzzle_kata',n:10,title:'Puzzle Kata Bergambar',desc:'Buka potongan puzzle dengan jawaban',ico:'🧩',bg:'#e6fcf5',col:'#12b886',screen:'g10',launch:()=>G10.start(0)},
-  {id:'misi_roket',n:11,title:'Misi Roket Angka',desc:'Isi bahan bakar roket berhitung',ico:'🚀',bg:'#edf2ff',col:'#4c6ef5',screen:'g11',launch:()=>G11.start(0)},
-  {id:'salon_kata',n:12,title:'Salon Kata & Hadiah',desc:'Hias Ciko dengan jawaban kata',ico:'🎨',bg:'#fff0f6',col:'#f783ac',screen:'g12',launch:()=>G12.start(0)},
-  {id:'ular_tangga',n:13,title:'Ular Tangga Calistung',desc:'Board game tantangan seru',ico:'🎲',bg:'#fff3bf',col:'#fab005',screen:'g13',launch:()=>G13.start()}
+  {id:'ekspedisi_pulau',n:1,title:'Ekspedisi Pulau Pintar',category:'Membaca & Angka',sublabel:'5 Pulau Calistung',desc:'Eksplorasi 5 pulau huruf & angka',ico:'🏝️',bg:'#e3fafc',col:'#15aabf',screen:'g1',launch:()=>G1.start()},
+  {id:'dapur_kata',n:2,title:'Dapur Kata & Angka',category:'Membaca & Eja',sublabel:'Koki Cilik Kata',desc:'Susun huruf jadi resep lezat',ico:'🍳',bg:'#fff4e6',col:'#fd7e14',screen:'g2',launch:()=>G2.start(0)},
+  {id:'lomba_lari',n:3,title:'Lomba Lari Angka',category:'Berhitung Cepat',sublabel:'Lari Angka Ceria',desc:'Ketuk angka benar sambil berlari',ico:'🏃',bg:'#f3f0ff',col:'#7950f2',screen:'g3',launch:()=>G3.start(0)},
+  {id:'detektif_huruf',n:4,title:'Detektif Huruf Hilang',category:'Tebak Abjad',sublabel:'Detektif Huruf',desc:'Lengkapi huruf yang hilang',ico:'🔍',bg:'#fff9db',col:'#f59f00',screen:'g4',launch:()=>G4.start(0)},
+  {id:'bangun_rumah',n:5,title:'Bangun Rumah Kata',category:'Kosakata Cilik',sublabel:'Arsitek Balok Kata',desc:'Susun balok huruf jadi kata',ico:'🏠',bg:'#ebfbee',col:'#40c057',screen:'g5',launch:()=>G5.start(0)},
+  {id:'kebun_ajaib',n:6,title:'Kebun Ajaib',category:'Eja & Panen',sublabel:'Panen Buah Berhitung',desc:'Eja kata & panen buah berhitung',ico:'🍎',bg:'#fff0f6',col:'#e64980',screen:'g6',launch:()=>G6.start(0)},
+  {id:'ketuk_suku',n:7,title:'Ketuk Suku Kata',category:'Ritme & Suku Kata',sublabel:'Ketukan Ritme Kata',desc:'Hitung suku kata dengan tepat',ico:'🥁',bg:'#f1f3f5',col:'#495057',screen:'g7',launch:()=>G7.start(0)},
+  {id:'toko_mini',n:8,title:'Toko Mini Pintar',category:'Matematika Belanja',sublabel:'Kasir Cilik Pintar',desc:'Simulasi kasir & belanja hitung',ico:'🛒',bg:'#e7f5ff',col:'#228be6',screen:'g8',launch:()=>G8.start(0)},
+  {id:'peternakan',n:9,title:'Peternakan Abjad',category:'Abjad & Fauna',sublabel:'Sahabat Peternakan',desc:'Cocokkan hewan dengan hurufnya',ico:'🐮',bg:'#f8f9fa',col:'#82c91e',screen:'g9',launch:()=>G9.start(0)},
+  {id:'puzzle_kata',n:10,title:'Puzzle Kata Bergambar',category:'Kosakata Gambar',sublabel:'Buka Potongan Puzzle',desc:'Buka potongan puzzle dengan jawaban',ico:'🧩',bg:'#e6fcf5',col:'#12b886',screen:'g10',launch:()=>G10.start(0)},
+  {id:'misi_roket',n:11,title:'Misi Roket Angka',category:'Matematika Roket',sublabel:'Bahan Bakar Roket',desc:'Isi bahan bakar roket berhitung',ico:'🚀',bg:'#edf2ff',col:'#4c6ef5',screen:'g11',launch:()=>G11.start(0)},
+  {id:'salon_kata',n:12,title:'Salon Kata & Hadiah',category:'Kuis Kata & Gaya',sublabel:'Hias Ciko Modis',desc:'Hias Ciko dengan jawaban kata',ico:'🎨',bg:'#fff0f6',col:'#f783ac',screen:'g12',launch:()=>G12.start(0)},
+  {id:'ular_tangga',n:13,title:'Ular Tangga Calistung',category:'Papan Board Game',sublabel:'Ular Tangga Pintar',desc:'Board game tantangan calistung seru',ico:'🎲',bg:'#fff3bf',col:'#fab005',screen:'g13',launch:()=>G13.start()},
+  {id:'suku_kata',n:14,title:'Susun Suku Kata Ceria',category:'Literasi Kata',sublabel:'Rangkai Suku Kata',desc:'Susun potongan suku kata jadi kata bermakna',ico:'🗣️',bg:'#fdf2f8',col:'#db2777',screen:'g14',launch:()=>G14.start(0)},
+  {id:'cocok_bentuk',n:15,title:'Petualangan Bentuk Ajaib',category:'Geometri Cilik',sublabel:'Mengenal Bentuk & Benda',desc:'Kenali lingkaran, segitiga, kotak & benda',ico:'🔺',bg:'#ecfdf5',col:'#059669',screen:'g15',launch:()=>G15.start(0)}
 ];
 
 /* ═══════════════════════════════════════════════════════════
@@ -2479,7 +3099,7 @@ const G12_DATA = [
     {q:'Ibu kota Indonesia?',ans:'JAKARTA',opts:['JAKARTA','BANDUNG','SURABAYA','MEDAN']},
     {q:'Berapa 18 - 9?',ans:'9',opts:['7','8','9','10']},
     {q:'Hewan terbesar di darat?',ans:'GAJAH',opts:['GAJAH','KUDA','SAPI','HARIMAU']},
-    {q:'Berapa 9 + 9?',ans:'18',opts:['16','17','18','19']},
+    {q:'Berapa 11 + 7?',ans:'18',opts:['16','17','18','19']},
   ]}
 ];
 
@@ -2503,6 +3123,84 @@ const G13_CHALLENGES = [
 ];
 // Snakes: 17→4, 20→9, 23→14  Ladders: 3→11, 7→18, 13→22
 const SNAKES={17:4,20:9,23:14}, LADDERS={3:11,7:18,13:22};
+
+// G14 SUSUN SUKU KATA
+const G14_DATA = [
+  { level: 1, title: 'Level 1: Dua Suku Kata Mudah', items: [
+    { word: 'BAJU', parts: ['BA', 'JU'], distractors: ['KU', 'MA'], emoji: '👕' },
+    { word: 'BOLA', parts: ['BO', 'LA'], distractors: ['RO', 'SI'], emoji: '⚽' },
+    { word: 'BUKU', parts: ['BU', 'KU'], distractors: ['TA', 'PA'], emoji: '📖' },
+    { word: 'KAKI', parts: ['KA', 'KI'], distractors: ['PI', 'DA'], emoji: '🦶' },
+    { word: 'KUDA', parts: ['KU', 'DA'], distractors: ['BA', 'SA'], emoji: '🐴' }
+  ]},
+  { level: 2, title: 'Level 2: Variasi Vokal Ceria', items: [
+    { word: 'TOPI', parts: ['TO', 'PI'], distractors: ['TI', 'KA'], emoji: '🧢' },
+    { word: 'MEJA', parts: ['ME', 'JA'], distractors: ['LE', 'RA'], emoji: '🪑' },
+    { word: 'SAPI', parts: ['SA', 'PI'], distractors: ['TA', 'LU'], emoji: '🐮' },
+    { word: 'ROTI', parts: ['RO', 'TI'], distractors: ['MO', 'GA'], emoji: '🍞' },
+    { word: 'PITA', parts: ['PI', 'TA'], distractors: ['KA', 'LI'], emoji: '🎀' }
+  ]},
+  { level: 3, title: 'Level 3: Tiga Suku Kata', items: [
+    { word: 'SEPATU', parts: ['SE', 'PA', 'TU'], distractors: ['KA', 'ME'], emoji: '👟' },
+    { word: 'KELAPA', parts: ['KE', 'LA', 'PA'], distractors: ['NA', 'BU'], emoji: '🥥' },
+    { word: 'CELANA', parts: ['CE', 'LA', 'NA'], distractors: ['SA', 'KU'], emoji: '👖' },
+    { word: 'SEPEDA', parts: ['SE', 'PE', 'DA'], distractors: ['TO', 'MA'], emoji: '🚲' },
+    { word: 'BONEKA', parts: ['BO', 'NE', 'KA'], distractors: ['LA', 'SI'], emoji: '🧸' }
+  ]},
+  { level: 4, title: 'Level 4: Berakhiran Konsonan', items: [
+    { word: 'MAKAN', parts: ['MA', 'KAN'], distractors: ['LA', 'SIN'], emoji: '🍽️' },
+    { word: 'MINUM', parts: ['MI', 'NUM'], distractors: ['TU', 'RAN'], emoji: '🥛' },
+    { word: 'BEBEK', parts: ['BE', 'BEK'], distractors: ['SA', 'ROK'], emoji: '🦆' },
+    { word: 'BURUNG', parts: ['BU', 'RUNG'], distractors: ['KU', 'DANG'], emoji: '🐦' },
+    { word: 'GAJAH', parts: ['GA', 'JAH'], distractors: ['RA', 'WAN'], emoji: '🐘' }
+  ]},
+  { level: 5, title: 'Level 5: Frasa Suku Kata', items: [
+    { word: 'BUKU BARU', parts: ['BU', 'KU', 'BA', 'RU'], distractors: ['SA', 'KA'], emoji: '📚' },
+    { word: 'BAJU BIRU', parts: ['BA', 'JU', 'BI', 'RU'], distractors: ['TA', 'ME'], emoji: '👕' },
+    { word: 'SAPI LUCU', parts: ['SA', 'PI', 'LU', 'CU'], distractors: ['NA', 'PO'], emoji: '🐮' },
+    { word: 'ROTI MANIS', parts: ['RO', 'TI', 'MA', 'NIS'], distractors: ['KE', 'LUR'], emoji: '🍞' },
+    { word: 'BOLA BULAT', parts: ['BO', 'LA', 'BU', 'LAT'], distractors: ['SI', 'KAS'], emoji: '⚽' }
+  ]}
+];
+
+// G15 PENGENALAN & PENCOCOKAN BENTUK
+const G15_DATA = [
+  { level: 1, title: 'Level 1: Mengenal Bentuk Dasar', items: [
+    { q: 'Manakah bentuk LINGKARAN? ⭕', shape: 'circle', color: '#ef4444', ans: 'Lingkaran ⭕', opts: ['Lingkaran ⭕', 'Segitiga 🔺', 'Kotak 🟦'] },
+    { q: 'Manakah bentuk SEGITIGA? 🔺', shape: 'triangle', color: '#f59e0b', ans: 'Segitiga 🔺', opts: ['Segitiga 🔺', 'Lingkaran ⭕', 'Kotak 🟦'] },
+    { q: 'Manakah bentuk PERSEGI / KOTAK? 🟦', shape: 'square', color: '#3b82f6', ans: 'Kotak 🟦', opts: ['Kotak 🟦', 'Bintang ⭐', 'Segitiga 🔺'] },
+    { q: 'Manakah bentuk BINTANG? ⭐', shape: 'star', color: '#eab308', ans: 'Bintang ⭐', opts: ['Bintang ⭐', 'Hati ❤️', 'Lingkaran ⭕'] },
+    { q: 'Manakah bentuk HATI? ❤️', shape: 'heart', color: '#ec4899', ans: 'Hati ❤️', opts: ['Hati ❤️', 'Kotak 🟦', 'Segitiga 🔺'] }
+  ]},
+  { level: 2, title: 'Level 2: Bentuk Benda di Sekitar', items: [
+    { q: 'Roda sepeda 🚲 berbentuk apa?', shape: 'circle', color: '#64748b', ans: 'Lingkaran ⭕', opts: ['Lingkaran ⭕', 'Segitiga 🔺', 'Kotak 🟦'] },
+    { q: 'Potongan pizza lezat 🍕 berbentuk apa?', shape: 'triangle', color: '#f97316', ans: 'Segitiga 🔺', opts: ['Segitiga 🔺', 'Lingkaran ⭕', 'Kotak 🟦'] },
+    { q: 'Buku cerita 📖 berbentuk apa?', shape: 'rect', color: '#10b981', ans: 'Persegi Panjang ▭', opts: ['Persegi Panjang ▭', 'Lingkaran ⭕', 'Bintang ⭐'] },
+    { q: 'Telur ayam 🥚 berbentuk apa?', shape: 'oval', color: '#d97706', ans: 'Oval / Lonjong 🥚', opts: ['Oval / Lonjong 🥚', 'Segitiga 🔺', 'Kotak 🟦'] },
+    { q: 'Jam dinding bulat ⏰ berbentuk apa?', shape: 'circle', color: '#06b6d4', ans: 'Lingkaran ⭕', opts: ['Lingkaran ⭕', 'Segitiga 🔺', 'Bintang ⭐'] }
+  ]},
+  { level: 3, title: 'Level 3: Hitung Sisi & Sudut', items: [
+    { q: 'Berapa jumlah sudut SEGITIGA 🔺?', shape: 'triangle', color: '#8b5cf6', ans: '3 Sudut', opts: ['3 Sudut', '4 Sudut', '5 Sudut'] },
+    { q: 'Berapa jumlah sisi PERSEGI / KOTAK 🟦?', shape: 'square', color: '#3b82f6', ans: '4 Sisi', opts: ['4 Sisi', '3 Sisi', '6 Sisi'] },
+    { q: 'Apakah LINGKARAN ⭕ memiliki sudut?', shape: 'circle', color: '#ec4899', ans: 'Tidak Ada (0)', opts: ['Tidak Ada (0)', 'Ada 2', 'Ada 4'] },
+    { q: 'Berapa titik sudut BINTANG 5 ⭐?', shape: 'star', color: '#f59e0b', ans: '5 Sudut', opts: ['5 Sudut', '3 Sudut', '6 Sudut'] },
+    { q: 'Berapa sisi SEGILIMA ⬟?', shape: 'pentagon', color: '#10b981', ans: '5 Sisi', opts: ['5 Sisi', '4 Sisi', '3 Sisi'] }
+  ]},
+  { level: 4, title: 'Level 4: Warna & Pasangan Bentuk', items: [
+    { q: 'Bentuk apa yang berwarna BIRU? 🟦', shape: 'square', color: '#2563eb', ans: 'Kotak Biru 🟦', opts: ['Kotak Biru 🟦', 'Segitiga Hijau 🔺', 'Lingkaran Merah ⭕'] },
+    { q: 'Bentuk apa yang berwarna MERAH? 🔴', shape: 'circle', color: '#dc2626', ans: 'Lingkaran Merah 🔴', opts: ['Lingkaran Merah 🔴', 'Bintang Kuning ⭐', 'Kotak Biru 🟦'] },
+    { q: 'Bentuk apa yang berwarna KUNING? ⭐', shape: 'star', color: '#eab308', ans: 'Bintang Kuning ⭐', opts: ['Bintang Kuning ⭐', 'Hati Pink ❤️', 'Segitiga Biru 🔺'] },
+    { q: 'Bentuk apa yang berwarna HIJAU? 🔺', shape: 'triangle', color: '#16a34a', ans: 'Segitiga Hijau 🔺', opts: ['Segitiga Hijau 🔺', 'Kotak Merah 🟦', 'Lingkaran Biru ⭕'] },
+    { q: 'Bentuk apa yang melambangkan KASIH SAYANG? ❤️', shape: 'heart', color: '#e11d48', ans: 'Hati Pink ❤️', opts: ['Hati Pink ❤️', 'Kotak 🟦', 'Segitiga 🔺'] }
+  ]},
+  { level: 5, title: 'Level 5: Bangun Arsitektur Cilik', items: [
+    { q: 'Atap rumah 🏠 biasanya berbentuk apa?', shape: 'triangle', color: '#d97706', ans: 'Segitiga 🔺', opts: ['Segitiga 🔺', 'Lingkaran ⭕', 'Bintang ⭐'] },
+    { q: 'Matahari di langit ☀️ berbentuk apa?', shape: 'circle', color: '#f59e0b', ans: 'Lingkaran ⭕', opts: ['Lingkaran ⭕', 'Kotak 🟦', 'Segitiga 🔺'] },
+    { q: 'Tenda kemah pramuka ⛺ berbentuk apa?', shape: 'triangle', color: '#059669', ans: 'Segitiga 🔺', opts: ['Segitiga 🔺', 'Oval 🥚', 'Hati ❤️'] },
+    { q: 'Pintu kamar 🚪 berbentuk apa?', shape: 'rect', color: '#7c3aed', ans: 'Persegi Panjang ▭', opts: ['Persegi Panjang ▭', 'Lingkaran ⭕', 'Segitiga 🔺'] },
+    { q: 'Layang-layang di udara 🪁 berbentuk apa?', shape: 'diamond', color: '#0284c7', ans: 'Belah Ketupat 🔷', opts: ['Belah Ketupat 🔷', 'Lingkaran ⭕', 'Oval 🥚'] }
+  ]}
+];
 
 /* ═══════════════════════════════════════════════════════════
    7. GAME ENGINES
@@ -3036,6 +3734,200 @@ const G13={
   }
 };
 
+/* ── G14: SUSUN SUKU KATA ── */
+const G14 = {
+  lvl: 0, qi: 0, mistakes: 0, assembled: [], targetParts: [],
+  start(l) {
+    this.lvl = l; this.qi = 0; this.mistakes = 0;
+    this.loadQ();
+  },
+  loadQ() {
+    const ld = G14_DATA[this.lvl];
+    const item = ld.items[this.qi];
+    this.assembled = [];
+    this.targetParts = [...item.parts];
+
+    document.getElementById('g14-title').textContent = ld.title;
+    document.getElementById('g14-prog').textContent = `Kata ${this.qi + 1} dari ${ld.items.length}`;
+    document.getElementById('g14-stars').textContent = Prog.gameStars('suku_kata', this.lvl + 1);
+    document.getElementById('g14-emoji').textContent = item.emoji;
+    document.getElementById('g14-label').innerHTML = `Susun suku kata untuk kata: <strong>${item.word}</strong>`;
+    document.getElementById('g14-banner').style.display = 'none';
+
+    SFX.speak(item.word);
+
+    // Render slots
+    const slotsContainer = document.getElementById('g14-slots');
+    slotsContainer.innerHTML = '';
+    this.targetParts.forEach((_, idx) => {
+      const s = document.createElement('div');
+      s.className = 'suku-slot-box';
+      s.id = `g14-slot-${idx}`;
+      s.textContent = '?';
+      slotsContainer.appendChild(s);
+    });
+
+    // Render bubbles
+    this.renderBubbles();
+
+    // Reset button
+    document.getElementById('g14-reset-btn').onclick = () => {
+      SFX.pop();
+      this.resetTurn();
+    };
+  },
+  renderBubbles() {
+    const item = G14_DATA[this.lvl].items[this.qi];
+    const allOptions = scramble([...item.parts, ...item.distractors]);
+    const bubbleContainer = document.getElementById('g14-bubbles');
+    bubbleContainer.innerHTML = '';
+
+    allOptions.forEach((syllable, bIdx) => {
+      const btn = document.createElement('button');
+      btn.className = 'btn-suku-bubble';
+      btn.textContent = syllable;
+      btn.id = `g14-btn-${bIdx}`;
+      btn.onclick = () => {
+        this.pickSyllable(syllable, btn);
+      };
+      bubbleContainer.appendChild(btn);
+    });
+  },
+  pickSyllable(syllable, btn) {
+    SFX.pop();
+    SFX.speak(syllable);
+    const nextSlotIdx = this.assembled.length;
+    if (nextSlotIdx >= this.targetParts.length) return;
+
+    this.assembled.push({ syllable, btn });
+    btn.classList.add('used');
+
+    const slot = document.getElementById(`g14-slot-${nextSlotIdx}`);
+    if (slot) {
+      slot.textContent = syllable;
+      slot.classList.add('filled');
+    }
+
+    // Verify if all slots filled
+    if (this.assembled.length === this.targetParts.length) {
+      const assembledWord = this.assembled.map(a => a.syllable).join('');
+      const expectedWord = this.targetParts.join('');
+
+      if (assembledWord === expectedWord) {
+        SFX.correct();
+        const banner = document.getElementById('g14-banner');
+        banner.textContent = `✨ Luar Biasa! ${this.targetParts.join(' - ')} = ${expectedWord}!`;
+        banner.style.display = 'block';
+        showToast('🌟', 'Hebat! Kata tersusun sempurna!');
+        setTimeout(() => this.next(), 1300);
+      } else {
+        SFX.retry();
+        this.mistakes++;
+        showToast('💡', 'Belum tepat, coba lagi ya!', true);
+        setTimeout(() => this.resetTurn(), 900);
+      }
+    }
+  },
+  resetTurn() {
+    this.assembled.forEach(a => a.btn.classList.remove('used'));
+    this.assembled = [];
+    this.targetParts.forEach((_, idx) => {
+      const s = document.getElementById(`g14-slot-${idx}`);
+      if (s) {
+        s.textContent = '?';
+        s.classList.remove('filled');
+      }
+    });
+  },
+  next() {
+    this.qi++;
+    const ld = G14_DATA[this.lvl];
+    if (this.qi < ld.items.length) {
+      this.loadQ();
+    } else {
+      const s = calcStars(this.mistakes), c = s * 5;
+      Prog.record('suku_kata', this.lvl + 1, s, c);
+      UI.updateHeader();
+      showVictory(this.lvl + 1, s, c, G14_DATA.length, (n) => G14.start(Math.min(n, G14_DATA.length - 1)));
+    }
+  }
+};
+
+/* ── G15: PETUALANGAN BENTUK AJAIB ── */
+const G15 = {
+  lvl: 0, qi: 0, mistakes: 0,
+  start(l) {
+    this.lvl = l; this.qi = 0; this.mistakes = 0;
+    this.loadQ();
+  },
+  renderSVG(shape, color) {
+    switch (shape) {
+      case 'circle':
+        return `<svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="44" fill="${color}" stroke="#fff" stroke-width="4"/><circle cx="36" cy="44" r="6" fill="#fff" opacity=".8"/><circle cx="64" cy="44" r="6" fill="#fff" opacity=".8"/><path d="M 38 60 Q 50 72 62 60" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round"/></svg>`;
+      case 'square':
+        return `<svg viewBox="0 0 100 100"><rect x="10" y="10" width="80" height="80" rx="14" fill="${color}" stroke="#fff" stroke-width="4"/><circle cx="36" cy="44" r="6" fill="#fff" opacity=".8"/><circle cx="64" cy="44" r="6" fill="#fff" opacity=".8"/><path d="M 38 60 Q 50 72 62 60" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round"/></svg>`;
+      case 'triangle':
+        return `<svg viewBox="0 0 100 100"><polygon points="50,10 92,86 8,86" fill="${color}" stroke="#fff" stroke-width="4" stroke-linejoin="round"/><circle cx="42" cy="52" r="5" fill="#fff" opacity=".8"/><circle cx="58" cy="52" r="5" fill="#fff" opacity=".8"/><path d="M 44 66 Q 50 74 56 66" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"/></svg>`;
+      case 'star':
+        return `<svg viewBox="0 0 100 100"><polygon points="50,5 64,36 98,36 70,57 81,91 50,70 19,91 30,57 2,36 36,36" fill="${color}" stroke="#fff" stroke-width="3" stroke-linejoin="round"/></svg>`;
+      case 'heart':
+        return `<svg viewBox="0 0 100 100"><path d="M 50,88 C 20,65 5,45 5,28 C 5,14 16,5 30,5 C 40,5 47,11 50,18 C 53,11 60,5 70,5 C 84,5 95,14 95,28 C 95,45 80,65 50,88 Z" fill="${color}" stroke="#fff" stroke-width="4"/></svg>`;
+      case 'rect':
+        return `<svg viewBox="0 0 100 100"><rect x="15" y="6" width="70" height="88" rx="12" fill="${color}" stroke="#fff" stroke-width="4"/></svg>`;
+      case 'oval':
+        return `<svg viewBox="0 0 100 100"><ellipse cx="50" cy="50" rx="34" ry="44" fill="${color}" stroke="#fff" stroke-width="4"/></svg>`;
+      case 'pentagon':
+        return `<svg viewBox="0 0 100 100"><polygon points="50,8 92,38 76,88 24,88 8,38" fill="${color}" stroke="#fff" stroke-width="4" stroke-linejoin="round"/></svg>`;
+      case 'diamond':
+        return `<svg viewBox="0 0 100 100"><polygon points="50,6 92,50 50,94 8,50" fill="${color}" stroke="#fff" stroke-width="4" stroke-linejoin="round"/></svg>`;
+      default:
+        return `<svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="${color}"/></svg>`;
+    }
+  },
+  loadQ() {
+    const ld = G15_DATA[this.lvl];
+    const item = ld.items[this.qi];
+
+    document.getElementById('g15-title').textContent = ld.title;
+    document.getElementById('g15-prog').textContent = `Soal ${this.qi + 1} dari ${ld.items.length}`;
+    document.getElementById('g15-stars').textContent = Prog.gameStars('cocok_bentuk', this.lvl + 1);
+    document.getElementById('g15-qtext').textContent = item.q;
+
+    const svgContainer = document.getElementById('g15-svg-container');
+    svgContainer.innerHTML = this.renderSVG(item.shape, item.color);
+
+    SFX.speak(item.q.replace(/[⭕🔺🟦⭐❤️]/g, ''));
+
+    renderChoices('g15-choices', scramble(item.opts), item.ans,
+      (btn) => {
+        btn.className = 'btn-shape right';
+        SFX.correct();
+        showToast('🔺', 'Jawaban tepat sekali!');
+        setTimeout(() => this.next(), 900);
+      },
+      (btn) => {
+        btn.classList.add('wrong');
+        setTimeout(() => btn.classList.remove('wrong'), 550);
+        this.mistakes++;
+        showToast('💡', 'Coba perhatikan bentuknya lagi ya!', true);
+      },
+      'btn-shape'
+    );
+  },
+  next() {
+    this.qi++;
+    const ld = G15_DATA[this.lvl];
+    if (this.qi < ld.items.length) {
+      this.loadQ();
+    } else {
+      const s = calcStars(this.mistakes), c = s * 5;
+      Prog.record('cocok_bentuk', this.lvl + 1, s, c);
+      UI.updateHeader();
+      showVictory(this.lvl + 1, s, c, G15_DATA.length, (n) => G15.start(Math.min(n, G15_DATA.length - 1)));
+    }
+  }
+};
+
 
 
 
@@ -3303,6 +4195,132 @@ const DoaHarian = {
 };
 
 /* ═══════════════════════════════════════════════════════════
+   7B. PENGINGAT BELAJAR HARIAN (Notification API)
+═══════════════════════════════════════════════════════════ */
+const Reminder = {
+  enabledKey: 'harsha_reminder_enabled',
+  timeKey: 'harsha_reminder_time',
+  lastNotifKey: 'harsha_last_notif_date',
+
+  init() {
+    this.updateUIStatus();
+    this.startHeartbeat();
+  },
+
+  isEnabled() {
+    return localStorage.getItem(this.enabledKey) === '1';
+  },
+
+  getTime() {
+    return localStorage.getItem(this.timeKey) || '16:00';
+  },
+
+  updateUIStatus() {
+    const statusText = document.getElementById('notif-status-text');
+    const toggleBtn = document.getElementById('btn-toggle-notif');
+    const select = document.getElementById('notif-time-select');
+    const hasPermission = ('Notification' in window) && Notification.permission === 'granted';
+    const enabled = this.isEnabled() && hasPermission;
+
+    if (select) select.value = this.getTime();
+    if (statusText) {
+      statusText.textContent = enabled ? `Aktif (Setiap jam ${this.getTime()}) 🔔` : 'Belum aktif 🔕';
+      statusText.style.color = enabled ? '#16a34a' : '#64748b';
+    }
+    if (toggleBtn) {
+      toggleBtn.textContent = enabled ? 'Matikan 🔕' : 'Aktifkan 🔔';
+      toggleBtn.style.background = enabled ? 'linear-gradient(135deg,#ef4444,#dc2626)' : 'linear-gradient(135deg,#0284c7,#0369a1)';
+    }
+  },
+
+  async toggle() {
+    if (this.isEnabled()) {
+      this.disable();
+    } else {
+      await this.requestAndEnable();
+    }
+  },
+
+  async requestAndEnable() {
+    if (!('Notification' in window)) {
+      showToast('⚠️', 'Browser ini belum mendukung notifikasi sistem');
+      return;
+    }
+    try {
+      const perm = await Notification.requestPermission();
+      if (perm === 'granted') {
+        localStorage.setItem(this.enabledKey, '1');
+        const sel = document.getElementById('notif-time-select');
+        const time = sel ? sel.value : '16:00';
+        localStorage.setItem(this.timeKey, time);
+        this.updateUIStatus();
+        showToast('🔔', 'Pengingat harian berhasil diaktifkan!');
+        this.sendTest();
+      } else {
+        localStorage.setItem(this.enabledKey, '0');
+        this.updateUIStatus();
+        showToast('⚠️', 'Izin notifikasi belum diizinkan');
+      }
+    } catch(e) {
+      showToast('⚠️', 'Gagal meminta izin notifikasi');
+    }
+  },
+
+  disable() {
+    localStorage.setItem(this.enabledKey, '0');
+    this.updateUIStatus();
+    showToast('🔕', 'Pengingat harian dinonaktifkan');
+  },
+
+  sendTest() {
+    if (!('Notification' in window) || Notification.permission !== 'granted') {
+      this.requestAndEnable();
+      return;
+    }
+    const p = Prog.getActiveProfile();
+    const title = `Halo ${p.name}! Waktunya Belajar Ceria 🌟`;
+    const options = {
+      body: 'Ciko dan kawan-kawan menunggumu di Petualangan bersama Harsha! Yuk raih bintang calistung hari ini 🚀',
+      icon: 'logo_harsha.png',
+      badge: 'logo_harsha.png',
+      tag: 'harsha-daily-reminder'
+    };
+
+    if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
+      navigator.serviceWorker.ready.then(reg => {
+        reg.showNotification(title, options);
+      }).catch(() => {
+        new Notification(title, options);
+      });
+    } else {
+      new Notification(title, options);
+    }
+    showToast('🔔', 'Notifikasi uji coba terkirim!');
+  },
+
+  check() {
+    if (!this.isEnabled()) return;
+    if (!('Notification' in window) || Notification.permission !== 'granted') return;
+
+    const now = new Date();
+    const todayStr = now.toISOString().slice(0, 10);
+    const lastNotif = localStorage.getItem(this.lastNotifKey);
+    if (lastNotif === todayStr) return;
+
+    const [targetHour, targetMinute] = this.getTime().split(':').map(Number);
+    if (now.getHours() > targetHour || (now.getHours() === targetHour && now.getMinutes() >= targetMinute)) {
+      localStorage.setItem(this.lastNotifKey, todayStr);
+      this.sendTest();
+    }
+  },
+
+  startHeartbeat() {
+    setInterval(() => this.check(), 60000);
+    setTimeout(() => this.check(), 2500);
+  }
+};
+
+/* ═══════════════════════════════════════════════════════════
    8. UI CONTROLLER & MODAL LOGIC
 ═══════════════════════════════════════════════════════════ */
 const UI = {
@@ -3312,6 +4330,7 @@ const UI = {
     this.initDarkMode();
     this.initBGM();
     this.initDialect();
+    Reminder.init();
     this.buildGrid();
     this.updateHeader();
     this.bindEvents();
@@ -3362,7 +4381,7 @@ const UI = {
 
     // 1. Ubin Petualangan bersama Harsha
     const hCard = document.createElement('div');
-    hCard.className = 'gcard playable';
+    hCard.className = 'gcard playable gcard-featured';
     hCard.style.border = '4px solid #38bdf8';
     hCard.style.boxShadow = '0 8px 22px rgba(2,132,199,.18)';
     hCard.innerHTML = `
@@ -3370,6 +4389,7 @@ const UI = {
       <div class="gico" style="background:#e0f2fe;display:flex;align-items:center;justify-content:center">
         <img src="logo_harsha.png" alt="HSA" style="width:72px;height:72px;object-fit:contain">
       </div>
+      <div class="gcat-tag" style="background:#e0f2fe;color:#0369a1">Modul Petualangan</div>
       <h3 class="gtitle" style="color:#0369a1">Petualangan Harsha</h3>
       <p class="gdesc">Eksplorasi 5 Pulau Calistung bersama Habibi, Shafiyyah, &amp; Arsha!</p>
       <div class="gfooter">
@@ -3387,7 +4407,7 @@ const UI = {
 
     // 2. Ubin Lembar Kerja Ceria Digital
     const wCard = document.createElement('div');
-    wCard.className = 'gcard playable';
+    wCard.className = 'gcard playable gcard-featured';
     wCard.style.border = '4px solid #f59e0b';
     wCard.style.boxShadow = '0 8px 22px rgba(245,158,11,.18)';
     wCard.style.background = 'linear-gradient(180deg,#ffffff 0%,#fffdf0 100%)';
@@ -3396,6 +4416,7 @@ const UI = {
       <div class="gico" style="background:#fef3c7;display:flex;align-items:center;justify-content:center;font-size:46px">
         📝
       </div>
+      <div class="gcat-tag" style="background:#fef3c7;color:#b45309">Aktivitas Mandiri</div>
       <h3 class="gtitle" style="color:#b45309">Lembar Kerja Ceria</h3>
       <p class="gdesc">10 Modul Interaktif: Labirin, Koding, Tracing, Titik, Bayangan, Pola, &amp; Puzzle!</p>
       <div class="gfooter">
@@ -3411,10 +4432,9 @@ const UI = {
     };
     g.appendChild(wCard);
 
-    
     // 3. Ubin Huruf Hijaiyah Ceria
     const hjiCard = document.createElement('div');
-    hjiCard.className = 'gcard playable';
+    hjiCard.className = 'gcard playable gcard-featured';
     hjiCard.style.border = '4px solid #10b981';
     hjiCard.style.boxShadow = '0 8px 22px rgba(16,185,129,.18)';
     hjiCard.style.background = 'linear-gradient(180deg,#ffffff 0%,#f0fdf4 100%)';
@@ -3423,6 +4443,7 @@ const UI = {
       <div class="gico" style="background:#d1fae5;display:flex;align-items:center;justify-content:center;font-size:46px">
         🧕
       </div>
+      <div class="gcat-tag" style="background:#d1fae5;color:#047857">Huruf Al-Quran</div>
       <h3 class="gtitle" style="color:#065f46">Huruf Hijaiyah</h3>
       <p class="gdesc">Mengenal 28 huruf hijaiyah Alif sampai Ya dengan suara merdu!</p>
       <div class="gfooter">
@@ -3435,7 +4456,7 @@ const UI = {
 
     // 4. Ubin Doa Sehari-Hari
     const doaCard = document.createElement('div');
-    doaCard.className = 'gcard playable';
+    doaCard.className = 'gcard playable gcard-featured';
     doaCard.style.border = '4px solid #06b6d4';
     doaCard.style.boxShadow = '0 8px 22px rgba(6,182,212,.18)';
     doaCard.style.background = 'linear-gradient(180deg,#ffffff 0%,#ecfeff 100%)';
@@ -3444,6 +4465,7 @@ const UI = {
       <div class="gico" style="background:#cffafe;display:flex;align-items:center;justify-content:center;font-size:46px">
         🤲
       </div>
+      <div class="gcat-tag" style="background:#cffafe;color:#0e7490">Adab &amp; Doa</div>
       <h3 class="gtitle" style="color:#155e75">Doa Anak Pintar</h3>
       <p class="gdesc">Doa makan, tidur, kedua orang tua, dan menuntut ilmu!</p>
       <div class="gfooter">
@@ -3461,7 +4483,20 @@ const UI = {
       const badge = gd.played
         ? `<span class="gbadge badge-played">Level ${gd.highLevel}/5</span>`
         : `<span class="gbadge badge-new">MAIN SEKARANG</span>`;
-      card.innerHTML = `${badge}<div class="gico" style="background:${game.bg};color:${game.col}">${game.ico}</div><h3 class="gtitle">${game.n}. ${game.title}</h3><p class="gdesc">${game.desc}</p><div class="gfooter"><div class="gstars">⭐ ${gd.stars||0}</div><button class="btn-play">Main 🎮</button></div>`;
+      card.innerHTML = `
+        ${badge}
+        <div class="gico" style="background:${game.bg};color:${game.col}">
+          <span class="gico-main">${game.ico}</span>
+          <span class="gico-sublabel">${game.sublabel || 'Calistung Ceria'}</span>
+        </div>
+        <div class="gcat-tag">${game.category || 'Membaca & Angka'}</div>
+        <h3 class="gtitle"><span class="gnum-circle">${game.n}</span> ${game.title}</h3>
+        <p class="gdesc">${game.desc}</p>
+        <div class="gfooter">
+          <div class="gstars">⭐ ${gd.stars||0}</div>
+          <button class="btn-play">Main 🎮</button>
+        </div>
+      `;
       card.onclick = () => {
         SFX.pop();
         this.switchTo(game.screen);
@@ -3572,9 +4607,23 @@ const UI = {
     const data = Prog.data;
     const sheet = document.getElementById('report-sheet-content');
 
-    const totalGames = Prog.IDS.length;
+    const totalGames = CATALOG.length;
     const playedGames = Object.values(data.games).filter(g => g.played).length;
     const completionPct = Math.round((playedGames / totalGames) * 100);
+
+    const gamesGridHtml = CATALOG.map(g => {
+      const gd = data.games[g.id] || { played: false, stars: 0, highLevel: 0 };
+      const starsCount = gd.stars || 0;
+      const starsIcons = '⭐'.repeat(Math.min(3, starsCount)) + '⚪'.repeat(Math.max(0, 3 - Math.min(3, starsCount)));
+      return `
+        <div class="rapor-mini-card">
+          <div class="rapor-mini-ico">${g.ico}</div>
+          <div class="rapor-mini-name">${g.n}. ${g.title}</div>
+          <div class="rapor-mini-stars">${starsIcons}</div>
+          <div class="rapor-mini-lvl">Level ${gd.highLevel || 0}/5 · ${starsCount}★</div>
+        </div>
+      `;
+    }).join('');
 
     sheet.innerHTML = `
       <div style="text-align:center;border-bottom:2px dashed #93c5fd;padding-bottom:12px;margin-bottom:12px">
@@ -3601,6 +4650,11 @@ const UI = {
       </div>
 
       <div style="margin-top:14px">
+        <h4 style="font-size:.95rem;color:#0369a1;margin-bottom:6px;font-weight:700">⭐ Koleksi Bintang Semua Game (15 Modul):</h4>
+        <div class="rapor-grid-games">${gamesGridHtml}</div>
+      </div>
+
+      <div style="margin-top:14px">
         <div style="font-weight:700;color:#1e3a5f;margin-bottom:4px">Kemampuan Membaca &amp; Abjad</div>
         <div class="skill-bar-wrap"><div class="skill-bar-fill" style="width:${Math.min(100, Math.max(25, data.totalStars * 3))}%;background:#3b82f6"></div></div>
       </div>
@@ -3619,6 +4673,159 @@ const UI = {
     `;
 
     document.getElementById('report-modal').classList.add('open');
+  },
+
+  generateReportImage() {
+    const prof = Prog.getActiveProfile();
+    const data = Prog.data;
+    const canvas = document.createElement('canvas');
+    canvas.width = 800;
+    canvas.height = 1140;
+    const ctx = canvas.getContext('2d');
+
+    // Background Gradient
+    const bgGrad = ctx.createLinearGradient(0, 0, 0, canvas.height);
+    bgGrad.addColorStop(0, '#f8fafc');
+    bgGrad.addColorStop(0.5, '#f0fdf4');
+    bgGrad.addColorStop(1, '#e0f2fe');
+    ctx.fillStyle = bgGrad;
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    // Gold Outer Border
+    ctx.strokeStyle = '#f59e0b';
+    ctx.lineWidth = 10;
+    ctx.strokeRect(20, 20, canvas.width - 40, canvas.height - 40);
+
+    ctx.strokeStyle = '#0284c7';
+    ctx.lineWidth = 3;
+    ctx.strokeRect(30, 30, canvas.width - 60, canvas.height - 60);
+
+    // Header Banner
+    ctx.fillStyle = '#0284c7';
+    ctx.fillRect(40, 45, canvas.width - 80, 80);
+    ctx.fillStyle = '#ffffff';
+    ctx.font = 'bold 30px "Fredoka", sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText('🌟 RAPOR PRESTASI HARSHA EDU 🌟', canvas.width / 2, 95);
+
+    // Profile Box
+    ctx.fillStyle = '#ffffff';
+    ctx.strokeStyle = '#bae6fd';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.roundRect(50, 145, canvas.width - 100, 110, [16]);
+    ctx.fill();
+    ctx.stroke();
+
+    ctx.fillStyle = '#0f172a';
+    ctx.font = 'bold 28px "Fredoka", sans-serif';
+    ctx.textAlign = 'left';
+    ctx.fillText(`${prof.avatar} ${prof.name}`, 80, 195);
+
+    ctx.fillStyle = '#64748b';
+    ctx.font = '600 18px "Fredoka", sans-serif';
+    const now = new Date();
+    const dateStr = now.toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
+    ctx.fillText(`${prof.badge} • ${prof.level} • Usia ${prof.age} Tahun • Dicetak: ${dateStr}`, 80, 230);
+
+    // Quick Stats Cards
+    const stats = [
+      { label: 'Total Bintang', val: `⭐ ${data.totalStars}`, bg: '#fef3c7', col: '#b45309' },
+      { label: 'Koin Emas', val: `🪙 ${data.totalCoins}`, bg: '#fef9c3', col: '#a16207' },
+      { label: 'Game Selesai', val: `🎮 ${Object.values(data.games).filter(g=>g.played).length}/15`, bg: '#dcfce7', col: '#15803d' },
+    ];
+    stats.forEach((st, idx) => {
+      const sx = 50 + idx * 240;
+      ctx.fillStyle = st.bg;
+      ctx.beginPath();
+      ctx.roundRect(sx, 275, 220, 75, [12]);
+      ctx.fill();
+
+      ctx.fillStyle = st.col;
+      ctx.font = 'bold 16px "Fredoka", sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText(st.label, sx + 110, 305);
+      ctx.font = 'bold 24px "Fredoka", sans-serif';
+      ctx.fillText(st.val, sx + 110, 336);
+    });
+
+    // Subtitle Mini-Games
+    ctx.fillStyle = '#0369a1';
+    ctx.font = 'bold 22px "Fredoka", sans-serif';
+    ctx.textAlign = 'left';
+    ctx.fillText('📊 Rincian Bintang & Level Tiap Game (15 Modul):', 50, 385);
+
+    // 15 Games Grid (5 rows x 3 cols)
+    const cols = 3;
+    const itemW = 220;
+    const itemH = 100;
+    const startX = 50;
+    const startY = 405;
+    const gapX = 20;
+    const gapY = 14;
+
+    CATALOG.forEach((game, idx) => {
+      const colIdx = idx % cols;
+      const rowIdx = Math.floor(idx / cols);
+      const gx = startX + colIdx * (itemW + gapX);
+      const gy = startY + rowIdx * (itemH + gapY);
+
+      const gd = data.games[game.id] || { played: false, stars: 0, highLevel: 0 };
+      const starsCount = gd.stars || 0;
+      const starsStr = '⭐'.repeat(Math.min(3, starsCount)) + '⚪'.repeat(Math.max(0, 3 - Math.min(3, starsCount)));
+
+      ctx.fillStyle = '#ffffff';
+      ctx.strokeStyle = '#e2e8f0';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.roundRect(gx, gy, itemW, itemH, [10]);
+      ctx.fill();
+      ctx.stroke();
+
+      ctx.textAlign = 'left';
+      ctx.font = 'bold 15px "Fredoka", sans-serif';
+      ctx.fillStyle = '#1e293b';
+      const cleanTitle = `${game.n}. ${game.title}`.slice(0, 22);
+      ctx.fillText(`${game.ico} ${cleanTitle}`, gx + 10, gy + 28);
+
+      ctx.font = '600 13px "Fredoka", sans-serif';
+      ctx.fillStyle = '#0284c7';
+      ctx.fillText(`Tingkat: Level ${gd.highLevel || 0}/5`, gx + 10, gy + 55);
+
+      ctx.font = '16px sans-serif';
+      ctx.fillText(starsStr, gx + 10, gy + 82);
+      ctx.font = 'bold 14px "Fredoka", sans-serif';
+      ctx.fillStyle = '#d97706';
+      ctx.fillText(`${starsCount}★`, gx + 130, gy + 82);
+    });
+
+    // Footer Ribbon & Stamp
+    ctx.fillStyle = '#1e293b';
+    ctx.font = 'bold 15px "Fredoka", sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText('🎓 Belajar Calistung Ceria 100% Edukatif & Ramah Anak Indonesia', canvas.width / 2, 1070);
+    ctx.font = '500 13px "Fredoka", sans-serif';
+    ctx.fillStyle = '#64748b';
+    ctx.fillText('Petualangan bersama Harsha • Habibi, Shafiyyah, & Arsha • Dibuat oleh @prihantowhy', canvas.width / 2, 1095);
+
+    // Download canvas as PNG
+    canvas.toBlob((blob) => {
+      if (!blob) return;
+      const link = document.createElement('a');
+      link.download = `Rapor_Harsha_${prof.name}.png`;
+      link.href = URL.createObjectURL(blob);
+      link.click();
+      showToast('📸', 'Rapor berhasil disimpan sebagai gambar PNG!');
+
+      // Try native Web Share if available
+      if (navigator.canShare && navigator.canShare({ files: [new File([blob], 'rapor.png', { type: 'image/png' })] })) {
+        navigator.share({
+          files: [new File([blob], `Rapor_Harsha_${prof.name}.png`, { type: 'image/png' })],
+          title: `Rapor Belajar ${prof.name}`,
+          text: `Alhamdulillah! Inilah rapor prestasi belajar ${prof.name} di Petualangan bersama Harsha ⭐`
+        }).catch(() => {});
+      }
+    }, 'image/png');
   },
 
   bindEvents() {
@@ -3709,6 +4916,10 @@ const UI = {
     const crBtn = document.getElementById('btn-close-report');
     if (crBtn) crBtn.onclick = () => document.getElementById('report-modal').classList.remove('open');
 
+    // Save report image (Canvas PNG)
+    const saveImgBtn = document.getElementById('btn-save-report-img');
+    if (saveImgBtn) saveImgBtn.onclick = () => { SFX.pop(); this.generateReportImage(); };
+
     // Print & Share WA
     const prBtn = document.getElementById('btn-print-report');
     if (prBtn) prBtn.onclick = () => window.print();
@@ -3716,8 +4927,31 @@ const UI = {
     const waBtn = document.getElementById('btn-share-wa');
     if (waBtn) waBtn.onclick = () => {
       const p = Prog.getActiveProfile();
-      const txt = `🌟 *RAPOR BELAJAR HARSHA EDU* 🌟%0A👤 Nama: *${p.name}* (${p.level})%0A⭐ Total Bintang: *${Prog.data.totalStars}*%0A🪙 Total Koin: *${Prog.data.totalCoins}*%0A🎮 Modul: *${Object.values(Prog.data.games).filter(g=>g.played).length}/13 Game Selesai*%0A%0A_Aplikasi Belajar Calistung 100% Gratis untuk Anak Indonesia oleh @prihantowhy!_`;
+      const txt = `🌟 *RAPOR PRESTASI HARSHA EDU* 🌟%0A👤 Nama: *${p.name}* (${p.level})%0A⭐ Total Bintang: *${Prog.data.totalStars}*%0A🪙 Total Koin: *${Prog.data.totalCoins}*%0A🎮 Modul: *${Object.values(Prog.data.games).filter(g=>g.played).length}/15 Game Selesai*%0A%0A_Aplikasi Belajar Calistung 100% Gratis untuk Anak Indonesia oleh @prihantowhy!_`;
       window.open('https://api.whatsapp.com/send?text=' + txt, '_blank');
+    };
+
+    // Daily Reminder Modal & Events
+    const notifBtn = document.getElementById('notif-btn');
+    if (notifBtn) notifBtn.onclick = () => {
+      SFX.pop();
+      Reminder.updateUIStatus();
+      document.getElementById('notif-modal').classList.add('open');
+    };
+    const cNotifBtn = document.getElementById('btn-close-notif');
+    if (cNotifBtn) cNotifBtn.onclick = () => document.getElementById('notif-modal').classList.remove('open');
+
+    const togNotifBtn = document.getElementById('btn-toggle-notif');
+    if (togNotifBtn) togNotifBtn.onclick = () => { SFX.pop(); Reminder.toggle(); };
+
+    const testNotifBtn = document.getElementById('btn-test-notif');
+    if (testNotifBtn) testNotifBtn.onclick = () => { SFX.pop(); Reminder.sendTest(); };
+
+    const timeSel = document.getElementById('notif-time-select');
+    if (timeSel) timeSel.onchange = () => {
+      localStorage.setItem(Reminder.timeKey, timeSel.value);
+      Reminder.updateUIStatus();
+      showToast('⏰', `Jam belajar diatur pukul ${timeSel.value}`);
     };
 
     // Challenge Mode Toggle

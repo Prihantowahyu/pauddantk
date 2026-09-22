@@ -3,7 +3,7 @@
    Offline-first: App Shell Cache + Network Fallback
 ----------------------------------------------------------- */
 
-const CACHE_NAME  = 'harsha-edu-v15';
+const CACHE_NAME  = 'harsha-edu-v16';
 const FONT_CACHE  = 'harsha-fonts-v1';
 const OFFLINE_URL = './offline.html';
 
@@ -114,6 +114,19 @@ self.addEventListener('fetch', event => {
         }
         return res;
       }).catch(() => new Response('', { status: 404 }));
+    })
+  );
+});
+
+/* NOTIFICATION CLICK — fokus atau buka halaman utama */
+self.addEventListener('notificationclick', event => {
+  event.notification.close();
+  event.waitUntil(
+    clients.matchAll({ type: 'window', includeUncontrolled: true }).then(clientList => {
+      for (const client of clientList) {
+        if (client.url && 'focus' in client) return client.focus();
+      }
+      if (clients.openWindow) return clients.openWindow('./index.html');
     })
   );
 });
