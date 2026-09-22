@@ -1791,6 +1791,57 @@ body.dark-mode .notif-time-select {
   </div>
 </section>
 
+<!-- ═══ G16: WARNA CERIA ═══ -->
+<section class="view" id="g16">
+  <div class="game-wrap">
+    <div class="gtop" style="border-color:#f59e0b;background:#fffbeb">
+      <button class="back-btn" style="background:#d97706;box-shadow:0 5px 0 #92400e" data-back="g16" title="Kembali ke Beranda"><span>🏠</span> <span>Beranda</span></button>
+      <div class="lvl-info"><div class="lvl-title" style="color:#92400e" id="g16-title">Level 1</div><div class="lvl-prog" id="g16-prog">Soal 1 dari 5</div></div>
+      <div class="star-pill">⭐ <span id="g16-stars">0</span></div>
+    </div>
+    <div class="board" style="border:5px solid #fbbf24;box-shadow:0 12px 24px rgba(0,0,0,.1),0 8px 0 #d97706">
+      <div id="g16-swatch" style="width:130px;height:130px;border-radius:24px;margin:0 auto 14px;box-shadow:0 8px 20px rgba(0,0,0,.15);border:4px solid rgba(255,255,255,.6);transition:background .3s"></div>
+      <div class="q-box" id="g16-qtext" style="font-size:1.4rem">Warna apa ini?</div>
+      <div class="choices" id="g16-choices"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ G17: JAM WAKTU ═══ -->
+<section class="view" id="g17">
+  <div class="game-wrap">
+    <div class="gtop" style="border-color:#6366f1;background:#eef2ff">
+      <button class="back-btn" style="background:#4f46e5;box-shadow:0 5px 0 #312e81" data-back="g17" title="Kembali ke Beranda"><span>🏠</span> <span>Beranda</span></button>
+      <div class="lvl-info"><div class="lvl-title" style="color:#312e81" id="g17-title">Level 1</div><div class="lvl-prog" id="g17-prog">Soal 1 dari 5</div></div>
+      <div class="star-pill">⭐ <span id="g17-stars">0</span></div>
+    </div>
+    <div class="board" style="border:5px solid #818cf8;box-shadow:0 12px 24px rgba(0,0,0,.1),0 8px 0 #4338ca">
+      <div style="display:flex;justify-content:center;margin-bottom:14px">
+        <canvas id="g17-clock" width="180" height="180" style="border-radius:50%;box-shadow:0 6px 18px rgba(0,0,0,.15)"></canvas>
+      </div>
+      <div class="q-box" id="g17-qtext" style="font-size:1.35rem">Jam berapa sekarang?</div>
+      <div class="choices" id="g17-choices"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ G18: SUARA HEWAN ═══ -->
+<section class="view" id="g18">
+  <div class="game-wrap">
+    <div class="gtop" style="border-color:#f97316;background:#fff7ed">
+      <button class="back-btn" style="background:#ea580c;box-shadow:0 5px 0 #9a3412" data-back="g18" title="Kembali ke Beranda"><span>🏠</span> <span>Beranda</span></button>
+      <div class="lvl-info"><div class="lvl-title" style="color:#9a3412" id="g18-title">Level 1</div><div class="lvl-prog" id="g18-prog">Soal 1 dari 5</div></div>
+      <div class="star-pill">⭐ <span id="g18-stars">0</span></div>
+    </div>
+    <div class="board" style="border:5px solid #fb923c;box-shadow:0 12px 24px rgba(0,0,0,.1),0 8px 0 #c2410c">
+      <div class="q-emoji" id="g18-animal" style="font-size:5rem">🐱</div>
+      <div class="q-box" id="g18-qtext" style="font-size:1.35rem">Suara hewan apa ini?</div>
+      <button id="g18-play-btn" style="margin:8px auto;display:flex;align-items:center;gap:6px;background:linear-gradient(135deg,#f97316,#ea580c);color:#fff;border:none;border-radius:999px;padding:10px 22px;font-family:var(--font);font-size:1rem;font-weight:700;cursor:pointer;box-shadow:0 4px 0 #9a3412;touch-action:manipulation">🔊 Dengarkan Suaranya!</button>
+      <div class="choices" id="g18-choices"></div>
+    </div>
+  </div>
+</section>
+
 <!-- MODALS -->
 
 <!-- ═══ MODAL PROFIL (P1 & P2) ═══ -->
@@ -2170,7 +2221,8 @@ const Prog = {
   data: null,
   IDS: ['ekspedisi_pulau','dapur_kata','lomba_lari','detektif_huruf','bangun_rumah',
         'kebun_ajaib','ketuk_suku','toko_mini','peternakan','puzzle_kata',
-        'misi_roket','salon_kata','ular_tangga','suku_kata','cocok_bentuk'],
+        'misi_roket','salon_kata','ular_tangga','suku_kata','cocok_bentuk',
+        'warna_ceria','jam_waktu','suara_hewan'],
 
   default(id = 'habibi') {
     const g = {};
@@ -2672,7 +2724,10 @@ const CATALOG = [
   {id:'salon_kata',n:12,title:'Salon Kata & Hadiah',category:'Kuis Kata & Gaya',sublabel:'Hias Ciko Modis',desc:'Hias Ciko dengan jawaban kata',ico:'🎨',bg:'#fff0f6',col:'#f783ac',screen:'g12',launch:()=>G12.start(0)},
   {id:'ular_tangga',n:13,title:'Ular Tangga Calistung',category:'Papan Board Game',sublabel:'Ular Tangga Pintar',desc:'Board game tantangan calistung seru',ico:'🎲',bg:'#fff3bf',col:'#fab005',screen:'g13',launch:()=>G13.start()},
   {id:'suku_kata',n:14,title:'Susun Suku Kata Ceria',category:'Literasi Kata',sublabel:'Rangkai Suku Kata',desc:'Susun potongan suku kata jadi kata bermakna',ico:'🗣️',bg:'#fdf2f8',col:'#db2777',screen:'g14',launch:()=>G14.start(0)},
-  {id:'cocok_bentuk',n:15,title:'Petualangan Bentuk Ajaib',category:'Geometri Cilik',sublabel:'Mengenal Bentuk & Benda',desc:'Kenali lingkaran, segitiga, kotak & benda',ico:'🔺',bg:'#ecfdf5',col:'#059669',screen:'g15',launch:()=>G15.start(0)}
+  {id:'cocok_bentuk',n:15,title:'Petualangan Bentuk Ajaib',category:'Geometri Cilik',sublabel:'Mengenal Bentuk & Benda',desc:'Kenali lingkaran, segitiga, kotak & benda',ico:'🔺',bg:'#ecfdf5',col:'#059669',screen:'g15',launch:()=>G15.start(0)},
+  {id:'warna_ceria',n:16,title:'Warna Ceria Pelangi',category:'Seni & Warna',sublabel:'Kenali Warna Ceria',desc:'Kenali dan cocokkan semua warna pelangi indah',ico:'🌈',bg:'#fffbeb',col:'#d97706',screen:'g16',launch:()=>G16.start(0)},
+  {id:'jam_waktu',n:17,title:'Belajar Jam & Waktu',category:'Matematika Waktu',sublabel:'Baca Jarum Jam',desc:'Belajar membaca jam analog dengan cara seru',ico:'⏰',bg:'#eef2ff',col:'#4338ca',screen:'g17',launch:()=>G17.start(0)},
+  {id:'suara_hewan',n:18,title:'Tebak Suara Hewan',category:'Sains & Fauna',sublabel:'Dengarkan & Tebak',desc:'Dengarkan suara hewan dan tebak siapa mereka',ico:'🐾',bg:'#fff7ed',col:'#ea580c',screen:'g18',launch:()=>G18.start(0)}
 ];
 
 /* ═══════════════════════════════════════════════════════════
@@ -3160,6 +3215,123 @@ const G14_DATA = [
     { word: 'SAPI LUCU', parts: ['SA', 'PI', 'LU', 'CU'], distractors: ['NA', 'PO'], emoji: '🐮' },
     { word: 'ROTI MANIS', parts: ['RO', 'TI', 'MA', 'NIS'], distractors: ['KE', 'LUR'], emoji: '🍞' },
     { word: 'BOLA BULAT', parts: ['BO', 'LA', 'BU', 'LAT'], distractors: ['SI', 'KAS'], emoji: '⚽' }
+  ]}
+];
+
+// G16 WARNA CERIA
+const G16_DATA = [
+  { level: 1, title: 'Level 1: Warna Dasar', items: [
+    { color: '#ef4444', name: 'Merah', opts: ['Merah', 'Biru', 'Hijau'] },
+    { color: '#3b82f6', name: 'Biru', opts: ['Merah', 'Biru', 'Kuning'] },
+    { color: '#22c55e', name: 'Hijau', opts: ['Hijau', 'Ungu', 'Biru'] },
+    { color: '#eab308', name: 'Kuning', opts: ['Merah', 'Kuning', 'Hijau'] },
+    { color: '#f97316', name: 'Oranye', opts: ['Oranye', 'Biru', 'Ungu'] }
+  ]},
+  { level: 2, title: 'Level 2: Warna Sekunder', items: [
+    { color: '#8b5cf6', name: 'Ungu', opts: ['Ungu', 'Merah', 'Biru'] },
+    { color: '#ec4899', name: 'Merah Muda / Pink', opts: ['Merah Muda / Pink', 'Ungu', 'Oranye'] },
+    { color: '#06b6d4', name: 'Biru Muda / Cyan', opts: ['Biru Muda / Cyan', 'Hijau', 'Biru'] },
+    { color: '#f59e0b', name: 'Kuning Emas', opts: ['Kuning Emas', 'Oranye', 'Kuning'] },
+    { color: '#10b981', name: 'Hijau Muda / Tosca', opts: ['Hijau Muda / Tosca', 'Biru', 'Hijau'] }
+  ]},
+  { level: 3, title: 'Level 3: Warna & Benda', items: [
+    { color: '#dc2626', name: 'Merah (Seperti Apel!)', opts: ['Merah (Seperti Apel!)', 'Hijau (Seperti Pohon)', 'Biru (Seperti Langit)'] },
+    { color: '#2563eb', name: 'Biru (Seperti Langit!)', opts: ['Biru (Seperti Langit!)', 'Kuning (Seperti Matahari)', 'Merah (Seperti Apel!)'] },
+    { color: '#16a34a', name: 'Hijau (Seperti Daun!)', opts: ['Oranye (Seperti Jeruk)', 'Hijau (Seperti Daun!)', 'Ungu'] },
+    { color: '#ca8a04', name: 'Kuning (Seperti Matahari!)', opts: ['Kuning (Seperti Matahari!)', 'Merah (Seperti Apel!)', 'Biru (Seperti Langit!)'] },
+    { color: '#ea580c', name: 'Oranye (Seperti Jeruk!)', opts: ['Merah', 'Kuning', 'Oranye (Seperti Jeruk!)'] }
+  ]},
+  { level: 4, title: 'Level 4: Warna Campuran', items: [
+    { color: '#831843', name: 'Merah Tua (Maroon)', opts: ['Merah Tua (Maroon)', 'Merah', 'Cokelat'] },
+    { color: '#1e40af', name: 'Biru Tua (Navy)', opts: ['Biru', 'Biru Tua (Navy)', 'Ungu'] },
+    { color: '#4d7c0f', name: 'Hijau Tua (Olive)', opts: ['Hijau Tua (Olive)', 'Hijau', 'Cokelat'] },
+    { color: '#92400e', name: 'Cokelat (Seperti Tanah)', opts: ['Oranye', 'Cokelat (Seperti Tanah)', 'Kuning Emas'] },
+    { color: '#374151', name: 'Abu-abu (Seperti Awan)', opts: ['Hitam', 'Abu-abu (Seperti Awan)', 'Biru'] }
+  ]},
+  { level: 5, title: 'Level 5: Campuran Warna Seru!', items: [
+    { color: '#fef3c7', name: 'Kuning Pucat / Krim', opts: ['Kuning Pucat / Krim', 'Putih', 'Kuning'] },
+    { color: '#fce7f3', name: 'Pink Pucat / Muda', opts: ['Pink Pucat / Muda', 'Merah Muda / Pink', 'Putih'] },
+    { color: '#dbeafe', name: 'Biru Langit Muda', opts: ['Biru', 'Biru Langit Muda', 'Ungu Muda'] },
+    { color: '#d1fae5', name: 'Hijau Mint Segar', opts: ['Tosca', 'Hijau Mint Segar', 'Hijau Muda / Tosca'] },
+    { color: '#ede9fe', name: 'Lavender / Ungu Muda', opts: ['Ungu', 'Merah Muda / Pink', 'Lavender / Ungu Muda'] }
+  ]}
+];
+
+// G17 JAM WAKTU
+const G17_DATA = [
+  { level: 1, title: 'Level 1: Jam Tepat (Bulat)', items: [
+    { hour: 1, minute: 0, ans: '01:00 (Jam 1)', opts: ['01:00 (Jam 1)', '02:00 (Jam 2)', '03:00 (Jam 3)'] },
+    { hour: 3, minute: 0, ans: '03:00 (Jam 3)', opts: ['02:00 (Jam 2)', '03:00 (Jam 3)', '04:00 (Jam 4)'] },
+    { hour: 6, minute: 0, ans: '06:00 (Jam 6)', opts: ['05:00 (Jam 5)', '06:00 (Jam 6)', '12:00 (Jam 12)'] },
+    { hour: 9, minute: 0, ans: '09:00 (Jam 9)', opts: ['09:00 (Jam 9)', '06:00 (Jam 6)', '12:00 (Jam 12)'] },
+    { hour: 12, minute: 0, ans: '12:00 (Jam 12)', opts: ['12:00 (Jam 12)', '06:00 (Jam 6)', '03:00 (Jam 3)'] }
+  ]},
+  { level: 2, title: 'Level 2: Jam Lebih Variatif', items: [
+    { hour: 2, minute: 0, ans: '02:00 (Jam 2)', opts: ['01:00 (Jam 1)', '02:00 (Jam 2)', '03:00 (Jam 3)'] },
+    { hour: 4, minute: 0, ans: '04:00 (Jam 4)', opts: ['03:00 (Jam 3)', '04:00 (Jam 4)', '05:00 (Jam 5)'] },
+    { hour: 7, minute: 0, ans: '07:00 (Jam 7)', opts: ['07:00 (Jam 7)', '08:00 (Jam 8)', '06:00 (Jam 6)'] },
+    { hour: 10, minute: 0, ans: '10:00 (Jam 10)', opts: ['09:00 (Jam 9)', '10:00 (Jam 10)', '11:00 (Jam 11)'] },
+    { hour: 11, minute: 0, ans: '11:00 (Jam 11)', opts: ['10:00 (Jam 10)', '11:00 (Jam 11)', '12:00 (Jam 12)'] }
+  ]},
+  { level: 3, title: 'Level 3: Setengah Jam', items: [
+    { hour: 1, minute: 30, ans: '01:30 (Jam Setengah 2)', opts: ['01:00 (Jam 1)', '01:30 (Jam Setengah 2)', '02:00 (Jam 2)'] },
+    { hour: 3, minute: 30, ans: '03:30 (Jam Setengah 4)', opts: ['03:30 (Jam Setengah 4)', '03:00 (Jam 3)', '04:00 (Jam 4)'] },
+    { hour: 6, minute: 30, ans: '06:30 (Jam Setengah 7)', opts: ['06:00 (Jam 6)', '06:30 (Jam Setengah 7)', '07:00 (Jam 7)'] },
+    { hour: 9, minute: 30, ans: '09:30 (Jam Setengah 10)', opts: ['09:30 (Jam Setengah 10)', '09:00 (Jam 9)', '10:00 (Jam 10)'] },
+    { hour: 12, minute: 30, ans: '12:30 (Jam Setengah 1)', opts: ['12:00 (Jam 12)', '12:30 (Jam Setengah 1)', '01:00 (Jam 1)'] }
+  ]},
+  { level: 4, title: 'Level 4: Seperempat Jam', items: [
+    { hour: 2, minute: 15, ans: '02:15 (Jam Seperempat Lewat 2)', opts: ['02:15 (Jam Seperempat Lewat 2)', '02:00 (Jam 2)', '02:30 (Setengah 3)'] },
+    { hour: 5, minute: 15, ans: '05:15 (Jam Seperempat Lewat 5)', opts: ['05:00 (Jam 5)', '05:15 (Jam Seperempat Lewat 5)', '05:30 (Setengah 6)'] },
+    { hour: 8, minute: 15, ans: '08:15 (Jam Seperempat Lewat 8)', opts: ['08:15 (Jam Seperempat Lewat 8)', '08:30 (Setengah 9)', '08:00 (Jam 8)'] },
+    { hour: 10, minute: 45, ans: '10:45 (Seperempat Sebelum 11)', opts: ['10:30 (Setengah 11)', '10:45 (Seperempat Sebelum 11)', '11:00 (Jam 11)'] },
+    { hour: 3, minute: 45, ans: '03:45 (Seperempat Sebelum 4)', opts: ['03:30 (Setengah 4)', '03:45 (Seperempat Sebelum 4)', '04:00 (Jam 4)'] }
+  ]},
+  { level: 5, title: 'Level 5: Aktivitas & Waktu', items: [
+    { hour: 7, minute: 0, ans: '07:00 — Sarapan Pagi! 🍳', opts: ['07:00 — Sarapan Pagi! 🍳', '12:00 — Makan Siang 🍛', '19:00 — Makan Malam 🌙'] },
+    { hour: 12, minute: 0, ans: '12:00 — Makan Siang! 🍛', opts: ['07:00 — Sarapan Pagi! 🍳', '12:00 — Makan Siang! 🍛', '18:00 — Sore Hari ⛅'] },
+    { hour: 16, minute: 0, ans: '16:00 — Waktunya Main! 🏃', opts: ['12:00 — Makan Siang 🍛', '16:00 — Waktunya Main! 🏃', '21:00 — Tidur Malam 😴'] },
+    { hour: 19, minute: 0, ans: '19:00 — Makan Malam! 🌙', opts: ['16:00 — Waktunya Main 🏃', '19:00 — Makan Malam! 🌙', '21:00 — Tidur Malam 😴'] },
+    { hour: 21, minute: 0, ans: '21:00 — Tidur Malam! 😴', opts: ['19:00 — Makan Malam 🌙', '21:00 — Tidur Malam! 😴', '07:00 — Sarapan Pagi 🍳'] }
+  ]}
+];
+
+// G18 SUARA HEWAN
+const G18_DATA = [
+  { level: 1, title: 'Level 1: Hewan Peliharaan', items: [
+    { animal: '🐱', name: 'Kucing', sound: 'Meong... Meong!', soundHint: 'Meong', ans: 'Kucing 🐱 — Meong!', opts: ['Kucing 🐱 — Meong!', 'Anjing 🐶 — Guk!', 'Sapi 🐄 — Moo!'] },
+    { animal: '🐶', name: 'Anjing', sound: 'Guk! Guk! Guk!', soundHint: 'Guk guk', ans: 'Anjing 🐶 — Guk!', opts: ['Kucing 🐱 — Meong!', 'Anjing 🐶 — Guk!', 'Ayam 🐔 — Kukuruyuk!'] },
+    { animal: '🐰', name: 'Kelinci', sound: 'Hewan yang diam, tidak bersuara keras...', soundHint: 'Diam dan menggerak-gerakkan hidung', ans: 'Kelinci 🐰 — Diam!', opts: ['Kelinci 🐰 — Diam!', 'Kucing 🐱 — Meong!', 'Anjing 🐶 — Guk!'] },
+    { animal: '🐹', name: 'Hamster', sound: 'Cit cit cit kecil...', soundHint: 'Cit cit', ans: 'Hamster 🐹 — Cit cit!', opts: ['Hamster 🐹 — Cit cit!', 'Kelinci 🐰 — Diam!', 'Anjing 🐶 — Guk!'] },
+    { animal: '🐠', name: 'Ikan', sound: 'Ikan tidak bersuara...', soundHint: 'Diam dalam air', ans: 'Ikan 🐠 — Diam!', opts: ['Ikan 🐠 — Diam!', 'Kucing 🐱 — Meong!', 'Anjing 🐶 — Guk!'] }
+  ]},
+  { level: 2, title: 'Level 2: Hewan Ternak', items: [
+    { animal: '🐄', name: 'Sapi', sound: 'Mooo... Mooo...', soundHint: 'Moo moo', ans: 'Sapi 🐄 — Moo!', opts: ['Sapi 🐄 — Moo!', 'Kambing 🐐 — Mbee!', 'Kuda 🐴 — Hiiiih!'] },
+    { animal: '🐔', name: 'Ayam Jantan', sound: 'Kukuruyuuuk! Pagi sudah datang!', soundHint: 'Kukuruyuk', ans: 'Ayam 🐔 — Kukuruyuk!', opts: ['Ayam 🐔 — Kukuruyuk!', 'Sapi 🐄 — Moo!', 'Bebek 🦆 — Kwek!'] },
+    { animal: '🦆', name: 'Bebek', sound: 'Kwek kwek kwek!', soundHint: 'Kwek kwek', ans: 'Bebek 🦆 — Kwek!', opts: ['Bebek 🦆 — Kwek!', 'Ayam 🐔 — Kukuruyuk!', 'Sapi 🐄 — Moo!'] },
+    { animal: '🐐', name: 'Kambing', sound: 'Mbeeee... Mbee!', soundHint: 'Mbee mbee', ans: 'Kambing 🐐 — Mbee!', opts: ['Kambing 🐐 — Mbee!', 'Sapi 🐄 — Moo!', 'Domba 🐑 — Baa!'] },
+    { animal: '🐑', name: 'Domba', sound: 'Baaaa! Baa baa...', soundHint: 'Baa baa', ans: 'Domba 🐑 — Baa!', opts: ['Domba 🐑 — Baa!', 'Kambing 🐐 — Mbee!', 'Sapi 🐄 — Moo!'] }
+  ]},
+  { level: 3, title: 'Level 3: Hewan Liar & Rimba', items: [
+    { animal: '🦁', name: 'Singa', sound: 'Auumm! Auummm! (Raja Hutan!)', soundHint: 'Aum mengaum', ans: 'Singa 🦁 — Aum!', opts: ['Singa 🦁 — Aum!', 'Harimau 🐯 — Grr!', 'Gajah 🐘 — Preet!'] },
+    { animal: '🐯', name: 'Harimau', sound: 'Grrrr! Harimau mendengkur...', soundHint: 'Grr mengaum', ans: 'Harimau 🐯 — Grr!', opts: ['Harimau 🐯 — Grr!', 'Singa 🦁 — Aum!', 'Beruang 🐻 — Grr!'] },
+    { animal: '🐘', name: 'Gajah', sound: 'Prereet! Preet! (Terompet Gajah!)', soundHint: 'Preet preet', ans: 'Gajah 🐘 — Preet!', opts: ['Gajah 🐘 — Preet!', 'Singa 🦁 — Aum!', 'Monyet 🐒 — Uik!'] },
+    { animal: '🐒', name: 'Monyet', sound: 'Uik uik uik! Monyet berayun!', soundHint: 'Uik uik', ans: 'Monyet 🐒 — Uik!', opts: ['Monyet 🐒 — Uik!', 'Gajah 🐘 — Preet!', 'Harimau 🐯 — Grr!'] },
+    { animal: '🐺', name: 'Serigala', sound: 'Auuuuu! Serigala melolong ke bulan!', soundHint: 'Auu melolong', ans: 'Serigala 🐺 — Auu!', opts: ['Serigala 🐺 — Auu!', 'Anjing 🐶 — Guk!', 'Singa 🦁 — Aum!'] }
+  ]},
+  { level: 4, title: 'Level 4: Hewan Langit & Air', items: [
+    { animal: '🐸', name: 'Katak', sound: 'Koak! Koak! Koak! (Saat hujan)', soundHint: 'Koak koak', ans: 'Katak 🐸 — Koak!', opts: ['Katak 🐸 — Koak!', 'Ular 🐍 — Desss!', 'Bebek 🦆 — Kwek!'] },
+    { animal: '🐍', name: 'Ular', sound: 'Dessss... (Mendesis pelan)', soundHint: 'Dess desis', ans: 'Ular 🐍 — Dess!', opts: ['Ular 🐍 — Dess!', 'Katak 🐸 — Koak!', 'Lebah 🐝 — Bzzz!'] },
+    { animal: '🐝', name: 'Lebah', sound: 'Bzzzzz! Lebah sedang terbang!', soundHint: 'Bzzz bzzz', ans: 'Lebah 🐝 — Bzzz!', opts: ['Lebah 🐝 — Bzzz!', 'Lalat 🪰 — Brr!', 'Nyamuk 🦟 — Nggg!'] },
+    { animal: '🦜', name: 'Burung Beo', sound: 'Halo! Halo! Aku bisa meniru bicara!', soundHint: 'Meniru bicara manusia', ans: 'Beo 🦜 — Meniru!', opts: ['Beo 🦜 — Meniru!', 'Elang 🦅 — Kiiik!', 'Burung 🐦 — Ciak!'] },
+    { animal: '🦅', name: 'Elang', sound: 'Kiiiik! Kiik! (Terbang tinggi)', soundHint: 'Kiik melengking', ans: 'Elang 🦅 — Kiik!', opts: ['Elang 🦅 — Kiik!', 'Beo 🦜 — Meniru!', 'Merpati 🕊️ — Cruu!'] }
+  ]},
+  { level: 5, title: 'Level 5: Tebak dari Suaranya!', items: [
+    { animal: '🎵', name: 'Tebak Suara!', sound: 'Meong... Meong... Siapa aku?', soundHint: 'Meong meong', ans: 'Kucing 🐱', opts: ['Kucing 🐱', 'Anjing 🐶', 'Kambing 🐐'] },
+    { animal: '🎵', name: 'Tebak Suara!', sound: 'Kukuruyuuk! Aku bangunkan pagi!', soundHint: 'Kukuruyuk pagi', ans: 'Ayam 🐔', opts: ['Bebek 🦆', 'Ayam 🐔', 'Katak 🐸'] },
+    { animal: '🎵', name: 'Tebak Suara!', sound: 'Moooo! Moo! Aku ada di padang rumput...', soundHint: 'Moo moo', ans: 'Sapi 🐄', opts: ['Kambing 🐐', 'Domba 🐑', 'Sapi 🐄'] },
+    { animal: '🎵', name: 'Tebak Suara!', sound: 'Auuumm! Aummm! Aku Raja Hutan!', soundHint: 'Aum mengaum', ans: 'Singa 🦁', opts: ['Singa 🦁', 'Harimau 🐯', 'Serigala 🐺'] },
+    { animal: '🎵', name: 'Tebak Suara!', sound: 'Koak! Koak! Koak! Aku suka hujan!', soundHint: 'Koak koak', ans: 'Katak 🐸', opts: ['Bebek 🦆', 'Katak 🐸', 'Ular 🐍'] }
   ]}
 ];
 
@@ -3928,8 +4100,189 @@ const G15 = {
   }
 };
 
+/* ── G16: WARNA CERIA ── */
+const G16 = {
+  lvl: 0, qi: 0, mistakes: 0,
+  start(l) {
+    this.lvl = l; this.qi = 0; this.mistakes = 0;
+    this.loadQ();
+  },
+  loadQ() {
+    const ld = G16_DATA[this.lvl];
+    const item = ld.items[this.qi];
+    document.getElementById('g16-title').textContent = ld.title;
+    document.getElementById('g16-prog').textContent = `Soal ${this.qi + 1} dari ${ld.items.length}`;
+    document.getElementById('g16-stars').textContent = Prog.gameStars('warna_ceria', this.lvl + 1);
+    document.getElementById('g16-swatch').style.background = item.color;
+    document.getElementById('g16-qtext').textContent = 'Warna apa ini? 🎨';
+    SFX.speak('Warna apa ini?');
+    renderChoices('g16-choices', scramble(item.opts), item.name,
+      (btn) => {
+        btn.classList.add('right');
+        SFX.correct();
+        showToast('🎨', `Benar! Ini warna ${item.name}!`);
+        setTimeout(() => this.next(), 900);
+      },
+      (btn) => {
+        btn.classList.add('wrong');
+        setTimeout(() => btn.classList.remove('wrong'), 550);
+        this.mistakes++;
+        showToast('💡', 'Perhatikan warnanya lagi ya!', true);
+      }
+    );
+  },
+  next() {
+    this.qi++;
+    const ld = G16_DATA[this.lvl];
+    if (this.qi < ld.items.length) {
+      this.loadQ();
+    } else {
+      const s = calcStars(this.mistakes), c = s * 5;
+      Prog.record('warna_ceria', this.lvl + 1, s, c);
+      UI.updateHeader();
+      showVictory(this.lvl + 1, s, c, G16_DATA.length, (n) => G16.start(Math.min(n, G16_DATA.length - 1)));
+    }
+  }
+};
 
+/* ── G17: JAM WAKTU ── */
+const G17 = {
+  lvl: 0, qi: 0, mistakes: 0,
+  start(l) {
+    this.lvl = l; this.qi = 0; this.mistakes = 0;
+    this.loadQ();
+  },
+  drawClock(hour, minute) {
+    const canvas = document.getElementById('g17-clock');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    const cx = 90, cy = 90, r = 80;
+    ctx.clearRect(0, 0, 180, 180);
+    // Clock face
+    ctx.fillStyle = '#fff';
+    ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI * 2); ctx.fill();
+    ctx.strokeStyle = '#4338ca'; ctx.lineWidth = 6;
+    ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI * 2); ctx.stroke();
+    // Hour markers
+    for (let i = 0; i < 12; i++) {
+      const angle = (i * 30 - 90) * Math.PI / 180;
+      const x1 = cx + Math.cos(angle) * (r - 10);
+      const y1 = cy + Math.sin(angle) * (r - 10);
+      const x2 = cx + Math.cos(angle) * (r - 4);
+      const y2 = cy + Math.sin(angle) * (r - 4);
+      ctx.strokeStyle = '#818cf8'; ctx.lineWidth = 3;
+      ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x2, y2); ctx.stroke();
+    }
+    // Numbers
+    ctx.fillStyle = '#312e81'; ctx.font = 'bold 13px Fredoka, sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    [12,1,2,3,4,5,6,7,8,9,10,11].forEach((n, i) => {
+      const a = (i * 30 - 90) * Math.PI / 180;
+      ctx.fillText(n, cx + Math.cos(a) * (r - 20), cy + Math.sin(a) * (r - 20));
+    });
+    // Hour hand
+    const hourAngle = ((hour % 12) + minute / 60) * 30 - 90;
+    const hRad = hourAngle * Math.PI / 180;
+    ctx.strokeStyle = '#1e1b4b'; ctx.lineWidth = 7; ctx.lineCap = 'round';
+    ctx.beginPath(); ctx.moveTo(cx, cy);
+    ctx.lineTo(cx + Math.cos(hRad) * (r - 35), cy + Math.sin(hRad) * (r - 35)); ctx.stroke();
+    // Minute hand
+    const minAngle = minute * 6 - 90;
+    const mRad = minAngle * Math.PI / 180;
+    ctx.strokeStyle = '#4f46e5'; ctx.lineWidth = 4; ctx.lineCap = 'round';
+    ctx.beginPath(); ctx.moveTo(cx, cy);
+    ctx.lineTo(cx + Math.cos(mRad) * (r - 22), cy + Math.sin(mRad) * (r - 22)); ctx.stroke();
+    // Center dot
+    ctx.fillStyle = '#ef4444';
+    ctx.beginPath(); ctx.arc(cx, cy, 6, 0, Math.PI * 2); ctx.fill();
+  },
+  loadQ() {
+    const ld = G17_DATA[this.lvl];
+    const item = ld.items[this.qi];
+    document.getElementById('g17-title').textContent = ld.title;
+    document.getElementById('g17-prog').textContent = `Soal ${this.qi + 1} dari ${ld.items.length}`;
+    document.getElementById('g17-stars').textContent = Prog.gameStars('jam_waktu', this.lvl + 1);
+    document.getElementById('g17-qtext').textContent = 'Jam berapa yang ditunjukkan jarum jam ini? ⏰';
+    this.drawClock(item.hour, item.minute);
+    SFX.speak('Jam berapa ini?');
+    renderChoices('g17-choices', scramble(item.opts), item.ans,
+      (btn) => {
+        btn.classList.add('right');
+        SFX.correct();
+        showToast('⏰', 'Pintar! Kamu bisa baca jam!');
+        setTimeout(() => this.next(), 900);
+      },
+      (btn) => {
+        btn.classList.add('wrong');
+        setTimeout(() => btn.classList.remove('wrong'), 550);
+        this.mistakes++;
+        showToast('💡', 'Perhatikan letak jarum pendek ya!', true);
+      }
+    );
+  },
+  next() {
+    this.qi++;
+    const ld = G17_DATA[this.lvl];
+    if (this.qi < ld.items.length) {
+      this.loadQ();
+    } else {
+      const s = calcStars(this.mistakes), c = s * 5;
+      Prog.record('jam_waktu', this.lvl + 1, s, c);
+      UI.updateHeader();
+      showVictory(this.lvl + 1, s, c, G17_DATA.length, (n) => G17.start(Math.min(n, G17_DATA.length - 1)));
+    }
+  }
+};
 
+/* ── G18: SUARA HEWAN ── */
+const G18 = {
+  lvl: 0, qi: 0, mistakes: 0,
+  start(l) {
+    this.lvl = l; this.qi = 0; this.mistakes = 0;
+    this.loadQ();
+  },
+  playSound(item) {
+    SFX.speak(item.sound);
+    showToast(item.animal === '🎵' ? '🎵' : item.animal, item.soundHint);
+  },
+  loadQ() {
+    const ld = G18_DATA[this.lvl];
+    const item = ld.items[this.qi];
+    document.getElementById('g18-title').textContent = ld.title;
+    document.getElementById('g18-prog').textContent = `Soal ${this.qi + 1} dari ${ld.items.length}`;
+    document.getElementById('g18-stars').textContent = Prog.gameStars('suara_hewan', this.lvl + 1);
+    document.getElementById('g18-animal').textContent = item.animal;
+    document.getElementById('g18-qtext').textContent =
+      item.animal === '🎵' ? `Suara: "${item.soundHint}" — Ini suara hewan apa?` : `${item.name} bersuara apa?`;
+    document.getElementById('g18-play-btn').onclick = () => { SFX.pop(); this.playSound(item); };
+    SFX.speak(item.sound);
+    renderChoices('g18-choices', scramble(item.opts), item.ans,
+      (btn) => {
+        btn.classList.add('right');
+        SFX.correct();
+        showToast('🐾', 'Benar! Kamu hafal suara hewan!');
+        setTimeout(() => this.next(), 900);
+      },
+      (btn) => {
+        btn.classList.add('wrong');
+        setTimeout(() => btn.classList.remove('wrong'), 550);
+        this.mistakes++;
+        showToast('💡', 'Dengarkan suaranya lagi ya!', true);
+      }
+    );
+  },
+  next() {
+    this.qi++;
+    const ld = G18_DATA[this.lvl];
+    if (this.qi < ld.items.length) {
+      this.loadQ();
+    } else {
+      const s = calcStars(this.mistakes), c = s * 5;
+      Prog.record('suara_hewan', this.lvl + 1, s, c);
+      UI.updateHeader();
+      showVictory(this.lvl + 1, s, c, G18_DATA.length, (n) => G18.start(Math.min(n, G18_DATA.length - 1)));
+    }
+  }
+};
 
 /* ═══════════════════════════════════════════════════════════
    7. SHOP (TOKO KOSTUM KOIN), CERTIFICATE, SCREEN TIME, & HIJAIYAH
@@ -4650,7 +5003,7 @@ const UI = {
       </div>
 
       <div style="margin-top:14px">
-        <h4 style="font-size:.95rem;color:#0369a1;margin-bottom:6px;font-weight:700">⭐ Koleksi Bintang Semua Game (15 Modul):</h4>
+        <h4 style="font-size:.95rem;color:#0369a1;margin-bottom:6px;font-weight:700">⭐ Koleksi Bintang Semua Game (18 Modul):</h4>
         <div class="rapor-grid-games">${gamesGridHtml}</div>
       </div>
 
@@ -4680,7 +5033,7 @@ const UI = {
     const data = Prog.data;
     const canvas = document.createElement('canvas');
     canvas.width = 800;
-    canvas.height = 1140;
+    canvas.height = 1260;
     const ctx = canvas.getContext('2d');
 
     // Background Gradient
@@ -4732,7 +5085,7 @@ const UI = {
     const stats = [
       { label: 'Total Bintang', val: `⭐ ${data.totalStars}`, bg: '#fef3c7', col: '#b45309' },
       { label: 'Koin Emas', val: `🪙 ${data.totalCoins}`, bg: '#fef9c3', col: '#a16207' },
-      { label: 'Game Selesai', val: `🎮 ${Object.values(data.games).filter(g=>g.played).length}/15`, bg: '#dcfce7', col: '#15803d' },
+      { label: 'Game Selesai', val: `🎮 ${Object.values(data.games).filter(g=>g.played).length}/18`, bg: '#dcfce7', col: '#15803d' },
     ];
     stats.forEach((st, idx) => {
       const sx = 50 + idx * 240;
@@ -4753,9 +5106,9 @@ const UI = {
     ctx.fillStyle = '#0369a1';
     ctx.font = 'bold 22px "Fredoka", sans-serif';
     ctx.textAlign = 'left';
-    ctx.fillText('📊 Rincian Bintang & Level Tiap Game (15 Modul):', 50, 385);
+    ctx.fillText('📊 Rincian Bintang & Level Tiap Game (18 Modul):', 50, 385);
 
-    // 15 Games Grid (5 rows x 3 cols)
+    // 18 Games Grid (6 rows x 3 cols)
     const cols = 3;
     const itemW = 220;
     const itemH = 100;
@@ -4803,10 +5156,10 @@ const UI = {
     ctx.fillStyle = '#1e293b';
     ctx.font = 'bold 15px "Fredoka", sans-serif';
     ctx.textAlign = 'center';
-    ctx.fillText('🎓 Belajar Calistung Ceria 100% Edukatif & Ramah Anak Indonesia', canvas.width / 2, 1070);
+    ctx.fillText('🎓 Belajar Calistung Ceria 100% Edukatif & Ramah Anak Indonesia', canvas.width / 2, 1145);
     ctx.font = '500 13px "Fredoka", sans-serif';
     ctx.fillStyle = '#64748b';
-    ctx.fillText('Petualangan bersama Harsha • Habibi, Shafiyyah, & Arsha • Dibuat oleh @prihantowhy', canvas.width / 2, 1095);
+    ctx.fillText('Petualangan bersama Harsha • Habibi, Shafiyyah, & Arsha • Dibuat oleh @prihantowhy', canvas.width / 2, 1175);
 
     // Download canvas as PNG
     canvas.toBlob((blob) => {

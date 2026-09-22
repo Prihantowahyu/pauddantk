@@ -37,7 +37,7 @@ Aplikasi menyediakan **3 profil bawaan** yang disesuaikan dengan tahapan tumbuh 
 
 Aplikasi memiliki **3 pilar aktivitas utama**:
 
-### A. 13 Mini-Game Calistung (Halaman Utama)
+### A. 18 Mini-Game Calistung & Eksplorasi (Halaman Utama)
 1. **🏝️ Ekspedisi Pulau Pintar:** Eksplorasi 5 pulau kuis abjad dan angka bertingkat.
 2. **🍳 Dapur Kata & Angka:** Menyusun huruf menjadi nama resep makanan bergizi.
 3. **🏃 Lomba Lari Angka:** Kecepatan refleks memilih angka yang diminta sambil berlari.
@@ -51,6 +51,11 @@ Aplikasi memiliki **3 pilar aktivitas utama**:
 11. **🚀 Misi Roket Angka:** Mengisi bahan bakar roket berhitung penjumlahan dan pengurangan.
 12. **🎨 Salon Kata Ciko:** Menghias dan mendandani karakter dengan menjawab kata yang tepat.
 13. **🎲 Ular Tangga Calistung:** Papan permainan ular tangga interaktif dengan dadu dan tantangan soal di setiap petak.
+14. **🗣️ Susun Suku Kata Ceria:** Merangkai kepingan suku kata acak menjadi kata utuh bermakna.
+15. **🔺 Petualangan Bentuk Ajaib:** Mengenal bentuk geometri 2D (lingkaran, segitiga, persegi) dan mencocokkan benda sekitar.
+16. **🌈 Warna Ceria Pelangi:** Mengenal dan mencocokkan spektrum warna cerah dari warna dasar hingga sekunder.
+17. **⏰ Belajar Jam & Waktu:** Membaca jarum jam analog (jam tepat, setengah, dan seperempat) secara visual dan seru.
+18. **🐾 Tebak Suara Hewan:** Melatih kepekaan audio anak dengan mendengarkan tiruan suara hewan dan menebak hewannya.
 
 ### B. 🏝️ Petualangan Harsha (Nusa Pintar)
 * Dapat diakses lewat ubin biru **"Petualangan Harsha"** di beranda.
